@@ -3,6 +3,7 @@ name: Feature Request
 about: Describe a new feature
 title: "[Feature] "
 labels: enhancement
+status: backlog
 assignees: elinygard
 ---
 
