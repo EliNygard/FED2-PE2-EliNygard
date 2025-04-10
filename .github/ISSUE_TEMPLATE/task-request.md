@@ -2,7 +2,7 @@
 name: Task Request
 about: Describe a new feature
 title: "[Task] "
-labels: enhancement
+labels: documentation
 status: backlog
 assignees: elinygard
 ---
