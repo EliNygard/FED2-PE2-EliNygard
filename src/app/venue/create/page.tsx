@@ -1,5 +1,8 @@
 export default function CreateVenue() {
     return (
-        <h1>Create New Venue</h1>
+        <main>
+
+            <h1>Create New Venue</h1>
+        </main>
     )
 }
