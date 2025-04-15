@@ -5,7 +5,7 @@ export default async function Home() {
   const response = await fetch('https://v2.api.noroff.dev/holidaze/venues')
   const json = await response.json()
   const venues = json.data
-  console.log(venues);
+  // console.log(venues);
   
   
   return (
