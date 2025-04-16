@@ -1,31 +1,45 @@
-import { registerUser } from "@/app/api/auth/register";
+import { register } from "@/app/api/auth/register";
 import { IRegisterUser } from "@/interface";
 import { useState } from "react";
 
 
 export function useRegister() {
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isError, setIsError] = useState<string | null>(null);
+  const [isVenueManager, setIsVenueManager] = useState<boolean>(false)
+  const [isSuccess, setIsSuccess] = useState<boolean>(false)
 
-  const register = async (userData: IRegisterUser) => {
-    setLoading(true);
-    setError(null);
+  const registerUser = async ({ name, email, password, bio, avatar, venueManager }: IRegisterUser) => {
+    setIsLoading(true);
+    setIsError(null);
     try {
-      const data = await registerUser(userData);
+      const userData = await register({ name, email, password, bio, avatar, venueManager });
       // You could, for example, update the global auth state here.
-      return data;
-    } catch (err: unknown) {
-        // Narrow the type of err
-        if (err instanceof Error) {
-          setError(err.message); // Safely access the error message
+
+      if (userData.errors && userData.errors[0]) {
+        throw new Error(userData.errors[0].message)
+      }
+      
+      setIsError(null)
+      if (venueManager === true) {
+        setIsVenueManager(true)
+      }
+      setIsSuccess(true)
+      return userData
+    } catch (error: unknown) {
+        if (error instanceof Error) {
+          setIsError(error.message);
+          setIsSuccess(false)
+
         } else {
-          setError('An unknown error occurred'); // Handle non-Error types
+          setIsError('An unknown error occurred'); 
+          setIsSuccess(false)
         }
-        throw err; // Re-throw the error after handling it
+        throw error; 
       } finally {
-        setLoading(false);
+        setIsLoading(false);
       }
   };
 
-  return { register, loading, error };
+  return { registerUser, isLoading, isError, isVenueManager, isSuccess };
 }

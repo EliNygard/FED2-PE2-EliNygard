@@ -1,12 +1,12 @@
 import { IRegisterUser } from "@/interface";
 
-// /src/lib/api.js
-export async function registerUser(user: IRegisterUser) {
+
+export async function register({ name, email, password, bio, avatar, venueManager }: IRegisterUser) {
     try {
       const response = await fetch('https://v2.api.noroff.dev/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(user)
+        body: JSON.stringify({ name, email, password, bio, avatar, venueManager })
       });
   
       const json = await response.json();
