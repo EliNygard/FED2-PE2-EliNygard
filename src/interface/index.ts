@@ -5,7 +5,7 @@ export interface IRegisterRequest {
     email: string;
     password: string;
     bio?: string;
-    avatar?: Media;
+    avatar: Media;
     venueManager?: boolean }
   }
 
@@ -14,7 +14,7 @@ export interface IRegisterRequest {
     email: string;
     password: string;
     bio?: string;
-    avatar?: Media;
+    avatar: Media;
     venueManager?: boolean
   }
 
