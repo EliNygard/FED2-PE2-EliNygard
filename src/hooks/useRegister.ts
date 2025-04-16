@@ -21,9 +21,7 @@ export function useRegister() {
       }
       
       setIsError(null)
-      if (venueManager === true) {
-        setIsVenueManager(true)
-      }
+      
       setIsSuccess(true)
       return userData
     } catch (error: unknown) {
@@ -41,5 +39,5 @@ export function useRegister() {
       }
   };
 
-  return { registerUser, isLoading, isError, isVenueManager, isSuccess };
+  return { registerUser, isLoading, isError, isVenueManager, setIsVenueManager, isSuccess };
 }
