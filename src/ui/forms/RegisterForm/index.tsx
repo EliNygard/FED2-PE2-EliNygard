@@ -77,10 +77,8 @@ export function RegisterForm() {
     } = values;
 
     try {
-      console.log('button clicked');
-      
       await delay(3000)
-
+      
       const user = await registerUser({
         name,
         email,
@@ -89,6 +87,7 @@ export function RegisterForm() {
         avatar,
         venueManager: isVenueManager,
       });
+      
       console.log(user);
 
       // store user

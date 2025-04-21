@@ -8,6 +8,20 @@ export interface IRegisterRequest {
     avatar: Media;
     venueManager?: boolean }
   }
+  
+  export interface IUser {
+    name: string
+    email: string;
+    bio?: string;
+    avatar: Media;
+    accessToken: string
+    venueManager: boolean
+  }
+
+  export interface ILogin {
+    email: string,
+    password: string
+  }
 
   export interface IRegisterUser {
     name: string;

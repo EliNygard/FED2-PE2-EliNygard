@@ -1,3 +1,4 @@
+import { LoginForm } from "@/ui/forms/LoginForm";
 import { RegisterForm } from "@/ui/forms/RegisterForm";
 
 
@@ -12,6 +13,9 @@ export default async function Register() {
                     Welcome to Holidaze. Register form!
                 </h1>
                 <RegisterForm />
+            </div>
+            <div>
+                <LoginForm />
             </div>
         </main>
     )
