@@ -19,7 +19,7 @@ export async function register({
 
   if (!response.ok) {
     console.error(json.errors[0].message);
-    throw new Error(json.errors[0].message || "Registration failed");
+    throw new Error(json.errors[0].message || "Registration failed. Please try again");
   }
 
   const { data } = json;
