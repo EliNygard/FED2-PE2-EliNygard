@@ -12,7 +12,8 @@ export interface IRegisterRequest {
   export interface IRegisterUser {
     name: string;
     email: string;
-    password: string;
+   
+      password: string,
     bio?: string;
     avatar: Media;
     venueManager?: boolean
