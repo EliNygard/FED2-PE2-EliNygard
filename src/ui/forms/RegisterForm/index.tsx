@@ -192,7 +192,7 @@ export function RegisterForm() {
         </button>
 
         {isError && (
-          <div role="alert">{isError}</div>
+          <div role="alert">{`${isError}. Please try again.`}</div>
         )}
       </form>
     </>

@@ -86,7 +86,7 @@ export function LoginForm() {
           {isLoading ? "Logging in..." : "Log in"}
         </button>
 
-        {isError && <div role="alert">{isError}</div>}
+        {isError && <div role="alert">{`${isError}. Please try again.`}</div>}
       </form>
     </div>
   );
