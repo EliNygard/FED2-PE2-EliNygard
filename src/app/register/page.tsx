@@ -17,6 +17,8 @@ export default async function Register() {
             <div>
                 <LoginForm />
             </div>
+
+            <button onClick={logout}>Log out</button>
         </main>
     )
 }
