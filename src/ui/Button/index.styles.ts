@@ -7,6 +7,6 @@ export const StyledButton = styled.button`
   text-transform: uppercase;
   font-weight: 500;
   width: 100%;
-  padding: 4px 0 4px 0;
+  padding: 4px 16px 4px 16px;
   cursor: pointer;
 `;

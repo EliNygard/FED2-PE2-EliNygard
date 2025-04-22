@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { FaBars } from "react-icons/fa";
+import Button from "../Button";
 
 export default function Header() {
   return (
@@ -27,11 +28,11 @@ export default function Header() {
         <button className="block sm:hidden">
           <FaBars className="size-7 text-brand-blue" />
         </button>
-        <div className="hidden sm:flex gap-5">
-          <Link href="/">
-            <button>Register</button>
+        <div className="hidden sm:flex gap-5 items-center">
+          <Link href="/register">
+            <button className="text-brand-blue">Register</button>
           </Link>
-          {/* <Button>Log In</Button> */}
+          <Button>Log In</Button>
         </div>
       </div>
     </header>
