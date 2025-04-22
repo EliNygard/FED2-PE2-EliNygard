@@ -1,19 +1,31 @@
 "use client";
 
 import { IVenue } from "@/interface";
-// import Image from "next/image";
+import Image from "next/image";
 
 export default function VenueCard({ venue }: { venue: IVenue }) {
   const firstImage = venue.media?.[0];
-  console.log(venue);
+  // console.log(venue);
 
   return (
     <li className="flex flex-col gap-1">
-      {firstImage && (
-        <img
+      {firstImage ? (
+        <Image
           className="object-fill aspect-3/2 rounded-t-sm"
           src={firstImage.url}
           alt={firstImage.alt || venue.name}
+          width={300}
+          height={300}
+          loading="lazy"
+        />
+      ) : (
+        <Image
+          className="object-fill aspect-3/2 rounded-t-sm"
+          src="/LogoMountainsV.svg"
+          alt={venue.name}
+          height={300}
+          width={300}
+          loading="lazy"
         />
       )}
       <h1>{`${venue.location.city}, ${venue.location.country}`}</h1>
