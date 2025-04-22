@@ -1,5 +1,6 @@
 import { IUser } from "@/interface";
 import { create } from "zustand";
+import { subscribeWithSelector } from "zustand/middleware";
 
 interface AuthState {
   user: IUser | null;
@@ -8,18 +9,23 @@ interface AuthState {
   logout: () => void;
 }
 
-export const useAuthStore = create<AuthState>((set) => ({
-  user: null,
-  isVenueManager: false,
-  setUser: (user) =>
-    set({
-      user: user,
-      isVenueManager: !!user.venueManager,
-    }),
+export const useAuthStore = create(
+  subscribeWithSelector<AuthState>((set) => ({
+    user: null,
+    isVenueManager: false,
+    setUser: (user) =>
+      set({
+        user: user,
+        isVenueManager: !!user.venueManager,
+      }),
 
-  logout: () =>
-    set({
-      user: null,
-      isVenueManager: false,
-    }),
-}));
+    logout: () => {
+      set({ user: null, isVenueManager: false });
+    },
+  }))
+);
+
+// Subscribe to state changes and log them
+useAuthStore.subscribe((state) => {
+  console.log("[auth store] state changed: ", state);
+});

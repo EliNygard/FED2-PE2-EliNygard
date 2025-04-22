@@ -8,7 +8,7 @@ export function useLogin() {
   const [isError, setIsError] = useState<string | null>(null);
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
 
-  const setUser = useAuthStore((store) => store.setUser);
+  const setUser = useAuthStore((state) => state.setUser);
 
   async function loginUser({
     email,

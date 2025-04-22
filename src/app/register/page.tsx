@@ -1,7 +1,11 @@
+'use client'
+
+import { useAuthStore } from "@/stores/useAuthStore";
 import { LoginForm } from "@/ui/forms/LoginForm";
 import { RegisterForm } from "@/ui/forms/RegisterForm";
 
-export default async function Register() {
+export default function Register() {
+    const logout = useAuthStore((state) => state.logout)
   return (
     <main>
       <div>
@@ -12,7 +16,7 @@ export default async function Register() {
         <LoginForm />
       </div>
 
-      <button>Log out</button>
+      <button onClick={logout}>Log out</button>
     </main>
   );
 }
