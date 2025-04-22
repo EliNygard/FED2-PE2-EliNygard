@@ -1,6 +1,7 @@
 import { roboto } from "@/ui/fonts";
 import Header from "@/ui/Header";
 import type { Metadata } from "next";
+import "tw-animate-css";
 import "./globals.css";
 
 export const metadata: Metadata = {

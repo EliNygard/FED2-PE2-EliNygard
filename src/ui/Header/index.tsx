@@ -1,3 +1,9 @@
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import Image from "next/image";
 import Link from "next/link";
 import { FaBars } from "react-icons/fa";
@@ -25,9 +31,21 @@ export default function Header() {
         </Link>
       </div>
       <div>
-        <button className="block sm:hidden">
+        <DropdownMenu modal={false}>
+          <DropdownMenuTrigger asChild>
+            <FaBars className="size-7 text-brand-blue" />
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="px-11">
+            <DropdownMenuItem>
+              <Link href="/register">Register</Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem>Log in</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+
+        {/* <button className="block sm:hidden">
           <FaBars className="size-7 text-brand-blue" />
-        </button>
+        </button> */}
         <div className="hidden sm:flex gap-5 items-center">
           <Link href="/register">
             <button className="text-brand-blue">Register</button>
