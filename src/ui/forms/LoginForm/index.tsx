@@ -19,7 +19,7 @@ export function LoginForm() {
     },
   });
 
-  const { loginUser, isLoading, isError, isVenueManager } =
+  const { loginUser, isLoading, isError } =
     useLogin();
 
   const delay = (ms: number) =>
@@ -37,17 +37,6 @@ export function LoginForm() {
             password,
         });
         if (!user) return
-      console.log(user);
-
-      if (isVenueManager) {
-          console.log('this is a venue manger');
-        
-    } else {
-        console.log('this is a customer');
-        
-    }
-    
-    // store user
 
       form.reset({
         email: "",

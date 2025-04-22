@@ -1,5 +1,5 @@
-import create from 'zustand'
 import { IUser } from '@/interface'
+import { create } from 'zustand'
 
 interface AuthState {
     user: IUser | null

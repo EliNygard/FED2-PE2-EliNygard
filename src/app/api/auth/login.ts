@@ -12,7 +12,6 @@ export async function login({
     })
 
     const json = await response.json()
-    console.log(json);
 
     if (!response.ok) {
         console.error(json.errors[0].message);
