@@ -31,21 +31,22 @@ export default function Header() {
         </Link>
       </div>
       <div>
+        <div className="block sm:hidden">
+
         <DropdownMenu modal={false}>
           <DropdownMenuTrigger asChild>
             <FaBars className="size-7 text-brand-blue" />
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="px-11">
+          <DropdownMenuContent className="px-11 py-4 flex flex-col gap-4 text-brand-blue">
             <DropdownMenuItem>
               <Link href="/register">Register</Link>
             </DropdownMenuItem>
             <DropdownMenuItem>Log in</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
+        </div>
 
-        {/* <button className="block sm:hidden">
-          <FaBars className="size-7 text-brand-blue" />
-        </button> */}
+      
         <div className="hidden sm:flex gap-5 items-center">
           <Link href="/register">
             <button className="text-brand-blue">Register</button>
