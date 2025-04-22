@@ -1,9 +1,9 @@
 "use client";
 
-import { z } from "zod";
+import { useLogin } from "@/hooks/useLogin";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { useLogin } from "@/hooks/useLogin";
+import { z } from "zod";
 
 const LoginFormSchema = z.object({
   email: z.string().trim(),
@@ -19,8 +19,7 @@ export function LoginForm() {
     },
   });
 
-  const { loginUser, isLoading, isError } =
-    useLogin();
+  const { loginUser, isLoading, isError } = useLogin();
 
   const delay = (ms: number) =>
     new Promise<void>((resolve) => setTimeout(resolve, ms));
@@ -28,15 +27,14 @@ export function LoginForm() {
   async function onSubmit(values: z.infer<typeof LoginFormSchema>) {
     const { email, password } = values;
 
-    
     try {
-        await delay(4000);
-        
-        const user = await loginUser({
-            email,
-            password,
-        });
-        if (!user) return
+      await delay(4000);
+
+      const user = await loginUser({
+        email,
+        password,
+      });
+      if (!user) return;
 
       form.reset({
         email: "",
@@ -45,7 +43,7 @@ export function LoginForm() {
     } catch (error) {
       console.error(error);
     } finally {
-      // redirect customer to home, manager to profile page
+      // redirect customer to home, manager to profile page. Or do this in useLogin?
     }
   }
   return (
