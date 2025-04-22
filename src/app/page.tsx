@@ -1,26 +1,24 @@
 import { IVenue } from "@/interface";
+import VenueCard from "@/ui/VenueCard";
 import Image from "next/image";
+import { getVenues } from "./api/data/getVenues";
 
 export default async function Home() {
-  const response = await fetch('https://v2.api.noroff.dev/holidaze/venues')
-  const json = await response.json()
-  const venues = json.data
-  // console.log(venues);
-  
-  
-  return (
+  const data = await getVenues();
+  console.log(data);
 
+  return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-<ul>
-  <h1>All venues</h1>
-  {venues.map((venue: IVenue) => (
-    <li key={venue.id}>{venue.name}</li>
-  ))}
-</ul>
-        
-<h1>This is Holidaze home page</h1>
-
+        <h1>This is Holidaze home page</h1>
+        <ul>
+          <h2>All venues</h2>
+          <ul className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+            {data.map((venue: IVenue) => (
+              <VenueCard key={venue.id} venue={venue} />
+            ))}
+          </ul>
+        </ul>
 
         <div className="flex gap-4 items-center flex-col sm:flex-row">
           <a
