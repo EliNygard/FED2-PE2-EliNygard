@@ -1,0 +1,49 @@
+{
+  // 1. Code Language Mode
+    "files.associations": {
+      "*.ts": "typescript",
+      "*.tsx": "typescriptreact"
+    },  
+    // use local TS version:
+    "typescript.tsdk": "node_modules/typescript/lib",
+
+    // 2. Formatting on save
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true,                // auto-fix linting errors
+    "source.organizeImports": true        // tidy up imports
+  },
+"editor.defaultFormatter": "esbenp.prettier-vscode",
+  "prettier.requireConfig": true,         // only run Prettier if you have a prettier.config.js
+
+  // 3. ESLint integration
+  "eslint.validate": [
+    "typescript",
+    "typescriptreact",
+    "javascript",
+    "javascriptreact"
+  ],
+  "eslint.run": "onSave",
+
+  // 4. Exclude build/artifacts from explorer & search
+  "files.exclude": {
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/.next": true,
+    "**/build": true
+  },
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/build": true
+  },
+
+  // 5. Editor preferences
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.rulers": [80, 120],
+
+  // 6. Turn off JS validation to avoid “duplicate” errors
+  "javascript.validate.enable": false,
+  "typescript.validate.enable": true 
+  }
