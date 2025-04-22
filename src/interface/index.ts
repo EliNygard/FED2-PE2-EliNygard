@@ -34,7 +34,7 @@ export interface IRegisterUser {
   venueManager?: boolean;
 }
 
-interface Media {
+export interface Media {
   url: string;
   alt: string;
 }
@@ -43,7 +43,7 @@ export interface IVenue {
   id: string;
   name: string;
   description: string;
-  media: Media;
+  media?: Media[];
   price: number;
   maxGuests: number;
   rating: number;
