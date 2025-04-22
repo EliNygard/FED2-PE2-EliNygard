@@ -1,11 +1,22 @@
+'use client'
+
+import { useAuthStore } from "@/stores/useAuthStore";
+import { LoginForm } from "@/ui/forms/LoginForm";
+import { RegisterForm } from "@/ui/forms/RegisterForm";
+
 export default function Register() {
-    return (
-        <main>
-            <div>
-                <h1>
-                    Welcome to Holidaze. Register form.
-                </h1>
-            </div>
-        </main>
-    )
+    const logout = useAuthStore((state) => state.logout)
+  return (
+    <main>
+      <div>
+        <h1>Welcome to Holidaze. Register form!</h1>
+        <RegisterForm />
+      </div>
+      <div>
+        <LoginForm />
+      </div>
+
+      <button onClick={logout}>Log out</button>
+    </main>
+  );
 }

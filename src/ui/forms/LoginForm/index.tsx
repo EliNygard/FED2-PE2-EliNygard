@@ -1,0 +1,80 @@
+"use client";
+
+import { useLogin } from "@/hooks/useLogin";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+
+const LoginFormSchema = z.object({
+  email: z.string().trim(),
+  password: z.string().trim(),
+});
+
+export function LoginForm() {
+  const form = useForm<z.infer<typeof LoginFormSchema>>({
+    resolver: zodResolver(LoginFormSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+
+  const { loginUser, isLoading, isError } = useLogin();
+
+  const delay = (ms: number) =>
+    new Promise<void>((resolve) => setTimeout(resolve, ms));
+
+  async function onSubmit(values: z.infer<typeof LoginFormSchema>) {
+    const { email, password } = values;
+
+    try {
+      await delay(4000);
+
+      const user = await loginUser({
+        email,
+        password,
+      });
+      if (!user) return;
+
+      form.reset({
+        email: "",
+        password: "",
+      });
+    } catch (error) {
+      console.error(error);
+    } finally {
+      // redirect customer to home, manager to profile page. Or do this in useLogin?
+    }
+  }
+  return (
+    <div>
+      <h1>Log in to your account</h1>
+
+      <form onSubmit={form.handleSubmit(onSubmit)}>
+        <label htmlFor="email">Email</label>
+        <input type="email" id="loginEmail" {...form.register("email")} />
+        {form.formState.errors.email && (
+          <span aria-live="polite">{form.formState.errors.email.message}</span>
+        )}
+
+        <label htmlFor="password">Password</label>
+        <input
+          type="password"
+          id="loginPassword"
+          {...form.register("password")}
+        />
+        {form.formState.errors.password && (
+          <span aria-live="polite">
+            {form.formState.errors.password?.message}
+          </span>
+        )}
+
+        <button type="submit" disabled={isLoading} aria-busy={isLoading}>
+          {isLoading ? "Logging in..." : "Log in"}
+        </button>
+
+        {isError && <div role="alert">{`${isError}. Please try again.`}</div>}
+      </form>
+    </div>
+  );
+}
