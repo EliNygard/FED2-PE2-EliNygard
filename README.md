@@ -2,7 +2,7 @@
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-##
+## Built With
 
 Next
 React
@@ -10,6 +10,11 @@ Tailwind
 [![style: styled-components](https://img.shields.io/badge/style-%F0%9F%92%85%20styled--components-orange.svg?colorB=daa357&colorA=db748e)](https://github.com/styled-components/styled-components)
 Zod
 Zustand
+React hook form
+eslint
+prettier
+shadcn ui
+
 
 ## Getting Started
 
