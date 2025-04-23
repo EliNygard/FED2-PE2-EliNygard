@@ -4,7 +4,6 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -59,7 +58,8 @@ export default function Header() {
                     src={userPicture || "/default-user.svg"}
                     alt={userName || "User"}
                     fill
-                    className="object-cover rounded-full"
+                    sizes="33vw"
+                    className="w-full object-cover rounded-full"
                   />
                 </Link>
               </div>
@@ -80,15 +80,20 @@ export default function Header() {
                         </DialogTrigger>
                       </DropdownMenuContent>
                     </DropdownMenu>
-                    {/* <Button>Log in</Button> */}
-                    <DialogContent className="bg-secondary-background">
+                    <DialogContent className="bg-secondary-background sm:max-w-md max-h-[calc(100vh-4rem)] overflow-y-auto touch-pan-y">
                       <DialogHeader>
-                        <div >
-                          <p>Welcome to Holidaze</p>
-                        </div>
+                        <Image
+                          src="/LogoMountainsV.svg"
+                          alt="Welcome to Holidaze"
+                          width={321}
+                          height={214}
+                          className="w-full h-auto object-contain"
+                          priority
+                        />
                         <DialogTitle className="text-xl">
                           Log into your account
                         </DialogTitle>
+                        <DialogDescription></DialogDescription>
                       </DialogHeader>
                       <div className="grid gap-4 py-4">
                         <LoginForm />
@@ -110,21 +115,26 @@ export default function Header() {
                       <DialogTrigger asChild>
                         <Button>Log in</Button>
                       </DialogTrigger>
-                      <DialogContent className="bg-secondary-background">
-                        <DialogHeader>
-                          <DialogTitle>Are you absolutely sure?</DialogTitle>
-                          <DialogDescription>
-                            This action cannot be undone. This will permanently
-                            delete your account and remove your data from our
-                            servers.
-                          </DialogDescription>
-                        </DialogHeader>
-                        <div className="grid gap-4 py-4">
-                          <LoginForm></LoginForm>
+                      <DialogContent className="bg-secondary-background max-h-[calc(100vh-4rem)] overflow-y-auto touch-pan-y">
+                        <div className="grid grid-cols-2">
+                          <div className="py-4 pr-8 mt-11">
+                            <DialogTitle className="text-xl mb-10">
+                              Log into your account
+                            </DialogTitle>
+                            <LoginForm />
+                          </div>
+                          <DialogHeader>
+                            <Image
+                              src="/LogoMountainsH.svg"
+                              alt="Welcome to Holidaze"
+                              width={321}
+                              height={214}
+                              className="w-full h-auto object-contain"
+                              priority
+                            />
+                            <DialogDescription></DialogDescription>
+                          </DialogHeader>
                         </div>
-                        <DialogFooter>
-                          <Button type="submit">Save changes</Button>
-                        </DialogFooter>
                       </DialogContent>
                     </Dialog>
                   </li>

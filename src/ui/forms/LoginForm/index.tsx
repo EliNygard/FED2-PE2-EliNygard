@@ -97,8 +97,8 @@ export function LoginForm() {
 
       </form>
 
-      <div>
-        <Link href='/register'>Do you not have an account? Register here</Link>
+      <div className="mt-4">
+        <Link href='/register'>Do you not have an account yet? Register here</Link>
       </div>
     </div>
   );
