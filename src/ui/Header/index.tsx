@@ -1,6 +1,15 @@
 "use client";
 
 import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -12,6 +21,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { FaBars } from "react-icons/fa";
 import Button from "../Button";
+import { LoginForm } from "../forms/LoginForm";
 
 export default function Header() {
   const isLoggedIn = AuthGuard();
@@ -56,17 +66,35 @@ export default function Header() {
             ) : (
               <>
                 <div className="block sm:hidden">
-                  <DropdownMenu modal={false}>
-                    <DropdownMenuTrigger asChild>
-                      <FaBars className="size-7 text-brand-blue" />
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent className="px-11 py-4 flex flex-col gap-4 text-brand-blue">
-                      <DropdownMenuItem>
-                        <Link href="/register">Register</Link>
-                      </DropdownMenuItem>
-                      <DropdownMenuItem>Log in</DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
+                  <Dialog>
+                    <DropdownMenu modal={false}>
+                      <DropdownMenuTrigger asChild>
+                        <FaBars className="size-7 text-brand-blue" />
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent className="px-11 py-4 flex flex-col gap-4 text-brand-blue">
+                        <DropdownMenuItem>
+                          <Link href="/register">Register</Link>
+                        </DropdownMenuItem>
+                        <DialogTrigger asChild>
+                          <DropdownMenuItem>Log in</DropdownMenuItem>
+                        </DialogTrigger>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                    {/* <Button>Log in</Button> */}
+                    <DialogContent className="bg-secondary-background">
+                      <DialogHeader>
+                        <div >
+                          <p>Welcome to Holidaze</p>
+                        </div>
+                        <DialogTitle className="text-xl">
+                          Log into your account
+                        </DialogTitle>
+                      </DialogHeader>
+                      <div className="grid gap-4 py-4">
+                        <LoginForm />
+                      </div>
+                    </DialogContent>
+                  </Dialog>
                 </div>
 
                 <ul className="hidden sm:flex gap-5 items-center">
@@ -78,7 +106,27 @@ export default function Header() {
                     </Link>
                   </li>
                   <li>
-                    <Button>Log In</Button>
+                    <Dialog>
+                      <DialogTrigger asChild>
+                        <Button>Log in</Button>
+                      </DialogTrigger>
+                      <DialogContent className="bg-secondary-background">
+                        <DialogHeader>
+                          <DialogTitle>Are you absolutely sure?</DialogTitle>
+                          <DialogDescription>
+                            This action cannot be undone. This will permanently
+                            delete your account and remove your data from our
+                            servers.
+                          </DialogDescription>
+                        </DialogHeader>
+                        <div className="grid gap-4 py-4">
+                          <LoginForm></LoginForm>
+                        </div>
+                        <DialogFooter>
+                          <Button type="submit">Save changes</Button>
+                        </DialogFooter>
+                      </DialogContent>
+                    </Dialog>
                   </li>
                 </ul>
               </>
