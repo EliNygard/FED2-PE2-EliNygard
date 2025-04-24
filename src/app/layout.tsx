@@ -4,6 +4,7 @@ import Header from "@/ui/Header";
 import type { Metadata } from "next";
 import "tw-animate-css";
 import "./globals.css";
+import HeaderNew from "@/ui/HeaderNew";
 
 export const metadata: Metadata = {
   title: "Holidaze",
@@ -21,7 +22,7 @@ export default function RootLayout({
         className={`${roboto.className} antialiased min-h-screen grid grid-rows-[auto_1fr_auto] `}
       >
         <div className="px-6 lg:px-10 2xl:px-20">
-          <Header />
+          <HeaderNew />
           {children}
         </div>
         <Footer />

@@ -69,7 +69,7 @@ export default function Header() {
                   <Dialog>
                     <DropdownMenu modal={false}>
                       <DropdownMenuTrigger asChild>
-                        <FaBars className="size-7 text-brand-blue" />
+                        <FaBars className="size-7 text-brand-blue" aria-label="Open menu" tabIndex={1} />
                       </DropdownMenuTrigger>
                       <DropdownMenuContent className="px-11 py-4 flex flex-col gap-4 text-brand-blue">
                         <DropdownMenuItem>
