@@ -1,12 +1,17 @@
 "use client";
 
+import { Dialog } from "@/components/ui/dialog";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { useAuthStore } from "@/stores/useAuthStore";
 import { AuthGuard } from "@/utils/AuthGuard";
 import { useMediaQuery } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 import { FaBars } from "react-icons/fa";
-import Button from "../Button";
+import MobileMenu from "../headerComponents/MobileMenu";
 
 export default function HeaderNew() {
   const isMobileView = useMediaQuery("(max-width: 639px)");
@@ -54,9 +59,20 @@ export default function HeaderNew() {
             ) : (
               <div>
                 {isMobileView ? (
-                  <button>
-                    <FaBars className="size-7 text-brand-blue" aria-label="Open menu" />
-                  </button>
+                  <div>
+                    <Dialog>
+                      <DropdownMenu modal={false}>
+                        <DropdownMenuTrigger asChild>
+                          <FaBars
+                            className="size-7 text-brand-blue"
+                            aria-label="Open menu"
+                            tabIndex={0}
+                          />
+                        </DropdownMenuTrigger>
+                        <MobileMenu />
+                      </DropdownMenu>
+                    </Dialog>
+                  </div>
                 ) : (
                   <nav>
                     <ul className="flex gap-5 items-center">
@@ -66,7 +82,7 @@ export default function HeaderNew() {
                         </button>
                       </li>
                       <li>
-                        <Button>Log in</Button>
+                        <div>Log in</div>
                       </li>
                     </ul>
                   </nav>

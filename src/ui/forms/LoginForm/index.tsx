@@ -14,7 +14,7 @@ const LoginFormSchema = z.object({
   password: z.string().trim(),
 });
 
-export function LoginForm() {
+export default function LoginForm() {
   const form = useForm<z.infer<typeof LoginFormSchema>>({
     resolver: zodResolver(LoginFormSchema),
     defaultValues: {
