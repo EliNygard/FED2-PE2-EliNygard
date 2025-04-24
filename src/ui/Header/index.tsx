@@ -30,9 +30,8 @@ export default function HeaderNew() {
                 src="/LogoHolidaze.svg"
                 alt="Holidaze logo (desktop)"
                 width={144}
-                height={40}
+                height={30}
                 className="hidden sm:flex"
-                style={{height:'auto'}}
               />
             </Link>
           </li>
