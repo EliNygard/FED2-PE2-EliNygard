@@ -10,8 +10,8 @@
     // 2. Formatting on save
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
-    "source.fixAll": true,                // auto-fix linting errors
-    "source.organizeImports": true        // tidy up imports
+    "source.fixAll": "explicit",
+    "source.organizeImports": "explicit"
   },
 "editor.defaultFormatter": "esbenp.prettier-vscode",
   "prettier.requireConfig": true,         // only run Prettier if you have a prettier.config.js

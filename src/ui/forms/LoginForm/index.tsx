@@ -1,16 +1,20 @@
 "use client";
 
+import { Input } from "@/components/ui/input"
 import { useLogin } from "@/hooks/useLogin";
+import Button from "@/ui/Button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import Link from "next/link";
+
 
 const LoginFormSchema = z.object({
   email: z.string().trim(),
   password: z.string().trim(),
 });
 
-export function LoginForm() {
+export default function LoginForm() {
   const form = useForm<z.infer<typeof LoginFormSchema>>({
     resolver: zodResolver(LoginFormSchema),
     defaultValues: {
@@ -47,34 +51,55 @@ export function LoginForm() {
     }
   }
   return (
-    <div>
-      <h1>Log in to your account</h1>
+    <div className="">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="flex flex-col gap-3"
+      >
+        <div className="flex flex-col gap-2">
+          <label htmlFor="email">Email</label>
+          <Input
+            className=""
+            type="email"
+            placeholder="Email"
+            {...form.register("email")}
+          />
+          {form.formState.errors.email && (
+            <span className="text-alert-red text-[14px]" aria-live="polite">
+              {form.formState.errors.email.message}
+            </span>
+          )}
+        </div>
 
-      <form onSubmit={form.handleSubmit(onSubmit)}>
-        <label htmlFor="email">Email</label>
-        <input type="email" id="loginEmail" {...form.register("email")} />
-        {form.formState.errors.email && (
-          <span aria-live="polite">{form.formState.errors.email.message}</span>
-        )}
+        <div className="flex flex-col gap-2">
+          <label htmlFor="password">Password</label>
+          <Input
+            className=""
+            type="password"
+            placeholder="Password"
+            {...form.register("password")}
+          />
+          {form.formState.errors.password && (
+            <span className="text-alert-red text-[14px]" aria-live="polite">
+              {form.formState.errors.password?.message}
+            </span>
+          )}
+        </div>
 
-        <label htmlFor="password">Password</label>
-        <input
-          type="password"
-          id="loginPassword"
-          {...form.register("password")}
-        />
-        {form.formState.errors.password && (
-          <span aria-live="polite">
-            {form.formState.errors.password?.message}
-          </span>
-        )}
+        <div className="mt-7">
 
-        <button type="submit" disabled={isLoading} aria-busy={isLoading}>
-          {isLoading ? "Logging in..." : "Log in"}
-        </button>
+        <Button type="submit" disabled={isLoading} aria-busy={isLoading}>
+          {isLoading ? "Logging in..." : "Log in"}{" "}
+        </Button>
 
-        {isError && <div role="alert">{`${isError}. Please try again.`}</div>}
+        {isError && <div className="text-alert-red text-[14px] mt-4" role="alert">{`${isError}. Please try again.`}</div>}
+        </div>
+
       </form>
+
+      <div className="mt-4">
+        <Link href='/register'>Do you not have an account yet? Register here</Link>
+      </div>
     </div>
   );
 }

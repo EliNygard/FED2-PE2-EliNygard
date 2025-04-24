@@ -1,7 +1,8 @@
 'use client'
 
 import { useAuthStore } from "@/stores/useAuthStore";
-import { LoginForm } from "@/ui/forms/LoginForm";
+import LoginForm from "@/ui/forms/LoginForm";
+
 import { RegisterForm } from "@/ui/forms/RegisterForm";
 
 export default function Register() {

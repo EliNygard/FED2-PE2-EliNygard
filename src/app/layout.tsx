@@ -1,5 +1,8 @@
+import { roboto } from "@/ui/fonts";
+import Footer from "@/ui/Footer";
+import Header from "@/ui/Header";
 import type { Metadata } from "next";
-import { roboto } from '@/ui/fonts'
+import "tw-animate-css";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -15,9 +18,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${roboto.className} antialiased px-6 lg:px-10 2xl:px-20`}
+        className={`${roboto.className} antialiased min-h-screen grid grid-rows-[auto_1fr_auto] `}
       >
-        {children}
+        <div className="px-6 lg:px-10 2xl:px-20">
+          <Header />
+          {children}
+        </div>
+        <Footer />
       </body>
     </html>
   );
