@@ -47,8 +47,8 @@ export default function MobileNav() {
             className="w-full h-auto object-contain"
             priority
           />
-          <DialogTitle className="text-xl">Log into your account</DialogTitle>
-          <DialogDescription></DialogDescription>
+          <DialogTitle className="text-xl">Log in to your account</DialogTitle>
+          <DialogDescription className="hidden"></DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <LoginForm />
