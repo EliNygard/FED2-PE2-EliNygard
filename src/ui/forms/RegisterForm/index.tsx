@@ -1,10 +1,13 @@
 "use client";
 
+import { Input } from "@/components/ui/input";
 import { useRegister } from "@/hooks/useRegister";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { FaChevronRight } from "react-icons/fa";
 import { z } from "zod";
+import { StyledRegisterForm } from "./index.styles";
+import { Textarea } from "@/components/ui/textarea";
 
 const RegisterFormSchema = z.object({
   name: z
@@ -156,68 +159,101 @@ export function RegisterForm() {
         )}
       </div>
 
-      <form
-        onSubmit={form.handleSubmit(onSubmit, (errors) => {
-          console.log("Validation failed", errors);
-        })}
-      >
-        <h2>Register</h2>
-        <label htmlFor="name">Name</label>
-        <input type="text" id="name" {...form.register("name")} />
-        {form.formState.errors.name && (
-          <span aria-live="polite">{form.formState.errors.name.message}</span>
-        )}
+      <StyledRegisterForm>
+        <form
+          
+          onSubmit={form.handleSubmit(onSubmit, (errors) => {
+            console.log("Validation failed", errors);
+          })}
+        >
+          <h2>Register</h2>
 
-        <label htmlFor="email">Email</label>
-        <input type="email" id="email" {...form.register("email")} />
-        {form.formState.errors.email && (
-          <span aria-live="polite">{form.formState.errors.email.message}</span>
-        )}
+          <div className="input-wrapper">
+            <div>
+              <label htmlFor="name">Name</label>
+              <Input type="text" id="name" placeholder="Name" {...form.register("name")} />
+              {form.formState.errors.name && (
+                <span aria-live="polite">
+                  {form.formState.errors.name.message}
+                </span>
+              )}
+            </div>
 
-        <label htmlFor="password">Password</label>
-        <input
-          type="password"
-          id="password"
-          {...form.register("passwordPair.password")}
-        />
-        {form.formState.errors.passwordPair?.password && (
-          <span aria-live="polite">
-            {form.formState.errors.passwordPair.password.message}
-          </span>
-        )}
+            <div>
+              <label htmlFor="email">Email</label>
+              <Input type="email" id="email" placeholder="Email" {...form.register("email")} />
+              {form.formState.errors.email && (
+                <span aria-live="polite">
+                  {form.formState.errors.email.message}
+                </span>
+              )}
+            </div>
 
-        <label htmlFor="confirmPassword">Confirm Password</label>
-        <input
-          type="password"
-          id="confirmPassword"
-          {...form.register("passwordPair.confirmPassword")}
-        />
-        {form.formState.errors.passwordPair?.confirmPassword && (
-          <span aria-live="polite">
-            {form.formState.errors.passwordPair.confirmPassword.message}
-          </span>
-        )}
+            <div>
+              <label htmlFor="password">Password</label>
+              <Input
+                type="password"
+                id="password"
+                placeholder="Password"
+                {...form.register("passwordPair.password")}
+              />
+              {form.formState.errors.passwordPair?.password && (
+                <span aria-live="polite">
+                  {form.formState.errors.passwordPair.password.message}
+                </span>
+              )}
+            </div>
 
-        <label htmlFor="bio">Bio</label>
-        <textarea id="bio" {...form.register("bio")}></textarea>
-        {form.formState.errors.bio && (
-          <span aria-live="polite">{form.formState.errors.bio.message}</span>
-        )}
+            <div>
+              <label htmlFor="confirmPassword">Confirm Password</label>
+              <Input
+                type="password"
+                id="confirmPassword"
+                placeholder="Confirm password"
+                {...form.register("passwordPair.confirmPassword")}
+              />
+              {form.formState.errors.passwordPair?.confirmPassword && (
+                <span aria-live="polite">
+                  {form.formState.errors.passwordPair.confirmPassword.message}
+                </span>
+              )}
+            </div>
 
-        <label htmlFor="avatarUrl">Profile Image</label>
-        <input type="text" id="avatarUrl" {...form.register("avatar.url")} />
-        {form.formState.errors.avatar?.url && (
-          <span aria-live="polite">
-            {form.formState.errors.avatar.url.message}
-          </span>
-        )}
+            <div>
+              <label htmlFor="bio">Your profile bio (optional)</label>
+              <Textarea id="bio" placeholder="Bio" {...form.register("bio")} />
+              {form.formState.errors.bio && (
+                <span aria-live="polite">
+                  {form.formState.errors.bio.message}
+                </span>
+              )}
+            </div>
 
-        <button type="submit" disabled={isLoading} aria-busy={isLoading}>
-          {isLoading ? "Registering" : "Register"}
-        </button>
+            <div>
+              <label htmlFor="avatarUrl">Your profile image (optional)</label>
+              <p className="image-link">The image must be a valid url link</p>
+              <Input
+                type="text"
+                id="avatarUrl"
+                placeholder="Image link"
+                {...form.register("avatar.url")}
+              />
+              {form.formState.errors.avatar?.url && (
+                <span aria-live="polite">
+                  {form.formState.errors.avatar.url.message}
+                </span>
+              )}
+            </div>
+            <button type="submit" disabled={isLoading} aria-busy={isLoading}>
+              {isLoading ? "Registering" : "Register"}
+            </button>
 
-        {isError && <div role="alert">{`${isError}. Please try again.`}</div>}
-      </form>
+            {isError && (
+              <div role="alert">{`${isError}. Please try again.`}</div>
+            )}
+          </div>
+        </form>
+      </StyledRegisterForm>
     </>
   );
 }
