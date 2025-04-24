@@ -1,9 +1,10 @@
 "use client";
 
-import { z } from "zod";
-import { useForm } from "react-hook-form";
 import { useRegister } from "@/hooks/useRegister";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { FaChevronRight } from "react-icons/fa";
+import { z } from "zod";
 
 const RegisterFormSchema = z.object({
   name: z
@@ -37,11 +38,9 @@ const RegisterFormSchema = z.object({
     }),
   bio: z.string(),
   avatar: z.object({
-    url: z
-      .string()
-      .regex(/^https:\/\/\S+$/, {
-        message: "Profile image must be a valid URL address",
-      }),
+    url: z.string().regex(/^https:\/\/\S+$/, {
+      message: "Profile image must be a valid URL address",
+    }),
     alt: z.string(),
   }),
 });
@@ -55,19 +54,23 @@ export function RegisterForm() {
       bio: "",
       avatar: {
         url: "https://images.unsplash.com/vector-1738925817850-4cfd13a45924?q=80&w=2360&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        alt: ""
+        alt: "",
       },
     },
   });
 
-  const { registerUser, isLoading, isError, isVenueManager, setIsVenueManager } =
-    useRegister();
+  const {
+    registerUser,
+    isLoading,
+    isError,
+    isVenueManager,
+    setIsVenueManager,
+  } = useRegister();
 
-    const delay = (ms: number) =>
-      new Promise<void>((resolve) => setTimeout(resolve, ms));
+  const delay = (ms: number) =>
+    new Promise<void>((resolve) => setTimeout(resolve, ms));
 
   async function onSubmit(values: z.infer<typeof RegisterFormSchema>) {
-    
     const {
       name,
       email,
@@ -77,8 +80,8 @@ export function RegisterForm() {
     } = values;
 
     try {
-      await delay(3000)
-      
+      await delay(3000);
+
       const user = await registerUser({
         name,
         email,
@@ -87,11 +90,10 @@ export function RegisterForm() {
         avatar,
         venueManager: isVenueManager,
       });
-      
+
       console.log(user);
 
       // store user
-         
 
       form.reset({
         name: "",
@@ -109,37 +111,56 @@ export function RegisterForm() {
 
   return (
     <>
-      {isVenueManager ? (
-        <div>
-          <h1>Register as a Venue Manager</h1>
-          <p>
-            Register as a Venue Manager to host your own venue.With our
-            comprehensive platform, you can seamlessly manage bookings, promote
-            your space, and transform your passion for hospitality into a
-            thriving business.
-          </p>
+      <div className="flex flex-col gap-6">
+        <h1 className="text-xl">
+          {isVenueManager ? "Register as a Venue Manager" : "Register Account"}
+        </h1>
+        <p className="">
+          {isVenueManager
+            ? "Register as a Venue Manager to host your own venue. With our comprehensive platform, you can seamlessly manage bookings, promote your space, and transform your passion for hospitality into a  thriving business."
+            : "Register an account to explore and book your next unforgettable stay at one of our venues."}
+        </p>
 
-          <button type="button" onClick={() => setIsVenueManager(false)}>
-            <span>Prefer to explore and book a stay?</span>
-            <span>Register as a Customer to unlock your next getaway</span>
+        {isVenueManager ? (
+          <button
+            className="text-left text-sm"
+            type="button"
+            onClick={() => setIsVenueManager(false)}
+          >
+            <div className="flex flex-col gap-1">
+              <span>Prefer to explore and book a stay?</span>
+              <div className="flex flex-row items-start gap-1.5">
+                <span className="pt-0.5">
+                  <FaChevronRight />
+                </span>
+                <span>Register as a Customer to unlock your next getaway</span>
+              </div>
+            </div>
           </button>
-        </div>
-      ) : (
-        <div>
-          <h1>Register Account</h1>
-          <p>
-            Register an account to explore and book your next unforgettable stay
-            at one of our venues.
-          </p>
-          <button type="button" onClick={() => setIsVenueManager(true)}>
-            <span>Interested in hosting your own venue?</span>
-            <span>Register as a Venue Manager</span>
+        ) : (
+          <button
+            className="text-left text-sm"
+            type="button"
+            onClick={() => setIsVenueManager(true)}
+          >
+            <div className="flex flex-col gap-1">
+              <span>Interested in hosting your own venue?</span>
+              <div className="flex flex-row items-start gap-1.5">
+                <span className="pt-0.5">
+                  <FaChevronRight />
+                </span>
+                <span>Register as a Venue Manager</span>
+              </div>
+            </div>
           </button>
-        </div>
-      )}
+        )}
+      </div>
 
-      <form onSubmit={form.handleSubmit(onSubmit, (errors) => { console.log('Validation failed', errors);
-      })}>
+      <form
+        onSubmit={form.handleSubmit(onSubmit, (errors) => {
+          console.log("Validation failed", errors);
+        })}
+      >
         <h2>Register</h2>
         <label htmlFor="name">Name</label>
         <input type="text" id="name" {...form.register("name")} />
@@ -160,7 +181,9 @@ export function RegisterForm() {
           {...form.register("passwordPair.password")}
         />
         {form.formState.errors.passwordPair?.password && (
-          <span aria-live="polite">{form.formState.errors.passwordPair.password.message}</span>
+          <span aria-live="polite">
+            {form.formState.errors.passwordPair.password.message}
+          </span>
         )}
 
         <label htmlFor="confirmPassword">Confirm Password</label>
@@ -184,16 +207,16 @@ export function RegisterForm() {
         <label htmlFor="avatarUrl">Profile Image</label>
         <input type="text" id="avatarUrl" {...form.register("avatar.url")} />
         {form.formState.errors.avatar?.url && (
-          <span aria-live="polite">{form.formState.errors.avatar.url.message}</span>
+          <span aria-live="polite">
+            {form.formState.errors.avatar.url.message}
+          </span>
         )}
 
         <button type="submit" disabled={isLoading} aria-busy={isLoading}>
           {isLoading ? "Registering" : "Register"}
         </button>
 
-        {isError && (
-          <div role="alert">{`${isError}. Please try again.`}</div>
-        )}
+        {isError && <div role="alert">{`${isError}. Please try again.`}</div>}
       </form>
     </>
   );
