@@ -1,19 +1,7 @@
 export async function getVenues() {
   try {
-    const response = await fetch("https://v2.api.noroff.dev/holidaze/venues/search", {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    });
-
+    const response = await fetch("https://v2.api.noroff.dev/holidaze/venues");
     const json = await response.json();
-
-    if (!response.ok) {
-      console.error(json.errors[0].message);
-      throw new Error(
-        json.errors[0].message ||
-          "Can not get the venues at the moment. Please try again."
-      );
-    }
 
     return json.data;
   } catch (error) {
