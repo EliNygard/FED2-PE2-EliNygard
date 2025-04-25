@@ -3,7 +3,7 @@
 import { RegisterForm } from "@/ui/forms/RegisterForm";
 import Image from "next/image";
 
-export default function Register() {
+export default function RegisterPage() {
   return (
     <main className="max-w-4xl m-auto">
       <div className="mt-3 grid grid-cols-1 md:grid-cols-2 md:gap-1.5 md:items-start">

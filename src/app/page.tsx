@@ -2,9 +2,8 @@ import { IVenue } from "@/interface";
 import VenueCard from "@/ui/VenueCard";
 import { getVenues } from "../lib/venues/getVenues";
 
-export default async function Home() {
+export default async function HomePage() {
   const data = await getVenues();
-  console.log(data);
 
   return (
     <main className="flex flex-col gap-[32px]">
