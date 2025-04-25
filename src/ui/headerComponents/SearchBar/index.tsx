@@ -6,16 +6,13 @@ import { FaSearch } from "react-icons/fa";
 export default function SearchBar() {
   const router = useRouter()
   const [searchTerm, setSearchTerm] = useState('');
-  console.log('current term: ', searchTerm);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!searchTerm.trim()) {
-      console.log("Search term is empty");
       return;
     }
     router.push(`/search?search=${encodeURIComponent(searchTerm)}`)
-    console.log("Search term submitted:", searchTerm);
   };
 
   return (

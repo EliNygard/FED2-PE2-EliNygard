@@ -1,22 +1,16 @@
-export default async function searchVenues() {
+import { IVenue } from "@/interface";
+
+export default async function searchVenues({searchTerm}: { searchTerm: string }): Promise<IVenue[]> {
   try {
-    const response = await fetch('https://v2.api.noroff.dev/holidaze/', {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    })
-
-    const json = await response.json()
-
-    if (!response.ok) {
-      console.error(json.errors[0].message);
-      throw new Error(
-        json.errors[0].message ||
-          "Can not get the venues at the moment. Please try again."
-      );
-    }
+    const response = await fetch(
+      `https://v2.api.noroff.dev/holidaze/venues/search?q=${searchTerm}`
+    );
+    const json = await response.json();
+    console.log(json.data);
 
     return json.data;
   } catch (error) {
     console.error(error);
+    throw error
   }
 }
