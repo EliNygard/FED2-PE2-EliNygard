@@ -1,11 +1,11 @@
-export async function getVenues() {
+export default async function searchVenues() {
   try {
-    const response = await fetch("https://v2.api.noroff.dev/holidaze/venues/search", {
+    const response = await fetch('https://v2.api.noroff.dev/holidaze/', {
       method: "GET",
       headers: { "Content-Type": "application/json" },
-    });
+    })
 
-    const json = await response.json();
+    const json = await response.json()
 
     if (!response.ok) {
       console.error(json.errors[0].message);
