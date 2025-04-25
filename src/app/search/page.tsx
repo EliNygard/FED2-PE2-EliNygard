@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { IVenue } from "@/interface";
 import searchVenues from "@/lib/venues/searchVenues";
@@ -10,34 +10,33 @@ export default function Search() {
   const searchParams = useSearchParams();
   const searchTerm = searchParams.get("search");
 
-  const [venues, setVenues] = useState<IVenue[]>([])
-  const [isLoading, setIsLoading] = useState(false)
+  const [venues, setVenues] = useState<IVenue[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const amountVenues = venues.length
+  const amountVenues = venues.length;
 
   useEffect(() => {
     async function load() {
-      setIsLoading(true)
-      const searchResult = await searchVenues({ searchTerm: searchTerm || "" })
-      setVenues(searchResult)
-      setIsLoading(false)
+      setIsLoading(true);
+      const searchResult = await searchVenues({ searchTerm: searchTerm || "" });
+      setVenues(searchResult);
+      setIsLoading(false);
     }
-    if (searchTerm) load()
-      else setVenues([])
-  }, [searchTerm])
-
+    if (searchTerm) load();
+    else setVenues([]);
+  }, [searchTerm]);
 
   return (
     <main>
-      <div>
-        <p>{`We have ${amountVenues} venues in ${searchTerm?.toLocaleUpperCase()}`}</p>
+      <div className="mb-7" style={{ fontWeight: 500 }}>
+        <p>{`We have ${amountVenues} venues matching the search for ${searchTerm?.toLocaleUpperCase()}`}</p>
       </div>
       {isLoading && <p>Loading venues...</p>}
-        <ul className="grid gap-6 grid-cols-1 min-[440px]:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
-          {venues.map((venue: IVenue) => (
-            <VenueCard key={venue.id} venue={venue} />
-          ))}
-        </ul>
+      <ul className="grid gap-6 grid-cols-1 min-[440px]:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+        {venues.map((venue: IVenue) => (
+          <VenueCard key={venue.id} venue={venue} />
+        ))}
+      </ul>
     </main>
   );
 }
