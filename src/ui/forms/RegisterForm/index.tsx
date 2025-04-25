@@ -8,6 +8,7 @@ import { FaChevronRight } from "react-icons/fa";
 import { z } from "zod";
 import { StyledRegisterForm } from "./index.styles";
 import { Textarea } from "@/components/ui/textarea";
+import Button from "@/ui/Button";
 
 const RegisterFormSchema = z.object({
   name: z
@@ -244,12 +245,13 @@ export function RegisterForm() {
                 </span>
               )}
             </div>
-            <button type="submit" disabled={isLoading} aria-busy={isLoading}>
+
+            <Button type="submit" disabled={isLoading} aria-busy={isLoading}>
               {isLoading ? "Registering" : "Register"}
-            </button>
+            </Button>
 
             {isError && (
-              <div role="alert">{`${isError}. Please try again.`}</div>
+              <p className="error-message" role="alert">{`${isError}. Please try again.`}</p>
             )}
           </div>
         </form>

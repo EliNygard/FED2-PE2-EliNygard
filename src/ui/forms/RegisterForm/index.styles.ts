@@ -1,33 +1,41 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const StyledRegisterForm = styled.div`
+  form {
+    margin-top: 1.75rem;
+  }
 
-form {
-  margin-top: 1.75rem;
-}
+  h2 {
+    font-size: 1.125rem;
+  }
 
-h2 {
-  font-size: 1.125rem;
-}
+  .input-wrapper {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
 
-.input-wrapper {
-  margin-top: 1rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
+  #bio {
+    height: 124px;
+  }
 
-#bio {
-  height: 124px;
-}
+  .image-link {
+    font-size: 14px;
+    margin: 0.5rem 0 0.5rem 0;
+  }
 
-.image-link {
-  font-size: 14px;
-}
+  span {
+    margin-top: 10px;
+  }
 
-span {
-  margin-top: 10px;
-  color: var(--color-alert-red);
-  font-size: 14px;
-}
-`
+  span,
+  .error-message {
+    color: var(--color-alert-red);
+    font-size: 14px;
+  }
+
+  Button {
+    margin-top: 2rem;
+  }
+`;

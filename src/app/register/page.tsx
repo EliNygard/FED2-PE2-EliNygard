@@ -1,14 +1,12 @@
-"use client";
+'use client'
 
-import { useAuthStore } from "@/stores/useAuthStore";
 import { RegisterForm } from "@/ui/forms/RegisterForm";
 import Image from "next/image";
 
 export default function Register() {
-  const logout = useAuthStore((state) => state.logout);
   return (
-    <main>
-      <div className="grid grid-cols-1 md:grid-cols-2">
+    <main className="max-w-4xl m-auto">
+      <div className="mt-3 grid grid-cols-1 md:grid-cols-2 md:gap-1.5 md:items-start">
         <div className="block md:hidden">
           <Image
             src="/LogoMountainsV.svg"
@@ -20,7 +18,7 @@ export default function Register() {
           />
         </div>
 
-        <div className="hidden md:flex">
+        <div className="hidden md:flex md:order-2">
           <Image
             src="/LogoMountainsH.svg"
             alt="Welcome to Holidaze"
@@ -31,12 +29,10 @@ export default function Register() {
           />
         </div>
 
-        <div className="mt-6">
+        <div className="mt-6 md:mt-0 md:order-1">
           <RegisterForm />
         </div>
       </div>
-
-      <button onClick={logout}>Log out</button>
     </main>
   );
 }
