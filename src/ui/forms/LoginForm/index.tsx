@@ -61,6 +61,8 @@ export default function LoginForm() {
           <Input
             className=""
             type="email"
+            id="email"
+            autoComplete="email"
             placeholder="Email"
             {...form.register("email")}
           />
@@ -76,6 +78,7 @@ export default function LoginForm() {
           <Input
             className=""
             type="password"
+            id="password"
             placeholder="Password"
             {...form.register("password")}
           />

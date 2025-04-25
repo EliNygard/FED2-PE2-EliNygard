@@ -7,14 +7,12 @@ export default async function Home() {
   console.log(data);
 
   return (
-    <main className="flex flex-col gap-[32px] mt-5 2xl:mt-10">
-      <ul>
-        <ul className="grid gap-6 grid-cols-1 min-[440px]:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
-          {data.map((venue: IVenue) => (
-            <VenueCard key={venue.id} venue={venue} />
-          ))}
-        </ul>
-      </ul>
+    <main className="flex flex-col gap-[32px]">
+          <ul className="grid gap-6 grid-cols-1 min-[440px]:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+            {data.map((venue: IVenue) => (
+              <VenueCard key={venue.id} venue={venue} />
+            ))}
+          </ul>
     </main>
   );
 }

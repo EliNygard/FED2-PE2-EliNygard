@@ -182,7 +182,7 @@ export function RegisterForm() {
 
             <div>
               <label htmlFor="email">Email</label>
-              <Input type="email" id="email" placeholder="Email" {...form.register("email")} />
+              <Input type="email" id="email" autoComplete="email" placeholder="Email" {...form.register("email")} />
               {form.formState.errors.email && (
                 <span aria-live="polite">
                   {form.formState.errors.email.message}
