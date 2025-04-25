@@ -1,3 +1,5 @@
+// API 
+
 export interface IRegisterRequest {
   method: string;
   body: {
@@ -27,7 +29,6 @@ export interface ILogin {
 export interface IRegisterUser {
   name: string;
   email: string;
-
   password: string;
   bio?: string;
   avatar: Media;
@@ -65,3 +66,5 @@ export interface IVenue {
     lng: number;
   };
 }
+
+// other
