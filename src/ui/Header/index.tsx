@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import DesktopNav from "../headerComponents/DesktopNav";
 import MobileNav from "../headerComponents/MobileNav";
+import SearchBar from "../headerComponents/SearchBar";
 
 export default function HeaderNew() {
   const isLoggedIn = AuthGuard();
@@ -13,8 +14,8 @@ export default function HeaderNew() {
   const userName = useAuthStore((state) => state.user?.name);
 
   return (
-    <header className="h-20 py-5">
-      <nav>
+    <header className="py-5">
+      <nav className="h-15 md:h-20">
         <ul className="flex justify-between items-center">
           <li>
             <Link href="/" className="flex items-center">
@@ -62,6 +63,7 @@ export default function HeaderNew() {
           )}
         </ul>
       </nav>
+      <SearchBar />
     </header>
   );
 }
