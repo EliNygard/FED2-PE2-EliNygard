@@ -1,3 +1,13 @@
+import { getVenueById, getVenues } from "@/lib/api";
+import VenueHeader from "@/ui/venuePage/VenueHeader";
+
+export async function generateStaticParams() {
+  const venues = await getVenues()
+  return venues.map((venue) => ({
+    id: venue.id,
+  }))
+}
+
 export default async function VenuePage({
   params,
 }: {
@@ -6,10 +16,18 @@ export default async function VenuePage({
   const { id } = await params;
   console.log(id);
 
+  const venue = await getVenueById(id)
+
+  console.log(venue);
+  
+
+
   return (
     <main className="grid grid-cols-1 m-auto md:grid-cols-2">
       <div className="md:col-span-full">01 Images</div>
-      <div className="md:col-span-full">02 Header</div>
+      <div className="md:col-span-full">
+        <VenueHeader venue={venue} />
+      </div>
       <div className="md:col-start-1">03 Info</div>
       <div className="md:col-start-2 md:row-start-3 md:row-end-5">
         04 Calendar
