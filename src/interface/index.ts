@@ -65,6 +65,25 @@ export interface IVenue {
     lat: number;
     lng: number;
   };
+  owner: IPerson
+  bookings: IBooking[]
+}
+
+export interface IPerson {
+  name: string;
+  email: string;
+  bio?: string;
+  avatar: Media;
+}
+
+export interface IBooking {
+  id: string;
+  dateFrom: string;
+  dateTo: string;
+  guests: number;
+  created: string;
+  updated: string;
+  customer: IPerson
 }
 
 // other
