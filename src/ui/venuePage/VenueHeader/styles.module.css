@@ -20,3 +20,11 @@
   gap: 1.25rem;
   align-items: center;
 }
+
+@media (min-width: 768px) {
+  .headerDetails {
+    flex-direction: row;
+    gap: 5rem;
+    align-items: center;
+  }
+}
