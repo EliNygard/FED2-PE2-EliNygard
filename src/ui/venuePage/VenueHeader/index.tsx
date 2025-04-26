@@ -8,7 +8,7 @@ export default function VenueHeader({ venue }: { venue: IVenue }) {
     <header className={styles.header}>
       <section>
         <h1>{venue.name}</h1>
-        <h2>{`${venue.location.city}, ${venue.location.country}`}</h2>
+        <p>{`${venue.location.city}, ${venue.location.country}`}</p>
       </section>
       <div className={styles.headerDetails}>
         <div>

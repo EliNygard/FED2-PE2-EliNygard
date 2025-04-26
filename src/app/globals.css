@@ -4,13 +4,13 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --color-brand-blue: #0060A1;
-  --color-interaction-blue: #004B7E;
-  --color-disabled-blue: #DAE8F1;
-  --color-alert-red: #B20909;
-  --color-accent-green: #00611F;
+  --color-brand-blue: #0060a1;
+  --color-interaction-blue: #004b7e;
+  --color-disabled-blue: #dae8f1;
+  --color-alert-red: #b20909;
+  --color-accent-green: #00611f;
   --color-primary-background: #ffffff;
-  --color-secondary-background: #F7F7F7;
+  --color-secondary-background: #f7f7f7;
   --color-primary-font: #222222;
   --color-secondary-font: #373737;
   --color-sidebar-ring: var(--sidebar-ring);
@@ -48,11 +48,6 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
-}
-
-body {
-  background: var(--color-primary-background);
-  color: var(--color-primary-font);
 }
 
 :root {
@@ -129,6 +124,15 @@ body {
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-primary-background text-primary-font;
+  }
+  h1 {
+    @apply text-xl md:text-[22px] lg:text-2xl
+  }
+  h2 {
+    @apply text-lg md:text-xl
+  }
+  p {
+    @apply text-base lg:text-lg
   }
 }

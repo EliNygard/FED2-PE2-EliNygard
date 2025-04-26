@@ -31,7 +31,7 @@ export default function VenueCard({ venue }: { venue: IVenue }) {
             />
           )}
         </div>
-        <h1>{`${venue.location.city}, ${venue.location.country}`}</h1>
+        <h1 className="text-base mt-1.5">{`${venue.location.city}, ${venue.location.country}`}</h1>
         <div className="mt-4 flex flex-col gap-1">
           <p>{`${venue.maxGuests} guests`}</p>
           <p>

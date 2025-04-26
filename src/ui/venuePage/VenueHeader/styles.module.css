@@ -18,5 +18,5 @@
 .hostWrapper {
   display: flex;
   gap: 1.25rem;
-  justify-items: center;
+  align-items: center;
 }
