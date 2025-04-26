@@ -1,6 +1,7 @@
 import { getVenueById, getVenues } from "@/lib/api";
 import VenueHeader from "@/ui/venuePage/VenueHeader";
 import VenueInfo from "@/ui/venuePage/VenueInfo";
+import VenueLocation from "@/ui/venuePage/VenueLocation";
 
 export async function generateStaticParams() {
   const venues = await getVenues();
@@ -33,7 +34,9 @@ export default async function VenuePage({
       <div className="md:col-start-2 md:row-start-3 md:row-end-5">
         04 Calendar
       </div>
-      <div className="md:col-start-1">05 Location</div>
+      <div className="md:col-start-1">
+        <VenueLocation venue={venue} />
+      </div>
     </main>
   );
 }
