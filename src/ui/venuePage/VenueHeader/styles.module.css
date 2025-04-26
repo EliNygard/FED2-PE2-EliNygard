@@ -1,0 +1,22 @@
+.header, .headerDetails {
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  gap: 2rem;
+}
+
+.venueName {
+  text-wrap: wrap;
+}
+
+.headerDetails {
+  gap: 1rem;
+}
+
+.hostWrapper {
+  display: flex;
+  gap: 1.25rem;
+  justify-items: center;
+}
