@@ -4,9 +4,9 @@ import { useAuthStore } from "@/stores/useAuthStore";
 import { AuthGuard } from "@/utils/AuthGuard";
 import Image from "next/image";
 import Link from "next/link";
-import DesktopNav from "../headerComponents/DesktopNav";
-import MobileNav from "../headerComponents/MobileNav";
-import SearchBar from "../headerComponents/SearchBar";
+import DesktopNav from "../DesktopNav";
+import MobileNav from "../MobileNav";
+import SearchBar from "../SearchBar";
 
 export default function HeaderNew() {
   const isLoggedIn = AuthGuard();

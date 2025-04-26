@@ -1,6 +1,6 @@
 import { roboto } from "@/ui/fonts";
 import Footer from "@/ui/Footer";
-import Header from "@/ui/Header";
+import Header from "@/ui/header/Header";
 import type { Metadata } from "next";
 import "tw-animate-css";
 import "./globals.css";
