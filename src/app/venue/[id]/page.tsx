@@ -1,5 +1,5 @@
 import { getVenueById, getVenues } from "@/lib/api";
-import { VenueCalendar } from "@/ui/venuePage/VenueCalendar";
+import VenueCalendar from "@/ui/venuePage/VenueCalendar";
 import VenueHeader from "@/ui/venuePage/VenueHeader";
 import VenueInfo from "@/ui/venuePage/VenueInfo";
 import VenueLocation from "@/ui/venuePage/VenueLocation";
