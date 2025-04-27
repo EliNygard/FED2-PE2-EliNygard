@@ -5,6 +5,7 @@ import type { Metadata } from "next";
 import "tw-animate-css";
 import "./globals.css";
 
+
 export const metadata: Metadata = {
   title: "Holidaze",
   description: "Escape the Ordinary, Embrace the Extraordinary",

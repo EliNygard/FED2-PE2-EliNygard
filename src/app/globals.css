@@ -1,6 +1,8 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+@import "react-day-picker/style.css";
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -134,5 +136,23 @@
   }
   p {
     @apply text-base lg:text-lg
+  }
+}
+
+.calendar-container .rdp-root {
+  /* default desktop: ~44×44px day cells */
+  --rdp-day-width: 2.5rem;      /* was 44px */
+  --rdp-day-height: 2.5rem;     /* was 44px */
+  --rdp-font-size: 0.875rem;    /* caption & weekday font */
+  /* max-width: 100%;              never overflow its parent */
+  --rdp-accent-color: var(--color-brand-blue)
+}
+
+/* tweak further on small screens */
+@media (max-width: 480px) {
+  .calendar-container .rdp-root {
+    --rdp-day-width: 1rem;      /* ~32px cells */
+    --rdp-day-height: 1rem;
+    --rdp-font-size: 0.5rem;
   }
 }
