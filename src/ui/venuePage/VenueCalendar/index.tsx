@@ -6,7 +6,8 @@ import { useState } from "react";
 import { DateRange, DayPicker } from "react-day-picker";
 
 export default function VenueCalendar({ venue }: { venue: IVenue }) {
-  const [date, setDate] = useState<DateRange | undefined>();
+  const [selectedDate, setDate] = useState<DateRange | undefined>();
+
   const bookings = venue.bookings;
   const bookedPeriods = bookings.map((booking) => ({
     from: new Date(booking.dateFrom),
@@ -17,21 +18,26 @@ export default function VenueCalendar({ venue }: { venue: IVenue }) {
     setDate(newSelected);
   };
 
-  const amountNights =
-    date?.from && date?.to
-      ? differenceInCalendarDays(date.to, date.from) + 1
+  const amountBookedNights =
+    selectedDate?.from && selectedDate?.to
+      ? differenceInCalendarDays(selectedDate.to, selectedDate.from)
       : undefined;
 
-  console.log(amountNights);
+  const pricePerNight = venue.price;
+  // const total = pricePerNight * amountBookedNights;
+  // console.log(total);
 
-  const pricePerNight = venue.price
-  if (amountNights) {
-    const totalCost = pricePerNight * amountNights
+  // verification: must select min one night
+  if (selectedDate?.to === selectedDate?.from) {
+    console.log("please select min one night");
+  }
+
+  if (amountBookedNights) {
+    const totalCost = pricePerNight * amountBookedNights;
     console.log(totalCost);
   }
-  
 
-  console.log(date);
+  console.log(selectedDate);
   // console.log(date?.from?.getTime());
   // console.log(date?.to?.getTime());
 
@@ -41,7 +47,7 @@ export default function VenueCalendar({ venue }: { venue: IVenue }) {
       <div className="rounded-lg border-brand-blue border p-2 w-full overflow-x-auto calendar-container">
         <DayPicker
           mode="range"
-          selected={date}
+          selected={selectedDate}
           disabled={[{ before: new Date() }, ...bookedPeriods]}
           excludeDisabled
           numberOfMonths={1}
@@ -52,7 +58,7 @@ export default function VenueCalendar({ venue }: { venue: IVenue }) {
           }}
         />
       </div>
-      <div>{amountNights ? `Total` : "Select dates"}</div>
+      <div>{amountBookedNights ? `Total NOK` : " "}</div>
     </>
   );
 }
