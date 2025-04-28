@@ -28,10 +28,11 @@ import { z } from "zod";
 // TODO:
 // calculate total ✅
 // verification: must select min one night + error message ✅
-// store selected dates, nights, guests, price, total
+// store selected dates, nights, guests, price, total ✅
 // add buttons, disable if no token
 // style calendar border
 // create booking confirmation
+// send request
 
 const BookFormSchema = z.object({
   guests: z
@@ -79,24 +80,32 @@ export default function VenueBooking({ venue }: { venue: IVenue }) {
   const totalCost = nights * pricePerNight;
 
   function onSubmit(values: z.infer<typeof BookFormSchema>) {
+    const { from, to, guests } = values.dateRange
+      ? {
+          from: values.dateRange.from,
+          to: values.dateRange.to,
+          guests: +values.guests,
+        }
+      : {};
+
     toast(
       <>
         <div>
-          <p>{`Dates: ${from.toDateString()} - ${to.toDateString}`}</p>
+          <p>{`Dates: ${from?.toDateString()} - ${to?.toDateString()}`}</p>
           <p>{`Nights: ${nights}`}</p>
-          <p>{`Guests: ${values.guests}`}</p>
+          <p>{`Guests: ${guests}`}</p>
           <p>{`Rate: ${pricePerNight}`}</p>
           <p>{`Total Cost: ${totalCost}`}</p>
         </div>
-        <Button onClick={() => toast('Thank you')}>Book your stay</Button>
+        <Button onClick={() => toast(
+           <div className="border border-primary-font rounded-xl p-3">
+           <p>Booking confirmed!</p>
+           <p>Thank you for choosing Holidaze. Enjoy your stay!</p>
+         </div>
+        )}>Book your stay</Button>
         <Button>Cancel</Button>
       </>,
-      {
-          action: {
-          label: "Confirm",
-          onClick: () => toast("Thank you"),
-        },
-      }
+      
     );
   }
 
@@ -134,11 +143,6 @@ export default function VenueBooking({ venue }: { venue: IVenue }) {
                     />
                   </div>
                   <FormMessage />
-                  {/* {errors.range && (
-                <span aria-live="polite">
-                  {errors.range.message}
-                </span>
-              )} */}
                 </FormItem>
               )}
             />
