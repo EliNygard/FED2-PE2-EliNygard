@@ -6,8 +6,8 @@ export default function VenueLocation({ venue }: { venue: IVenue }) {
   return (
     <section>
       <h2>Location</h2>
-      <div className="flex flex-col gap-1.5">
-        <div className="max-w-96 mt-4">
+      <div className="mt-4 flex flex-col gap-5">
+        <div className="max-w-96">
           <iframe
             src={embedSrc}
             width="100%"
