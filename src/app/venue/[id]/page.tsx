@@ -1,8 +1,12 @@
 import { getVenueById, getVenues } from "@/lib/api";
-import VenueCalendar from "@/ui/venuePage/VenueCalendar";
+import VenueBooking from "@/ui/venuePage/VenueBooking";
 import VenueHeader from "@/ui/venuePage/VenueHeader";
 import VenueInfo from "@/ui/venuePage/VenueInfo";
 import VenueLocation from "@/ui/venuePage/VenueLocation";
+
+// TODO
+// fix image urls (update venue, check venueCard)
+// add image slider
 
 export async function generateStaticParams() {
   const venues = await getVenues();
@@ -33,7 +37,7 @@ export default async function VenuePage({
         <VenueInfo venue={venue} />
       </div>
       <div className="md:col-start-2 md:row-start-3 md:row-end-5">
-        <VenueCalendar venue={venue} />
+        <VenueBooking venue={venue} />
       </div>
       <div className="md:col-start-1">
         <VenueLocation venue={venue} />

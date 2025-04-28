@@ -249,7 +249,7 @@ export default function VenueBooking({ venue }: { venue: IVenue }) {
               Confirm
             </Button>
             <DialogClose asChild>
-              <Button>Cancel</Button>
+              <Button variant='secondary'>Cancel</Button>
             </DialogClose>
           </DialogFooter>
         </DialogContent>

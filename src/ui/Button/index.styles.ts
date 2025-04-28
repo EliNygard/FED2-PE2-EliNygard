@@ -8,9 +8,9 @@ const variantStyles: Record<ButtonVariant, ReturnType<typeof css>> = {
   color: #fff;
   `,
   secondary: css`
-  background-color: transparent;
+  background-color: #fff;
   color: var(--color-primary-font);
-  border: 1px;
+  border-width: 1px;
   border-color: var(--color-primary-font);
   `,
   disabled: css`
