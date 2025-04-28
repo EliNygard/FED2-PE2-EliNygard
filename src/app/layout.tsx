@@ -4,6 +4,7 @@ import Header from "@/ui/header/Header";
 import type { Metadata } from "next";
 import "tw-animate-css";
 import "./globals.css";
+import { ToastProvider } from "@/ui/ToastProvider";
 
 
 export const metadata: Metadata = {
@@ -24,6 +25,7 @@ export default function RootLayout({
         <div className="px-6 lg:px-10 2xl:px-20">
           <Header />
           {children}
+          <ToastProvider />
         </div>
         <Footer />
       </body>

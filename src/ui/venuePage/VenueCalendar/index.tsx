@@ -1,9 +1,30 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { toast } from "sonner";
+
 import { IVenue } from "@/interface";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { differenceInCalendarDays } from "date-fns";
 import { useState } from "react";
 import { DateRange, DayPicker } from "react-day-picker";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 // TODO:
 // calculate total ✅
@@ -12,6 +33,14 @@ import { DateRange, DayPicker } from "react-day-picker";
 // add buttons, disable if no token
 // style calendar border
 // create booking confirmation
+
+const BookFormSchema = z.object({
+  email: z
+    .string({
+      required_error: "Please select an email to display.",
+    })
+    .email(),
+});
 
 export default function VenueCalendar({ venue }: { venue: IVenue }) {
   const [selectedDate, setDate] = useState<DateRange | undefined>();
@@ -50,6 +79,20 @@ export default function VenueCalendar({ venue }: { venue: IVenue }) {
   console.log(selectedDate?.from?.toLocaleDateString());
   console.log(selectedDate?.to?.toLocaleDateString());
 
+  const form = useForm<z.infer<typeof BookFormSchema>>({
+    resolver: zodResolver(BookFormSchema),
+  });
+
+  function onSubmit(data: z.infer<typeof BookFormSchema>) {
+    toast(`Submitted: ${JSON.stringify(data, null, 2)}`, {
+      description: `${totalCost}`,
+      action: {
+        label: "OK",
+        onClick: () => toast("Thank you"),
+      },
+    });
+  }
+
   return (
     <section>
       <h2>Select dates to see the price</h2>
@@ -68,7 +111,45 @@ export default function VenueCalendar({ venue }: { venue: IVenue }) {
             }}
           />
         </div>
-        
+
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="w-2/3 space-y-6"
+          >
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a verified email to display" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="m@example.com">
+                        m@example.com
+                      </SelectItem>
+                      <SelectItem value="m@google.com">m@google.com</SelectItem>
+                      <SelectItem value="m@support.com">
+                        m@support.com
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button type="submit">Continue</Button>
+          </form>
+        </Form>
+
         <div className="uppercase" style={{ fontWeight: 500 }}>
           {amountBookedNights ? `Total ${totalCost} NOK` : " "}
         </div>
