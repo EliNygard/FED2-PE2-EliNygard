@@ -1,13 +1,14 @@
 'use client'
 
 import React from "react";
-import { StyledButton } from "./index.styles"
+import { StyledButton, ButtonVariant } from "./index.styles"
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
+  variant?: ButtonVariant;
 }
 
-export default function Button({ children, ...props }: React.PropsWithChildren<ButtonProps>) {
+export default function Button({ children, variant='primary', ...props }: ButtonProps) {
 
-  return <StyledButton {...props}>{children}</StyledButton>
+  return <StyledButton variant={variant} {...props}>{children}</StyledButton>
 }
