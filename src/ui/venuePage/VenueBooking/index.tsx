@@ -32,6 +32,7 @@ import { differenceInCalendarDays } from "date-fns";
 import { useMemo, useState } from "react";
 import { DayPicker } from "react-day-picker";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 
 // TODO:
@@ -40,7 +41,7 @@ import { z } from "zod";
 // store selected dates, nights, guests, price, total ✅
 // add buttons, disable if no token
 // style calendar border
-// create booking confirmation - change to dialog
+// create booking confirmation - change to dialog ✅
 // send request
 // move Schema to sep folder/file
 
@@ -233,23 +234,23 @@ export default function VenueBooking({ venue }: { venue: IVenue }) {
             </div>
           )}
 
-          <DialogFooter className="space-x-2">
+          <DialogFooter className="gap-6">
             <Button
               onClick={() => {
-                // fire booking api
-                // toast()
-                // onClick={() => toast(
-                //        <div className="border border-primary-font rounded-xl p-3">
-                //        <p>Booking confirmed!</p>
-                //        <p>Thank you for choosing Holidaze. Enjoy your stay!</p>
-                //      </div>
                 setIsOpen(false);
+                // fire booking api
+                toast(
+                  <div className="border border-primary-font rounded-xl p-3">
+                    <p>Booking confirmed!</p>
+                    <p>Thank you for choosing Holidaze. Enjoy your stay!</p>
+                  </div>
+                );
               }}
             >
               Confirm
             </Button>
             <DialogClose asChild>
-              <Button variant='secondary'>Cancel</Button>
+              <Button variant="secondary">Cancel</Button>
             </DialogClose>
           </DialogFooter>
         </DialogContent>
