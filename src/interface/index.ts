@@ -86,4 +86,11 @@ export interface IBooking {
   customer: IPerson
 }
 
+export interface ICreateBooking {
+  dateFrom: string;
+  dateTo: string;
+  guests: number;
+  venueId: string;
+}
+
 // other

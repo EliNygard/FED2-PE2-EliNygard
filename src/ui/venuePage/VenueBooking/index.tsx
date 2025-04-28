@@ -2,6 +2,7 @@
 
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -23,14 +24,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import { IVenue } from "@/interface";
+import { ICreateBooking, IVenue } from "@/interface";
 import Button from "@/ui/Button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { DialogTitle } from "@radix-ui/react-dialog";
 import { differenceInCalendarDays } from "date-fns";
-import { useState } from "react";
-import { DateRange, DayPicker } from "react-day-picker";
-import { useForm } from "react-hook-form";
+import { useMemo, useState } from "react";
+import { DayPicker } from "react-day-picker";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 
 // TODO:
@@ -44,15 +45,11 @@ import { z } from "zod";
 // move Schema to sep folder/file
 
 const BookFormSchema = z.object({
-  guests: z
-    .string({
-      required_error: "Please select how many guests.",
-    })
-    .min(1, { message: "Please select how many guests." }),
+  guests: z.number().min(1, { message: "Please select at least one guest" }),
   dateRange: z
     .object({
-      from: z.string({ required_error: "Please select a check-in date." }),
-      to: z.string({ required_error: "Please select a check-out date." }),
+      from: z.date({ required_error: "Please select a check-in date." }),
+      to: z.date({ required_error: "Please select a check-out date." }),
     })
     .refine(({ from, to }) => differenceInCalendarDays(to, from) >= 1, {
       message: "Please select at least one night.",
@@ -66,11 +63,12 @@ export default function VenueBooking({ venue }: { venue: IVenue }) {
   const [bookingData, setBookingData] = useState<{
     from: string;
     to: string;
-    guests: number;
+    guests: string;
     nights: number;
     totalCost: number;
   } | null>(null);
 
+  const venueId = venue.id;
   const maxGuests = venue.maxGuests;
   const bookings = venue.bookings;
   console.log(bookings);
@@ -82,61 +80,56 @@ export default function VenueBooking({ venue }: { venue: IVenue }) {
   const form = useForm<FormValues>({
     resolver: zodResolver(BookFormSchema),
     defaultValues: {
-      guests: "",
-      dateRange: { from: new Date(), to: new Date() },
+      guests: 1,
+      dateRange: {
+        from: new Date(),
+        to: undefined,
+      },
     },
   });
 
-  const {
-    control,
-    watch,
-    handleSubmit,
-    formState: { errors },
-  } = form;
+  const { watch, handleSubmit } = form;
+
+  const { dateRange, guests } = watch();
+  const nights = useMemo(
+    () =>
+      dateRange.from && dateRange.to
+        ? differenceInCalendarDays(dateRange.to, dateRange.from)
+        : 0,
+    [dateRange]
+  );
 
   const pricePerNight = venue.price;
-  const { from, to } = watch("dateRange");
-  const guests = watch("guests");
-  const nights = from && to ? differenceInCalendarDays(to, from) : 0;
+  // const { from, to } = watch("dateRange");
+  // const guests = watch("guests");
+  // const nights = from && to ? differenceInCalendarDays(to, from) : 0;
   const totalCost = nights * pricePerNight;
 
-  function onSubmit(values: FormValues) {
+  console.log(dateRange.from);
+  console.log(dateRange.to);
+  console.log(guests);
+
+  const onSubmit: SubmitHandler<FormValues> = (values) => {
+    const payload: ICreateBooking = {
+      dateFrom: values.dateRange.from.toISOString(),
+      dateTo: values.dateRange.to.toISOString(),
+      guests: values.guests,
+      venueId: venueId,
+    };
+
+    console.log(payload);
+
+    // call api
+
     setBookingData({
-      from: values.dateRange.from,
-      to: values.dateRange.to,
-      guests: Number(values.guests),
+      from: values.dateRange.from.toDateString(),
+      to: values.dateRange.to.toDateString(),
+      guests: values.guests.toString(),
       nights,
       totalCost,
     });
     setIsOpen(true);
-    // const { from, to, guests } = values.dateRange
-    //   ? {
-    //       from: values.dateRange.from,
-    //       to: values.dateRange.to,
-    //       guests: +values.guests,
-    //     }
-    //   : {};
-
-    // toast(
-    //   <>
-    //     <div>
-    //       <p>{`Dates: ${from?.toDateString()} - ${to?.toDateString()}`}</p>
-    //       <p>{`Nights: ${nights}`}</p>
-    //       <p>{`Guests: ${guests}`}</p>
-    //       <p>{`Rate: ${pricePerNight}`}</p>
-    //       <p>{`Total Cost: ${totalCost}`}</p>
-    //     </div>
-    //     <Button onClick={() => toast(
-    //        <div className="border border-primary-font rounded-xl p-3">
-    //        <p>Booking confirmed!</p>
-    //        <p>Thank you for choosing Holidaze. Enjoy your stay!</p>
-    //      </div>
-    //     )}>Book your stay</Button>
-    //     <Button>Cancel</Button>
-    //   </>,
-
-    // );
-  }
+  };
 
   return (
     <>
@@ -147,7 +140,7 @@ export default function VenueBooking({ venue }: { venue: IVenue }) {
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
               {/* Calendar field */}
               <FormField
-                control={control}
+                control={form.control}
                 name="dateRange"
                 render={({ field }) => (
                   <FormItem>
@@ -155,20 +148,14 @@ export default function VenueBooking({ venue }: { venue: IVenue }) {
                     <div className="rounded-lg border-brand-blue border p-2 w-full overflow-x-auto calendar-container">
                       <DayPicker
                         mode="range"
-                        selected={field.value}
+                        selected={{
+                          from: field.value.from,
+                          to: field.value.to,
+                        }}
                         disabled={[{ before: new Date() }, ...bookedPeriods]}
                         excludeDisabled
                         numberOfMonths={1}
-                        onSelect={(range?: DateRange) => {
-                          if (range?.from && range?.to) {
-                            field.onChange(range);
-                          } else {
-                            field.onChange({
-                              from: range?.from,
-                              to: range?.to,
-                            });
-                          }
-                        }}
+                        onSelect={(range) => field.onChange(range!)}
                         modifiers={{ booked: bookedPeriods }}
                         modifiersClassNames={{
                           booked: "bg-red-200 cursor-not-allowed",
@@ -182,14 +169,14 @@ export default function VenueBooking({ venue }: { venue: IVenue }) {
 
               {/* Select guests field */}
               <FormField
-                control={control}
+                control={form.control}
                 name="guests"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="sr-only">Select guests</FormLabel>
                     <Select
                       onValueChange={field.onChange}
-                      defaultValue={field.value}
+                      value={`${field.value}`}
                     >
                       <FormControl>
                         <SelectTrigger>
@@ -213,9 +200,7 @@ export default function VenueBooking({ venue }: { venue: IVenue }) {
                   </FormItem>
                 )}
               />
-              <Button type="submit" disabled={Object.keys(errors).length > 0}>
-                Continue
-              </Button>
+              <Button type="submit">Continue</Button>
             </form>
           </Form>
 
@@ -248,7 +233,25 @@ export default function VenueBooking({ venue }: { venue: IVenue }) {
             </div>
           )}
 
-          <DialogFooter className="space-x-2"></DialogFooter>
+          <DialogFooter className="space-x-2">
+            <Button
+              onClick={() => {
+                // fire booking api
+                // toast()
+                // onClick={() => toast(
+                //        <div className="border border-primary-font rounded-xl p-3">
+                //        <p>Booking confirmed!</p>
+                //        <p>Thank you for choosing Holidaze. Enjoy your stay!</p>
+                //      </div>
+                setIsOpen(false);
+              }}
+            >
+              Confirm
+            </Button>
+            <DialogClose asChild>
+              <Button>Cancel</Button>
+            </DialogClose>
+          </DialogFooter>
         </DialogContent>
       </Dialog>
     </>
