@@ -1,6 +1,5 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -19,6 +18,7 @@ import {
 import { toast } from "sonner";
 
 import { IVenue } from "@/interface";
+import Button from "@/ui/Button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { differenceInCalendarDays } from "date-fns";
 import { useState } from "react";
@@ -35,15 +35,15 @@ import { z } from "zod";
 // create booking confirmation
 
 const BookFormSchema = z.object({
-  email: z
-    .string({
-      required_error: "Please select an email to display.",
-    })
-    .email(),
+  guests: z.string({
+    required_error: "Please select how many guests.",
+  }),
 });
 
 export default function VenueCalendar({ venue }: { venue: IVenue }) {
   const [selectedDate, setDate] = useState<DateRange | undefined>();
+
+  const maxGuests = venue.maxGuests;
 
   const bookings = venue.bookings;
   const bookedPeriods = bookings.map((booking) => ({
@@ -119,27 +119,28 @@ export default function VenueCalendar({ venue }: { venue: IVenue }) {
           >
             <FormField
               control={form.control}
-              name="email"
+              name="guests"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel className="sr-only">Select guests</FormLabel>
                   <Select
                     onValueChange={field.onChange}
                     defaultValue={field.value}
                   >
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder="Select a verified email to display" />
+                        <SelectValue placeholder="Guests" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="m@example.com">
-                        m@example.com
-                      </SelectItem>
-                      <SelectItem value="m@google.com">m@google.com</SelectItem>
-                      <SelectItem value="m@support.com">
-                        m@support.com
-                      </SelectItem>
+                      {Array.from(
+                        { length: maxGuests },
+                        (_, index) => index + 1
+                      ).map((guests) => (
+                        <SelectItem key={guests} value={guests.toString()}>
+                          {guests > 1 ? `${guests}  guests` : `${guests} guest`}
+                        </SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
                   <FormMessage />
