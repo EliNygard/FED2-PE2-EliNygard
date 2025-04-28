@@ -21,7 +21,6 @@ import { IVenue } from "@/interface";
 import Button from "@/ui/Button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { differenceInCalendarDays } from "date-fns";
-// import { useState } from "react";
 import { DateRange, DayPicker } from "react-day-picker";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -35,10 +34,13 @@ import { z } from "zod";
 // create booking confirmation
 
 const BookFormSchema = z.object({
-  guests: z.string({
-    required_error: "Please select how many guests.",
-  }).min(1, { message: "Please select how many guests." }),
-  range: z.object({
+  guests: z
+    .string({
+      required_error: "Please select how many guests.",
+    })
+    .min(1, { message: "Please select how many guests." }),
+  dateRange: z
+    .object({
       from: z.date({ required_error: "Please select a check-in date." }),
       to: z.date({ required_error: "Please select a check-out date." }),
     })
@@ -48,51 +50,19 @@ const BookFormSchema = z.object({
 });
 
 export default function VenueBooking({ venue }: { venue: IVenue }) {
-  // const [selectedDate, setDate] = useState<DateRange | undefined>();
-
   const maxGuests = venue.maxGuests;
-
   const bookings = venue.bookings;
   console.log(bookings);
-  
   const bookedPeriods = bookings.map((booking) => ({
     from: new Date(booking.dateFrom),
     to: new Date(booking.dateTo),
   }));
 
-  // const handleSelect = (newSelected: DateRange | undefined) => {
-  //   setDate(newSelected);
-  // };
-
-  // const amountBookedNights =
-  //   selectedDate?.from && selectedDate?.to
-  //     ? differenceInCalendarDays(selectedDate.to, selectedDate.from)
-  //     : undefined;
-
-  // const pricePerNight = venue.price;
-
-  // const totalCost = amountBookedNights
-  //   ? pricePerNight * amountBookedNights
-  //   : null;
-
-  // if (selectedDate?.to === selectedDate?.from) {
-  //   console.log("please select min one night");
-  // }
-
-  // if (amountBookedNights) {
-  //   const totalCost = pricePerNight * amountBookedNights;
-  //   console.log(totalCost);
-  // }
-
-  // console.log(selectedDate);
-  // console.log(selectedDate?.from?.toLocaleDateString());
-  // console.log(selectedDate?.to?.toLocaleDateString());
-
   const form = useForm<z.infer<typeof BookFormSchema>>({
     resolver: zodResolver(BookFormSchema),
     defaultValues: {
       guests: "",
-      range: { from: new Date, to: new Date },
+      dateRange: { from: new Date(), to: new Date() },
     },
   });
 
@@ -103,24 +73,31 @@ export default function VenueBooking({ venue }: { venue: IVenue }) {
     formState: { errors },
   } = form;
 
-  const selectedRange = watch("range");
-  console.log(selectedRange);
-  
-  const nights =
-    selectedRange.from && selectedRange.to
-      ? differenceInCalendarDays(selectedRange.to, selectedRange.from)
-      : 0;
+  const pricePerNight = venue.price;
+  const { from, to } = watch("dateRange");
+  const nights = from && to ? differenceInCalendarDays(to, from) : 0;
+  const totalCost = nights * pricePerNight;
 
-  const totalCost = nights * venue.price;
-
-  function onSubmit(data: z.infer<typeof BookFormSchema>) {
-    toast(`Submitted: ${JSON.stringify(data, null, 2)}`, {
-      description: `${totalCost}`,
-      action: {
-        label: "OK",
-        onClick: () => toast("Thank you"),
-      },
-    });
+  function onSubmit(values: z.infer<typeof BookFormSchema>) {
+    toast(
+      <>
+        <div>
+          <p>{`Dates: ${from.toDateString()} - ${to.toDateString}`}</p>
+          <p>{`Nights: ${nights}`}</p>
+          <p>{`Guests: ${values.guests}`}</p>
+          <p>{`Rate: ${pricePerNight}`}</p>
+          <p>{`Total Cost: ${totalCost}`}</p>
+        </div>
+        <Button onClick={() => toast('Thank you')}>Book your stay</Button>
+        <Button>Cancel</Button>
+      </>,
+      {
+          action: {
+          label: "Confirm",
+          onClick: () => toast("Thank you"),
+        },
+      }
+    );
   }
 
   return (
@@ -129,11 +106,10 @@ export default function VenueBooking({ venue }: { venue: IVenue }) {
       <div className="mt-4 flex flex-col gap-5">
         <Form {...form}>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-            
             {/* Calendar field */}
             <FormField
               control={control}
-              name="range"
+              name="dateRange"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="sr-only">Calendar</FormLabel>
@@ -198,7 +174,9 @@ export default function VenueBooking({ venue }: { venue: IVenue }) {
                 </FormItem>
               )}
             />
-            <Button type="submit" disabled={Object.keys(errors).length > 0}>Continue</Button>
+            <Button type="submit" disabled={Object.keys(errors).length > 0}>
+              Continue
+            </Button>
           </form>
         </Form>
 
