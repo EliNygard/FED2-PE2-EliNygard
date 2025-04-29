@@ -18,7 +18,7 @@ export default function VenueCard({ venue }: { venue: IVenue }) {
               src={firstImage.url}
               alt={firstImage.alt || venue.name}
               fill
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              sizes="50vw"
               style={{ objectFit: "cover" }}
               loading="lazy"
             />
