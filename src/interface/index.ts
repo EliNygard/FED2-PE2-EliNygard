@@ -7,7 +7,7 @@ export interface IRegisterRequest {
     email: string;
     password: string;
     bio?: string;
-    avatar: Media;
+    avatar: IMedia;
     venueManager?: boolean;
   };
 }
@@ -16,7 +16,7 @@ export interface IUser {
   name: string;
   email: string;
   bio?: string;
-  avatar: Media;
+  avatar: IMedia;
   accessToken: string;
   venueManager: boolean;
 }
@@ -31,11 +31,11 @@ export interface IRegisterUser {
   email: string;
   password: string;
   bio?: string;
-  avatar: Media;
+  avatar: IMedia;
   venueManager?: boolean;
 }
 
-export interface Media {
+export interface IMedia {
   url: string;
   alt: string;
 }
@@ -44,7 +44,7 @@ export interface IVenue {
   id: string;
   name: string;
   description: string;
-  media?: Media[];
+  media?: IMedia[];
   price: number;
   maxGuests: number;
   rating: number;
@@ -73,7 +73,7 @@ export interface IPerson {
   name: string;
   email: string;
   bio?: string;
-  avatar: Media;
+  avatar: IMedia;
 }
 
 export interface IBooking {
