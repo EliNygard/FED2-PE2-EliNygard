@@ -40,7 +40,6 @@ import { z } from "zod";
 // verification: must select min one night + error message ✅
 // store selected dates, nights, guests, price, total ✅
 // add buttons, disable if no token
-// style calendar border
 // create booking confirmation - change to dialog ✅
 // send request
 // move Schema to sep folder/file
@@ -134,7 +133,7 @@ export default function VenueBooking({ venue }: { venue: IVenue }) {
 
   return (
     <>
-      <section>
+      <section className="md:shadow-lg/20 md:shadow-brand-blue/50 md:p-3 md:rounded-md max-w-[339px]">
         <h2>Select dates to see the price</h2>
         <div className="mt-4 flex flex-col gap-5">
           <Form {...form}>
@@ -146,7 +145,7 @@ export default function VenueBooking({ venue }: { venue: IVenue }) {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="sr-only">Calendar</FormLabel>
-                    <div className="rounded-lg border-brand-blue border p-2 w-full overflow-x-auto calendar-container">
+                    <div className="rounded-lg border-brand-blue border p-2 overflow-x-auto calendar-container ">
                       <DayPicker
                         mode="range"
                         selected={{
@@ -173,7 +172,7 @@ export default function VenueBooking({ venue }: { venue: IVenue }) {
                 control={form.control}
                 name="guests"
                 render={({ field }) => (
-                  <FormItem>
+                  <FormItem className="w-full">
                     <FormLabel className="sr-only">Select guests</FormLabel>
                     <Select
                       onValueChange={field.onChange}

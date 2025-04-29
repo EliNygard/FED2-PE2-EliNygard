@@ -12,7 +12,7 @@
 }
 
 .headerDetails {
-  gap: 1rem;
+  gap: 1.5rem;
 }
 
 .hostWrapper {
@@ -22,6 +22,10 @@
 }
 
 @media (min-width: 768px) {
+  .header {
+    gap: 4rem;
+  }
+
   .headerDetails {
     flex-direction: row;
     gap: 5rem;
