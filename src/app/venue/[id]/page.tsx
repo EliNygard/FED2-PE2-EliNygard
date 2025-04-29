@@ -35,15 +35,12 @@ export default async function VenuePage({
       ? [venue.media as IMedia]
       : [];
 
-  const firstVenueImage = venueImages[0] || {};
+  // const firstVenueImage = venueImages[0] || {};
 
   return (
     <main className="m-auto grid grid-cols-1 gap-8 md:gap-x-16 lg:gap-x-28 md:grid-cols-[1fr_auto] max-w-[1120px]">
       <div className="md:col-span-full">
-        <VenueGallery
-          venueImages={venueImages}
-          firstVenueImage={firstVenueImage}
-        />
+        <VenueGallery venueImages={venueImages} />
       </div>
       <div className="md:col-span-full md:mb-7">
         <VenueHeader venue={venue} />
