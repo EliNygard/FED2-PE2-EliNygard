@@ -1,21 +1,24 @@
 ---
 name: Feature Request
 about: Describe a new feature
-title: "[Feature] "
+title: "[Feature]"
 labels: enhancement
 status: backlog
 assignees: elinygard
 ---
 
 ## Description
+
 A clear and concise description of the feature.
 
 ## Acceptance Criteria
+
 - [ ] Item 1
-- [ ] Item 2
-- [ ] Item 3
 
 ## Tasks
 
+- [ ] Task 1
+
 ## Related
-(Optional links to related issues, designs, or Figma files)
+
+[](Optional links to related issues, designs, or Figma files)
