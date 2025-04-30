@@ -1,0 +1,34 @@
+.header, .headerDetails {
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  gap: 2rem;
+}
+
+.venueName {
+  text-wrap: wrap;
+}
+
+.headerDetails {
+  gap: 1.5rem;
+}
+
+.hostWrapper {
+  display: flex;
+  gap: 1.25rem;
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .header {
+    gap: 4rem;
+  }
+
+  .headerDetails {
+    flex-direction: row;
+    gap: 5rem;
+    align-items: center;
+  }
+}
