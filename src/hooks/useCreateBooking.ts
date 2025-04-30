@@ -1,42 +1,33 @@
 import { ICreateBooking } from "@/interface";
 import { setBooking } from "@/lib/api";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 export function useCreateBooking() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isError, setIsError] = useState<string | null>(null);
-  const [isSuccess, setIsSuccess] = useState<boolean>(false);
 
-  async function createBooking({
-    dateFrom,
-    dateTo,
-    guests,
-    venueId,
-  }: ICreateBooking) {
-    setIsLoading(true);
-    setIsError(null);
-    setIsSuccess(false);
+  const createBooking = useCallback(async (payload: ICreateBooking) => {
+    setIsError(null)
+    setIsLoading(true)
 
     try {
-      const booking = await setBooking({ dateFrom, dateTo, guests, venueId });
-
-      console.log(booking);
-
-      if (!booking) return;
-      setIsSuccess(true);
-      return booking;
+      const booking = await setBooking(payload)
+      return booking
     } catch (error: unknown) {
-      const message =
-        error instanceof Error
-          ? error.message
-          : "Error trying to add booking. Please try again";
-      console.error(message);
-      setIsError(message);
-      setIsSuccess(false);
+      const message = error instanceof Error
+      ? error.message
+      : 'Something went wrong booking this venue. Please try again.'
+      setIsError(message)
+      throw new Error(message)
+
     } finally {
-      setIsLoading(false);
-      setIsSuccess(true);
+      setIsLoading(false)
     }
-  }
-  return { createBooking, isLoading, isError, isSuccess };
+  },
+  []
+
+)
+
+return { createBooking, isLoading, isError }
+
 }
