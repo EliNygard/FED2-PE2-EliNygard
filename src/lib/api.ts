@@ -2,7 +2,7 @@ import { IBooking, ICreateBooking, IVenue } from "@/interface";
 import { getToken } from "@/stores/useAuthStore";
 
 const API_BASE = process.env.API_URL;
-const API_KEY = process.env.NOROFF_API_KEY;
+const API_KEY = process.env.API_KEY;
 
 const paramOwner = "_owner=true";
 const paramBookings = "_bookings=true";
