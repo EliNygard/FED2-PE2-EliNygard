@@ -6,7 +6,6 @@ const API_KEY = process.env.API_KEY;
 
 const paramOwner = "_owner=true";
 const paramBookings = "_bookings=true";
-// const sortNameAsc = 'sort=name&sortOrder=asc'
 const sortDate = "sort=created&sortOrder=desc";
 
 // pagination: limit and page
@@ -21,7 +20,7 @@ async function fetcher<T>(
   options: FetcherOptions = {}
 ): Promise<T> {
   const { auth = false, headers: customHeaders, ...init } = options;
-  const token = getToken()
+  const token = getToken();
 
   const defaultHeaders: Record<string, string> = {
     "Content-Type": "application/json",
@@ -38,10 +37,11 @@ async function fetcher<T>(
     headers: { ...defaultHeaders, ...customHeaders },
   });
   if (!response.ok) {
-    const text = await response.text()
-     throw new Error(`API error: ${response.status}: ${text}`);}
+    const text = await response.text();
+    throw new Error(`API error: ${response.status}: ${text}`);
+  }
   const { data } = await response.json();
-  // console.log(data);
+  console.log(data);
   return data as T;
 }
 
@@ -56,11 +56,9 @@ export function getVenueById(id: string) {
 }
 
 export function setBooking(booking: ICreateBooking) {
-  return fetcher<IBooking>(
-    `/venues/bookings`, {
-      method: 'POST',
-      body: JSON.stringify(booking),
-      auth: true
-    }
-  )
+  return fetcher<IBooking>(`/bookings`, {
+    method: "POST",
+    body: JSON.stringify(booking),
+    auth: true,
+  });
 }
