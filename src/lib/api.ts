@@ -1,7 +1,7 @@
 import { IBooking, ICreateBooking, IVenue } from "@/interface";
 import { getToken } from "@/stores/useAuthStore";
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL;
+const API_BASE = process.env.API_URL;
 const API_KEY = process.env.NOROFF_API_KEY;
 
 const paramOwner = "_owner=true";
