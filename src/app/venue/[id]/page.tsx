@@ -33,6 +33,8 @@ export default async function VenuePage({
       ? [venue.media as IMedia]
       : [];
 
+      console.log(venue.bookings);
+      
   // const firstVenueImage = venueImages[0] || {};
 
   return (

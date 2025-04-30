@@ -29,3 +29,7 @@ export const useAuthStore = create(
 useAuthStore.subscribe((state) => {
   console.log("[auth store] state changed: ", state);
 });
+
+export function getToken() {
+  return useAuthStore.getState().user?.accessToken
+}

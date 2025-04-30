@@ -5,6 +5,7 @@ import type { Metadata } from "next";
 import "tw-animate-css";
 import "./globals.css";
 import { ToastProvider } from "@/ui/ToastProvider";
+import { Toaster } from "sonner";
 
 
 export const metadata: Metadata = {
@@ -23,6 +24,7 @@ export default function RootLayout({
         className={`${roboto.className} antialiased min-h-screen grid grid-rows-[auto_1fr_auto] `}
       >
         <div className="px-6 md:px-10 lg:px-10 2xl:px-20">
+          <Toaster position="top-right" />
           <Header />
           {children}
           <ToastProvider />

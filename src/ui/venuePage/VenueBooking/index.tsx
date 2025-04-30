@@ -23,40 +23,20 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useCreateBooking } from "@/hooks/useCreateBooking";
 
 import { ICreateBooking, IVenue } from "@/interface";
+import { BookFormSchema, FormValues } from "@/lib/shemas";
+import { useAuthStore } from "@/stores/useAuthStore";
 import Button from "@/ui/Button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { DialogTitle } from "@radix-ui/react-dialog";
 import { differenceInCalendarDays } from "date-fns";
+import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import { DayPicker } from "react-day-picker";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { z } from "zod";
-
-// TODO:
-// calculate total ✅
-// verification: must select min one night + error message ✅
-// store selected dates, nights, guests, price, total ✅
-// add buttons, disable if no token
-// create booking confirmation - change to dialog ✅
-// send request
-// move Schema to sep folder/file
-
-const BookFormSchema = z.object({
-  guests: z.number().min(1, { message: "Please select at least one guest" }),
-  dateRange: z
-    .object({
-      from: z.date({ required_error: "Please select a check-in date." }),
-      to: z.date({ required_error: "Please select a check-out date." }),
-    })
-    .refine(({ from, to }) => differenceInCalendarDays(to, from) >= 1, {
-      message: "Please select at least one night.",
-    }),
-});
-
-type FormValues = z.infer<typeof BookFormSchema>;
 
 export default function VenueBooking({ venue }: { venue: IVenue }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -68,14 +48,9 @@ export default function VenueBooking({ venue }: { venue: IVenue }) {
     totalCost: number;
   } | null>(null);
 
-  const venueId = venue.id;
-  const maxGuests = venue.maxGuests;
-  const bookings = venue.bookings;
-  // console.log(bookings);
-  const bookedPeriods = bookings.map((booking) => ({
-    from: new Date(booking.dateFrom),
-    to: new Date(booking.dateTo),
-  }));
+  const { createBooking, isLoading, isError } = useCreateBooking();
+  const router = useRouter();
+  const token = useAuthStore((state) => state.user?.accessToken)
 
   const form = useForm<FormValues>({
     resolver: zodResolver(BookFormSchema),
@@ -87,10 +62,8 @@ export default function VenueBooking({ venue }: { venue: IVenue }) {
       },
     },
   });
-
   const { watch, handleSubmit } = form;
-
-  const { dateRange, guests } = watch();
+  const { dateRange } = watch();
   const nights = useMemo(
     () =>
       dateRange.from && dateRange.to
@@ -98,29 +71,17 @@ export default function VenueBooking({ venue }: { venue: IVenue }) {
         : 0,
     [dateRange]
   );
-
+  const venueId = venue.id;
+  const maxGuests = venue.maxGuests;
+  const bookings = venue.bookings;
   const pricePerNight = venue.price;
-  // const { from, to } = watch("dateRange");
-  // const guests = watch("guests");
-  // const nights = from && to ? differenceInCalendarDays(to, from) : 0;
   const totalCost = nights * pricePerNight;
-
-  // console.log(dateRange.from);
-  // console.log(dateRange.to);
-  console.log(guests);
+  const bookedPeriods = bookings.map((booking) => ({
+    from: new Date(booking.dateFrom),
+    to: new Date(booking.dateTo),
+  }));
 
   const onSubmit: SubmitHandler<FormValues> = (values) => {
-    const payload: ICreateBooking = {
-      dateFrom: values.dateRange.from.toISOString(),
-      dateTo: values.dateRange.to.toISOString(),
-      guests: values.guests,
-      venueId: venueId,
-    };
-
-    console.log(payload);
-
-    // call api
-
     setBookingData({
       from: values.dateRange.from.toDateString(),
       to: values.dateRange.to.toDateString(),
@@ -129,6 +90,27 @@ export default function VenueBooking({ venue }: { venue: IVenue }) {
       totalCost,
     });
     setIsOpen(true);
+  };
+
+  const onConfirm: SubmitHandler<FormValues> = async (values) => {
+    const payload: ICreateBooking = {
+      dateFrom: values.dateRange.from.toISOString(),
+      dateTo: values.dateRange.to.toISOString(),
+      guests: values.guests,
+      venueId: venueId,
+    };
+
+    try {
+      await createBooking(payload);
+      toast.success(
+        "Booking confirmed. Thank you for choosing Holidaze. Enjoy your stay!"
+      );
+      setIsOpen(false);
+      router.push("/");
+    } catch (error) {
+      console.error(error);
+      toast.error(isError || "Error trying to add booking. Please try again.");
+    }
   };
 
   return (
@@ -175,7 +157,7 @@ export default function VenueBooking({ venue }: { venue: IVenue }) {
                   <FormItem className="w-full">
                     <FormLabel className="sr-only">Select guests</FormLabel>
                     <Select
-                      onValueChange={field.onChange}
+                      onValueChange={(value) => field.onChange(Number(value))}
                       value={`${field.value}`}
                     >
                       <FormControl>
@@ -200,7 +182,14 @@ export default function VenueBooking({ venue }: { venue: IVenue }) {
                   </FormItem>
                 )}
               />
-              <Button type="submit">Continue</Button>
+              <Button
+                type="submit"
+                // disabled={isLoading || !token}
+                title={!token ? "Log in to make a booking" : undefined}
+                variant={!token ? "disabled" : "primary"}
+              >
+                Continue
+              </Button>
             </form>
           </Form>
 
@@ -235,18 +224,12 @@ export default function VenueBooking({ venue }: { venue: IVenue }) {
 
           <DialogFooter className="gap-6">
             <Button
-              onClick={() => {
-                setIsOpen(false);
-                // fire booking api
-                toast(
-                  <div className="border border-primary-font rounded-xl p-3">
-                    <p>Booking confirmed!</p>
-                    <p>Thank you for choosing Holidaze. Enjoy your stay!</p>
-                  </div>
-                );
-              }}
+              onClick={handleSubmit(onConfirm)}
+              disabled={isLoading || !token}
+              title={!token ? "Log in to make a booking" : undefined}
+              variant={!token ? "disabled" : "primary"}
             >
-              Confirm
+              {isLoading ? "Loading" : "Confirm"}
             </Button>
             <DialogClose asChild>
               <Button variant="secondary">Cancel</Button>
