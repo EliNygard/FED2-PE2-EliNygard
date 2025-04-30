@@ -23,6 +23,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useCreateBooking } from "@/hooks/useCreateBooking";
 
 import { ICreateBooking, IVenue } from "@/interface";
 import Button from "@/ui/Button";
@@ -45,7 +46,9 @@ import { z } from "zod";
 // move Schema to sep folder/file
 
 const BookFormSchema = z.object({
-  guests: z.number().min(1, { message: "Please select at least one guest" }),
+  guests: z.coerce
+    .number()
+    .min(1, { message: "Please select at least one guest" }),
   dateRange: z
     .object({
       from: z.date({ required_error: "Please select a check-in date." }),
@@ -71,7 +74,6 @@ export default function VenueBooking({ venue }: { venue: IVenue }) {
   const venueId = venue.id;
   const maxGuests = venue.maxGuests;
   const bookings = venue.bookings;
-  // console.log(bookings);
   const bookedPeriods = bookings.map((booking) => ({
     from: new Date(booking.dateFrom),
     to: new Date(booking.dateTo),
@@ -90,7 +92,7 @@ export default function VenueBooking({ venue }: { venue: IVenue }) {
 
   const { watch, handleSubmit } = form;
 
-  const { dateRange, guests } = watch();
+  const { dateRange } = watch();
   const nights = useMemo(
     () =>
       dateRange.from && dateRange.to
@@ -98,18 +100,24 @@ export default function VenueBooking({ venue }: { venue: IVenue }) {
         : 0,
     [dateRange]
   );
-
   const pricePerNight = venue.price;
-  // const { from, to } = watch("dateRange");
-  // const guests = watch("guests");
-  // const nights = from && to ? differenceInCalendarDays(to, from) : 0;
   const totalCost = nights * pricePerNight;
 
-  // console.log(dateRange.from);
-  // console.log(dateRange.to);
-  console.log(guests);
+  const { createBooking, isSuccess } = useCreateBooking();
 
   const onSubmit: SubmitHandler<FormValues> = (values) => {
+    setBookingData({
+      from: values.dateRange.from.toDateString(),
+      to: values.dateRange.to.toDateString(),
+      guests: values.guests.toString(),
+      nights,
+      totalCost,
+    });
+
+    setIsOpen(true);
+  };
+
+  const onConfirm: SubmitHandler<FormValues> = async (values) => {
     const payload: ICreateBooking = {
       dateFrom: values.dateRange.from.toISOString(),
       dateTo: values.dateRange.to.toISOString(),
@@ -119,17 +127,21 @@ export default function VenueBooking({ venue }: { venue: IVenue }) {
 
     console.log(payload);
 
-    // call api
+    await createBooking(payload);
+    setIsOpen(false);
 
-    setBookingData({
-      from: values.dateRange.from.toDateString(),
-      to: values.dateRange.to.toDateString(),
-      guests: values.guests.toString(),
-      nights,
-      totalCost,
-    });
-    setIsOpen(true);
-  };
+    if (isSuccess) {
+      toast(
+        <div className="border border-primary-font rounded-xl p-3">
+          <p>Booking confirmed!</p>
+          <p>Thank you for choosing Holidaze. Enjoy your stay!</p>
+        </div>
+      )
+  } else {
+    toast(
+      <div>Unfortunately something went wrong when booking this venue. Please try again.</div>
+    )
+  }}
 
   return (
     <>
@@ -175,7 +187,7 @@ export default function VenueBooking({ venue }: { venue: IVenue }) {
                   <FormItem className="w-full">
                     <FormLabel className="sr-only">Select guests</FormLabel>
                     <Select
-                      onValueChange={field.onChange}
+                      onValueChange={(value) => field.onChange(Number(value))}
                       value={`${field.value}`}
                     >
                       <FormControl>
@@ -234,20 +246,7 @@ export default function VenueBooking({ venue }: { venue: IVenue }) {
           )}
 
           <DialogFooter className="gap-6">
-            <Button
-              onClick={() => {
-                setIsOpen(false);
-                // fire booking api
-                toast(
-                  <div className="border border-primary-font rounded-xl p-3">
-                    <p>Booking confirmed!</p>
-                    <p>Thank you for choosing Holidaze. Enjoy your stay!</p>
-                  </div>
-                );
-              }}
-            >
-              Confirm
-            </Button>
+            <Button onClick={handleSubmit(onConfirm)}>Confirm</Button>
             <DialogClose asChild>
               <Button variant="secondary">Cancel</Button>
             </DialogClose>
