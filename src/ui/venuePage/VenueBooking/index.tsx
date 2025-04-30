@@ -27,6 +27,7 @@ import { useCreateBooking } from "@/hooks/useCreateBooking";
 
 import { ICreateBooking, IVenue } from "@/interface";
 import { BookFormSchema, FormValues } from "@/lib/shemas";
+import { useAuthStore } from "@/stores/useAuthStore";
 import Button from "@/ui/Button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { DialogTitle } from "@radix-ui/react-dialog";
@@ -37,16 +38,6 @@ import { DayPicker } from "react-day-picker";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
-
-// TODO:
-// calculate total ✅
-// verification: must select min one night + error message ✅
-// store selected dates, nights, guests, price, total ✅
-// add buttons, disable if no token
-// create booking confirmation - change to dialog ✅
-// send request ✅
-// move Schema to sep folder/file ✅
-
 export default function VenueBooking({ venue }: { venue: IVenue }) {
   const [isOpen, setIsOpen] = useState(false);
   const [bookingData, setBookingData] = useState<{
@@ -56,9 +47,11 @@ export default function VenueBooking({ venue }: { venue: IVenue }) {
     nights: number;
     totalCost: number;
   } | null>(null);
-  
-  const { createBooking, isError } = useCreateBooking();
-  
+
+  const { createBooking, isLoading, isError } = useCreateBooking();
+  const router = useRouter();
+  const token = useAuthStore((state) => state.user?.accessToken)
+
   const form = useForm<FormValues>({
     resolver: zodResolver(BookFormSchema),
     defaultValues: {
@@ -99,8 +92,6 @@ export default function VenueBooking({ venue }: { venue: IVenue }) {
     setIsOpen(true);
   };
 
-  const router = useRouter()
-
   const onConfirm: SubmitHandler<FormValues> = async (values) => {
     const payload: ICreateBooking = {
       dateFrom: values.dateRange.from.toISOString(),
@@ -111,13 +102,16 @@ export default function VenueBooking({ venue }: { venue: IVenue }) {
 
     try {
       await createBooking(payload);
-      toast.success('Booking confirmed. Thank you for choosing Holidaze. Enjoy your stay!')
+      toast.success(
+        "Booking confirmed. Thank you for choosing Holidaze. Enjoy your stay!"
+      );
       setIsOpen(false);
-      router.push('/')
+      router.push("/");
     } catch (error) {
       console.error(error);
-      toast.error(isError || "Error trying to add booking. Please try again.")
-    } }
+      toast.error(isError || "Error trying to add booking. Please try again.");
+    }
+  };
 
   return (
     <>
@@ -188,7 +182,14 @@ export default function VenueBooking({ venue }: { venue: IVenue }) {
                   </FormItem>
                 )}
               />
-              <Button type="submit">Continue</Button>
+              <Button
+                type="submit"
+                // disabled={isLoading || !token}
+                title={!token ? "Log in to make a booking" : undefined}
+                variant={!token ? "disabled" : "primary"}
+              >
+                Continue
+              </Button>
             </form>
           </Form>
 
@@ -222,7 +223,14 @@ export default function VenueBooking({ venue }: { venue: IVenue }) {
           )}
 
           <DialogFooter className="gap-6">
-            <Button onClick={handleSubmit(onConfirm)}>Confirm</Button>
+            <Button
+              onClick={handleSubmit(onConfirm)}
+              disabled={isLoading || !token}
+              title={!token ? "Log in to make a booking" : undefined}
+              variant={!token ? "disabled" : "primary"}
+            >
+              {isLoading ? "Loading" : "Confirm"}
+            </Button>
             <DialogClose asChild>
               <Button variant="secondary">Cancel</Button>
             </DialogClose>
