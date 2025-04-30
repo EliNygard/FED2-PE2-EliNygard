@@ -9,13 +9,14 @@ const variantStyles: Record<ButtonVariant, ReturnType<typeof css>> = {
   `,
   secondary: css`
   background-color: #fff;
-  color: var(--color-primary-font);
+  color: var(--color-secondary-font);
   border-width: 1px;
   border-color: var(--color-primary-font);
   `,
   disabled: css`
   background-color: var(--color-disabled-blue);
   color: var(--color-primary-font);
+  pointer-events: none;
   `,
   narrow: css`
   background-color: var(--color-brand-blue);
