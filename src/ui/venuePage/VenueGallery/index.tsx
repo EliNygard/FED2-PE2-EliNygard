@@ -7,10 +7,15 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { IMedia } from "@/interface";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 
 // TODO
@@ -23,8 +28,12 @@ export default function VenueGallery({
 }: {
   venueImages: IMedia[];
 }) {
+  const [mounted, setMounted] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
+
+  const isMd = useMediaQuery({ query: "(min-width: 768px)" });
+  const isXl = useMediaQuery({ query: "(min-width: 1280px)" });
 
   const openGallery = (index: number) => {
     console.log("image button clicked");
@@ -32,9 +41,13 @@ export default function VenueGallery({
     setActiveIndex(index);
     setIsOpen(true);
   };
-
-  const isMd = useMediaQuery({ query: "(min-width: 768px)" });
-  const isXl = useMediaQuery({ query: "(min-width: 1280px)" });
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+  if (!mounted) {
+    // This renders on SSR *and* on first client pass
+    return <div className="aspect-video max-h-[500px] w-full bg-gray-100" />;
+  }
 
   const count = isXl ? 5 : isMd ? 3 : 1;
   const imagesToShow = venueImages.slice(0, count);
@@ -59,12 +72,12 @@ export default function VenueGallery({
   return (
     <>
       <div className="aspect-video max-h-[500px] w-full grid grid-cols-1 md:grid-cols-[65%_1fr] md:grid-rows-2 xl:grid-cols-[55%_1fr_1fr] xl:grid-rows-2 gap-2">
-        {imagesToShow.map((img, i) => (
+        {imagesToShow.map((img, index) => (
           <button
             key={img.url}
-            className={`relative overflow-hidden rounded ${spanClasses(i)}`}
-            aria-label={`View image ${i + 1} of ${venueImages.length}`}
-            onClick={() => openGallery(i)}
+            className={`relative overflow-hidden rounded ${spanClasses(index)}`}
+            aria-label={`View image ${index + 1} of ${venueImages.length}`}
+            onClick={() => openGallery(index)}
           >
             <Image
               src={img.url}
@@ -82,7 +95,9 @@ export default function VenueGallery({
 
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogContent>
-          <DialogTitle className="sr-only">Image Carousel</DialogTitle>
+          <DialogHeader className="sr-only">
+            <DialogTitle>Image Carousel</DialogTitle>
+          </DialogHeader>
           <Carousel
             defaultValue={activeIndex.toString()}
             onChange={(value) => setActiveIndex(Number(value))}
