@@ -71,7 +71,7 @@ export default function VenueBooking({ venue }: { venue: IVenue }) {
   const venueId = venue.id;
   const maxGuests = venue.maxGuests;
   const bookings = venue.bookings;
-  console.log(bookings);
+  // console.log(bookings);
   const bookedPeriods = bookings.map((booking) => ({
     from: new Date(booking.dateFrom),
     to: new Date(booking.dateTo),
@@ -105,8 +105,8 @@ export default function VenueBooking({ venue }: { venue: IVenue }) {
   // const nights = from && to ? differenceInCalendarDays(to, from) : 0;
   const totalCost = nights * pricePerNight;
 
-  console.log(dateRange.from);
-  console.log(dateRange.to);
+  // console.log(dateRange.from);
+  // console.log(dateRange.to);
   console.log(guests);
 
   const onSubmit: SubmitHandler<FormValues> = (values) => {

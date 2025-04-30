@@ -14,7 +14,7 @@ async function fetcher<T>(url: string): Promise<T> {
   const response = await fetch(`${API_BASE}${url}`)
   if (!response.ok) throw new Error(`API error: ${response.status}`)
   const { data } = await response.json();
-  console.log(data);
+  // console.log(data);
   return data as T;
 }
 

@@ -10,7 +10,7 @@ export default async function searchVenues({
       `https://v2.api.noroff.dev/holidaze/venues/search?_owner=true&_bookings=true&sort=name&sortOrder=asc&q=${searchTerm}`
     );
     const json = await response.json();
-    console.log(json.data);
+    // console.log(json.data);
 
     return json.data;
   } catch (error) {

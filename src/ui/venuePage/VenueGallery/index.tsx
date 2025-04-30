@@ -36,8 +36,6 @@ export default function VenueGallery({
   const isXl = useMediaQuery({ query: "(min-width: 1280px)" });
 
   const openGallery = (index: number) => {
-    console.log("image button clicked");
-
     setActiveIndex(index);
     setIsOpen(true);
   };

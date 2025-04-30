@@ -23,11 +23,9 @@ export default async function VenuePage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  console.log(id);
 
   const venue = await getVenueById(id);
 
-  console.log(venue);
   // add default image if array is empty
   const venueImages = Array.isArray(venue.media)
     ? venue.media
