@@ -1,12 +1,20 @@
 "use client";
 
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { IMedia } from "@/interface";
 import Image from "next/image";
-// import { useState } from "react";
+import { useState } from "react";
 import { useMediaQuery } from "react-responsive";
 
 // TODO
-// gallery opens: self made grid on mobile? 
+// gallery opens: self made grid on mobile?
 // gallery opens: shadcn Carousel for md screens and up
 // if fewer images, edit grid
 
@@ -15,16 +23,18 @@ export default function VenueGallery({
 }: {
   venueImages: IMedia[];
 }) {
-  // const [isOpen, setIsOpen] = useState(false);
-  // const [activeIndex, setActiveIndex] = useState(0);
+  const [isOpen, setIsOpen] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
 
-  // const openGallery = (index: number) => {
-  //   setActiveIndex(index);
-  //   setIsOpen(true);
-  // };
+  const openGallery = (index: number) => {
+    console.log("image button clicked");
 
-  const isMd = useMediaQuery({ query: "(min-width: 768px" });
-  const isXl = useMediaQuery({ query: "(min-width: 1280px" });
+    setActiveIndex(index);
+    setIsOpen(true);
+  };
+
+  const isMd = useMediaQuery({ query: "(min-width: 768px)" });
+  const isXl = useMediaQuery({ query: "(min-width: 1280px)" });
 
   const count = isXl ? 5 : isMd ? 3 : 1;
   const imagesToShow = venueImages.slice(0, count);
@@ -48,32 +58,13 @@ export default function VenueGallery({
 
   return (
     <>
-      <div
-        className="
-        aspect-video
-        max-h-[500px]
-        w-full
-          grid 
-          grid-cols-1
-          md:grid-cols-[65%_1fr] md:grid-rows-2
-          xl:grid-cols-[55%_1fr_1fr] xl:grid-rows-2 
-          gap-2
-        "
-      >
+      <div className="aspect-video max-h-[500px] w-full grid grid-cols-1 md:grid-cols-[65%_1fr] md:grid-rows-2 xl:grid-cols-[55%_1fr_1fr] xl:grid-rows-2 gap-2">
         {imagesToShow.map((img, i) => (
           <button
             key={img.url}
-            className={`
-              relative
-              overflow-hidden
-              
-              
-              
-              rounded 
-              ${spanClasses(i)}
-            `}
+            className={`relative overflow-hidden rounded ${spanClasses(i)}`}
             aria-label={`View image ${i + 1} of ${venueImages.length}`}
-            // onClick={() => openGallery(i)}
+            onClick={() => openGallery(i)}
           >
             <Image
               src={img.url}
@@ -88,6 +79,36 @@ export default function VenueGallery({
           </button>
         ))}
       </div>
+
+      <Dialog open={isOpen} onOpenChange={setIsOpen}>
+        <DialogContent>
+          <DialogTitle className="sr-only">Image Carousel</DialogTitle>
+          <Carousel
+            defaultValue={activeIndex.toString()}
+            onChange={(value) => setActiveIndex(Number(value))}
+            className="w-full h-full"
+          >
+            <CarouselContent>
+              {venueImages.map((image, index) => (
+                <CarouselItem defaultValue={index.toString()} key={image.url}>
+                  <div className="relative aspect-video">
+                    <Image
+                      src={image.url}
+                      alt={image.alt}
+                      fill
+                      sizes="50vw"
+                      style={{ objectFit: "contain" }}
+                      className="bg-primary-font"
+                    />
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious aria-label="Previous Image" />
+            <CarouselNext aria-label="Next Image" />
+          </Carousel>
+        </DialogContent>
+      </Dialog>
     </>
   );
 }
