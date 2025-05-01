@@ -67,32 +67,11 @@ export const useAuthStore = create<AuthState>()(
   )
 );
 
-// export const useAuthStore = create<AuthState>()(
-//   persist(
-//   subscribeWithSelector((set) => ({
-//     user: null,
-//     isVenueManager: false,
-//     setUser: (user) =>
-//       set({
-//         user,
-//         isVenueManager: !!user.venueManager,
-//       }),
-
-//     logout: () => {
-//       set({ user: null, isVenueManager: false });
-//     },
-//   })),
-//   {
-//     name: 'auth-storage',
-
-//   }),
-// );
-
 // Subscribe to state changes and log them
 useAuthStore.subscribe((state) => {
   console.log("[auth store] state changed: ", state);
 });
 
-// export function getToken() {
-//   return useAuthStore.getState().user?.accessToken
-// }
+export function getToken() {
+  return useAuthStore.getState().user?.accessToken
+}
