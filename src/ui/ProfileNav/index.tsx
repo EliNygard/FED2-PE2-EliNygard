@@ -6,7 +6,7 @@ import Button from "../Button";
 export default function ProfileNav() {
 const isVenueManager = useAuthStore((state) => state.isVenueManager);
   return (
-    <div className="mt-4 md:flex md:flex-col md:gap-8">
+    <div className="md:flex md:flex-col md:gap-8">
       {isVenueManager ? (
         <>
         <Button variant="narrow">Create New Venue</Button>
