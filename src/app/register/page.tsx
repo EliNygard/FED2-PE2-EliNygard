@@ -5,7 +5,7 @@ import Image from "next/image";
 
 export default function RegisterPage() {
   return (
-    <main className="max-w-4xl m-auto">
+    <section className="max-w-4xl m-auto">
       <div className="mt-3 grid grid-cols-1 md:grid-cols-2 md:gap-1.5 md:items-start">
         <div className="block md:hidden">
           <Image
@@ -33,6 +33,6 @@ export default function RegisterPage() {
           <RegisterForm />
         </div>
       </div>
-    </main>
+    </section>
   );
 }

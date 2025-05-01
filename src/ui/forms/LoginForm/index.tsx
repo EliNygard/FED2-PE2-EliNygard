@@ -6,6 +6,7 @@ import { useLogin } from "@/hooks/useLogin";
 import Button from "@/ui/Button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -24,6 +25,7 @@ export default function LoginForm() {
   });
 
   const { loginUser, isLoading, isError } = useLogin();
+  const router = useRouter();
 
   const delay = (ms: number) =>
     new Promise<void>((resolve) => setTimeout(resolve, ms));
@@ -44,6 +46,7 @@ export default function LoginForm() {
         email: "",
         password: "",
       });
+      router.push(`/profile/${user.name}`);
     } catch (error) {
       console.error(error);
     } finally {

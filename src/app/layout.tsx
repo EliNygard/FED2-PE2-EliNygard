@@ -1,12 +1,11 @@
 import { roboto } from "@/ui/fonts";
 import Footer from "@/ui/Footer";
 import Header from "@/ui/header/Header";
+import { ToastProvider } from "@/ui/ToastProvider";
 import type { Metadata } from "next";
+import { Toaster } from "sonner";
 import "tw-animate-css";
 import "./globals.css";
-import { ToastProvider } from "@/ui/ToastProvider";
-import { Toaster } from "sonner";
-
 
 export const metadata: Metadata = {
   title: "Holidaze",
@@ -21,14 +20,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${roboto.className} antialiased min-h-screen grid grid-rows-[auto_1fr_auto] `}
+        className={`${roboto.className} antialiased min-h-screen flex flex-col`}
       >
-        <div className="px-6 md:px-10 lg:px-10 2xl:px-20">
-          <Toaster position="top-right" />
-          <Header />
-          {children}
-          <ToastProvider />
-        </div>
+        <Toaster position="top-right" />
+        <Header />
+        <main className="flex-1">{children}</main>
+        <ToastProvider />
         <Footer />
       </body>
     </html>

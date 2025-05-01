@@ -1,6 +1,7 @@
 import { login } from "@/app/api/auth/login";
 import { ILogin, IUser } from "@/interface";
 import { useAuthStore } from "@/stores/useAuthStore";
+
 import { useState } from "react";
 
 export function useLogin() {
@@ -20,6 +21,7 @@ export function useLogin() {
 
     try {
       const userData = await login({ email, password });
+      console.log(userData);
 
       setUser(userData);
       setIsSuccess(true);

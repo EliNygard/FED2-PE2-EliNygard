@@ -8,13 +8,13 @@ import DesktopNav from "../DesktopNav";
 import MobileNav from "../MobileNav";
 import SearchBar from "../SearchBar";
 
-export default function HeaderNew() {
+export default function Header() {
   const isLoggedIn = AuthGuard();
   const userPicture = useAuthStore((state) => state.user?.avatar.url);
   const userName = useAuthStore((state) => state.user?.name);
 
   return (
-    <header className="py-5">
+    <header className="my-5 page-padding">
       <nav className="h-15 md:h-20">
         <ul className="flex justify-between items-center">
           <li>
@@ -39,7 +39,7 @@ export default function HeaderNew() {
 
           {isLoggedIn ? (
             <li>
-              <Link href="/profile">
+              <Link href={`/profile/${userName}`} title="Your profile page">
                 <div className="relative rounded-full h-10 w-10 overflow-hidden">
                   <Image
                     src={userPicture || "/default-user.svg"}
