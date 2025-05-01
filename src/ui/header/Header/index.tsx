@@ -39,7 +39,7 @@ export default function Header() {
 
           {isLoggedIn ? (
             <li>
-              <Link href={`/profile/${userName}`}>
+              <Link href={`/profile/${userName}`} title="Your profile page">
                 <div className="relative rounded-full h-10 w-10 overflow-hidden">
                   <Image
                     src={userPicture || "/default-user.svg"}
