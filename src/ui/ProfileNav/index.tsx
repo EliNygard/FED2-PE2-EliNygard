@@ -1,21 +1,22 @@
 'use client'
 
 import { useAuthStore } from "@/stores/useAuthStore";
+import Button from "../Button";
 
 export default function ProfileNav() {
 const isVenueManager = useAuthStore((state) => state.isVenueManager);
   return (
-    <div className="flex gap-3.5 flex-wrap">
+    <div className="mt-4 flex flex-wrap gap-2.5">
       {isVenueManager ? (
         <>
-        <div>Create New Venue</div>
-        <div>My Venues</div>
+        <Button variant="narrow">Create New Venue</Button>
+        <Button variant="narrow">My Venues</Button>
         </>
 
       ) : ''}
-      <div>My Bookings</div>
-      <div>Edit Profile</div>
-      <div>Log out</div>
+      <Button variant="narrow">My Bookings</Button>
+      <Button variant="narrow">Edit Profile</Button>
+      <Button variant="narrow">Log out</Button>
     </div>
   );
 }
