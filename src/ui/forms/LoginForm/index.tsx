@@ -41,7 +41,6 @@ export default function LoginForm() {
         password,
       });
       if (!user) return;
-      console.log(user);
 
       form.reset({
         email: "",
