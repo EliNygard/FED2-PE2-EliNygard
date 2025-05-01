@@ -7,19 +7,17 @@ export default function ProfileLayout({
   children: React.ReactNode;
 }) {
   return (
-    <main className="grid md:grid-cols-[200px_1fr] md:grid-rows-[1fr_auto]">
+    <section className="h-full grid md:grid-cols-[200px_1fr] md:grid-rows-[1fr_auto]">
       <div className="md:col-span-full md:row-start-1 bg-secondary-background">
         <ProfileHeader />
       </div>
 
-      {/* <div className="page-padding"> */}
-
       <div className="md:col-start-1 md:row-start-2 pl-6 md:pl-10 2xl:pl-20">
         <ProfileNav />
-        
       </div>
-      <div className="md:col-start-2 md:row-start-2 pl-6 md:pl-10 2xl:pl-20">{children}</div>
-      {/* </div> */}
-    </main>
+      <div className="md:col-start-2 md:row-start-2 pl-6 md:pl-10 2xl:pl-20">
+        {children}
+      </div>
+    </section>
   );
 }

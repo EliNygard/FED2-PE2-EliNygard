@@ -5,10 +5,10 @@ import SearchClient from "../../ui/SearchClient";
 
 export default function SearchPage() {
   return (
-    <main>
+    <div>
       <Suspense>
         <SearchClient />
       </Suspense>
-    </main>
+    </div>
   );
 }

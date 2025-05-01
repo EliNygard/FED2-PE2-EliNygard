@@ -1,6 +1,10 @@
+
+
 export default function ProfilePage() {
+    
+
     return (
-        <section>
+        <section className="">
             Here comes the different profile page sections
         </section>
     )
