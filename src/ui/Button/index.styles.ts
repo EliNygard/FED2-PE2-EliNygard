@@ -19,7 +19,6 @@ const variantStyles: Record<ButtonVariant, ReturnType<typeof css>> = {
     text-transform: uppercase;
     font-size: 1rem;
     width: 100%;
-    transition: background-color 0.3s, color 0.3s;
     `,
   disabled: css`
     background-color: var(--color-disabled-blue);
@@ -28,7 +27,6 @@ const variantStyles: Record<ButtonVariant, ReturnType<typeof css>> = {
     text-transform: uppercase;
     font-size: 1rem;
     width: 100%;
-    transition: background-color 0.3s, color 0.3s;
     `,
   narrow: css`
     background-color: var(--color-brand-blue);
@@ -37,7 +35,7 @@ const variantStyles: Record<ButtonVariant, ReturnType<typeof css>> = {
     text-transform: none;
     font-size: 0.875rem;
     padding: 0;
-    /* transition: background-color 0.9s, color 0.9s; */
+    width: auto;
     `,
 };
 
@@ -47,8 +45,8 @@ export const StyledButton = styled.button<{ variant?: ButtonVariant }>`
   border-radius: 6px;
   font-weight: 500;
   padding: 4px 16px 4px 16px;
-  /* transition: background-color 0.9s, color 0.9s; */
-  width: 100%;
+  transition: background-color 0.2s;
+  /* width: 100%; */
   cursor: pointer;
   &:hover {
     background-color: var(--color-interaction-blue);

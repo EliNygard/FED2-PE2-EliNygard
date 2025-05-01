@@ -7,7 +7,7 @@ export default function ProfileLayout({
   children: React.ReactNode;
 }) {
   return (
-    <main className="grid md:grid-cols-[176px_1fr] md:grid-rows-[1fr_auto]">
+    <main className="grid md:grid-cols-[200px_1fr] md:grid-rows-[1fr_auto]">
       <div className="md:col-span-full md:row-start-1 bg-secondary-background">
         <ProfileHeader />
       </div>
