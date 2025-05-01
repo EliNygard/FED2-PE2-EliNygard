@@ -156,3 +156,20 @@
     --rdp-font-size: 0.5rem;
   }
 }
+
+/* px-6 md:px-10 2xl:px-20 */
+
+.page-padding {
+  padding: 0 1.5rem 0 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .page-padding {
+    padding: 0 2.5rem 0 2.5rem; 
+  }
+}
+@media (min-width: 1536px) {
+  .page-padding {
+    padding: 0 5rem 0 5rem; 
+  }
+}

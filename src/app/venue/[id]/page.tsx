@@ -38,7 +38,7 @@ export default async function VenuePage({
   // const firstVenueImage = venueImages[0] || {};
 
   return (
-    <main className="m-auto grid grid-cols-1 gap-8 md:gap-x-16 lg:gap-x-28 md:grid-cols-[1fr_auto] max-w-[1120px]">
+    <main className="m-auto page-padding grid grid-cols-1 gap-8 md:gap-x-16 lg:gap-x-28 md:grid-cols-[1fr_auto] max-w-[1120px]">
       <div className="md:col-span-full">
         <VenueGallery venueImages={venueImages} />
       </div>
