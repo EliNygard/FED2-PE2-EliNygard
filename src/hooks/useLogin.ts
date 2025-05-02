@@ -1,37 +1,33 @@
 import { login } from "@/app/api/auth/login";
 import { ILogin, IUser } from "@/interface";
 import { useAuthStore } from "@/stores/useAuthStore";
+// import { useRouter } from "next/navigation";
 
 import { useState } from "react";
+// import { toast } from "sonner";
 
 export function useLogin() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isError, setIsError] = useState<string | null>(null);
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
-
+  
   const setUser = useAuthStore((state) => state.setUser);
-
-  async function loginUser({
+  // const userName = useAuthStore((state) => state.user?.name)
+  // const router = useRouter()
+  
+  async function handleLogin({
     email,
     password,
   }: ILogin): Promise<IUser | undefined> {
     setIsLoading(true);
     setIsError(null);
     setIsSuccess(false);
-
+    
     try {
       const userData = await login({ email, password });
-      console.log(userData);
-
+      
       setUser(userData);
       setIsSuccess(true);
-
-      console.log(
-        "is user venue manager?",
-        useAuthStore.getState().isVenueManager
-      );
-      console.log("user data saved in store", useAuthStore.getState().user);
-
       return userData;
     } catch (error: unknown) {
       const message =
@@ -42,7 +38,10 @@ export function useLogin() {
       setIsError(message);
     } finally {
       setIsLoading(false);
+      setIsError(null)
+      // toast.success('Login success')
+      // router.push(`/profile/${userName}`)
     }
   }
-  return { loginUser, isLoading, isError, isSuccess };
+  return { handleLogin, isLoading, isError, isSuccess };
 }

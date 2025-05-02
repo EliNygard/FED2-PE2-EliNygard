@@ -1,7 +1,7 @@
+// import { login as apiLogin } from "@/app/api/auth/login";
 import { IUser } from "@/interface";
 import { create } from "zustand";
 import { persist, subscribeWithSelector } from "zustand/middleware";
-import { login as apiLogin } from "@/app/api/auth/login";
 
 interface AuthState {
   user: IUser | null;
@@ -9,7 +9,7 @@ interface AuthState {
   isAuthenticated: boolean;
   isVenueManager: boolean;
   setUser: (user: IUser) => void;
-  login: (email: string, password: string) => Promise<void>;
+  // login: (email: string, password: string) => Promise<void>;
   logout: () => void;
 }
 
@@ -25,7 +25,6 @@ export const useAuthStore = create<AuthState>()(
     subscribeWithSelector((set, get) => ({
       ...initialState,
 
-      
       setUser: (user) =>
         set({
           user,
@@ -34,26 +33,19 @@ export const useAuthStore = create<AuthState>()(
           isVenueManager: !!user.venueManager,
         }),
 
-        login: async (email, password) => {
-          try {
-            const { user, accessToken } = await apiLogin({email, password})
-            set({
-              user, token: accessToken, isAuthenticated: true, isVenueManager: !!user.venueManager,
-            })
-          } catch (error) {
-            console.error('Login failed', error);
-            
-          }
-        },
+      changeToManager: () => {
+        // set up later. do something here if user edits profile and change to venue manager?
+      },
 
-        changeToManager: () => {
-          // do something here if user edits profile and change to venue manager?
-        },
-
-        logout:  () => {
-          if (!get().token) return
-          set({ user: null, token: null, isVenueManager: false, isAuthenticated: false, });
-        }
+      logout: () => {
+        if (!get().token) return;
+        set({
+          user: null,
+          token: null,
+          isVenueManager: false,
+          isAuthenticated: false,
+        });
+      },
     })),
     {
       name: "auth-storage",
@@ -73,5 +65,5 @@ useAuthStore.subscribe((state) => {
 });
 
 export function getToken() {
-  return useAuthStore.getState().user?.accessToken
+  return useAuthStore.getState().token;
 }

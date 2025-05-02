@@ -24,7 +24,7 @@ export default function LoginForm() {
     },
   });
 
-  const { loginUser, isLoading, isError } = useLogin();
+  const { handleLogin, isLoading, isError } = useLogin();
   const router = useRouter();
 
   const delay = (ms: number) =>
@@ -36,7 +36,7 @@ export default function LoginForm() {
     try {
       await delay(4000);
 
-      const user = await loginUser({
+      const user = await handleLogin({
         email,
         password,
       });
@@ -49,8 +49,6 @@ export default function LoginForm() {
       router.push(`/profile/${user.name}`);
     } catch (error) {
       console.error(error);
-    } finally {
-      // redirect customer to home, manager to profile page. Or do this in useLogin?
     }
   }
   return (
