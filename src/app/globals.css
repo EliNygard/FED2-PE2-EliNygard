@@ -137,6 +137,9 @@
   p {
     @apply text-base lg:text-lg
   }
+  li {
+    list-style: none;
+  }
 }
 
 .calendar-container .rdp-root {
