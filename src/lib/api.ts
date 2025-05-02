@@ -1,10 +1,13 @@
-import { IBooking, ICreateBooking, IVenue } from "@/interface";
+import { IBooking, ICreateBooking, IProfile, IVenue } from "@/interface";
 import { getToken } from "@/stores/useAuthStore";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL;
 const API_KEY = process.env.API_KEY;
 
 const paramOwner = "_owner=true";
+const paramCustomer = '_customer=true'
+const paramVenue = '_venue=true'
+// const paramVenues = '_venues=true'
 const paramBookings = "_bookings=true";
 const sortDate = "sort=created&sortOrder=desc";
 
@@ -62,3 +65,18 @@ export function setBooking(booking: ICreateBooking) {
     auth: true,
   });
 }
+
+export function getSingleProfile(username: string) {
+  return fetcher<IProfile>(`/profiles/${username}?${paramBookings}&${paramVenue}`, {
+    
+  })
+}
+
+export function getBookingsByProfile(username: string) {
+  return fetcher<IBooking[]>(`/profiles/${username}/bookings?${paramCustomer}&${paramVenue}`, {
+    method: 'GET',
+    auth: true,
+  })
+}
+
+
