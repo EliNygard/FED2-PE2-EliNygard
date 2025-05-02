@@ -75,6 +75,19 @@ export interface IPerson {
   bio?: string;
   avatar: IMedia;
 }
+export interface IProfile {
+  name: string;
+  email: string;
+  bio?: string;
+  avatar: IMedia;
+  venueManager?: boolean;
+  _count: {
+    venues: number
+    bookings: number
+  }
+  bookings: IBooking[];
+  venues: IVenue[]
+}
 
 export interface IBooking {
   id: string;
@@ -84,6 +97,7 @@ export interface IBooking {
   created: string;
   updated: string;
   customer: IPerson
+  venue: IVenue
 }
 
 export interface ICreateBooking {
@@ -92,5 +106,6 @@ export interface ICreateBooking {
   guests: number;
   venueId: string;
 }
+
 
 // other

@@ -2,10 +2,12 @@ import ProfileHeader from "@/ui/ProfileHeader";
 import ProfileNav from "@/ui/ProfileNav";
 
 export default function ProfileLayout({
+
   children,
 }: {
   children: React.ReactNode;
 }) {
+  
   return (
     <section>
       <ProfileHeader />

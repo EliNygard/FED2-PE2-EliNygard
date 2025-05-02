@@ -31,7 +31,7 @@ export default function ProfileNav() {
   );
 
   return (
-    <div className="flex flex-wrap gap-3.5 md:flex-col md:gap-8">
+    <div className="flex flex-wrap gap-3.5 md:flex-col md:gap-8 mb-4 md:mb-0">
       {isVenueManager && (
         <>
           <Tab href={`/profile/${username}/venues/new`}>Create New Venue</Tab>

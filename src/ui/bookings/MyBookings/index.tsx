@@ -8,8 +8,8 @@ export default function MyBookings({ bookings }: { bookings: IBooking[] }) {
 
   return (
     <section>
-      <h2>My Bookings</h2>
-      <ul className="flex flex-col gap-3.5">
+      <h2 className="mb-8">My Bookings</h2>
+      <ul className="grid grid-cols-1 gap-4 md:gap-6 lg:grid-cols-2">
         {bookings.map((booking) => (
           <BookingCard key={booking.id} booking={booking} />
         ))}
