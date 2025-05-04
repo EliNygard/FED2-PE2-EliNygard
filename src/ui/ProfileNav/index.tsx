@@ -20,18 +20,23 @@ export default function ProfileNav() {
     href: string;
     children: React.ReactNode;
   }) => (
+    <li>
+
     <Link href={href} passHref>
       <Button
-        variant="narrow"
+        $variant="narrow"
         className={path === href ? "bg-blue-600 text-white" : ""}
-      >
+        >
         {children}
       </Button>
     </Link>
+        </li>
   );
 
   return (
-    <div className="flex flex-wrap gap-3.5 md:flex-col md:gap-8 mb-4 md:mb-0">
+    <nav >
+      <ul className="flex flex-wrap gap-3.5 md:flex-col md:gap-8 mb-4 md:mb-0">
+
       {isVenueManager && (
         <>
           <Tab href={`/profile/${username}/venues/new`}>Create New Venue</Tab>
@@ -39,13 +44,14 @@ export default function ProfileNav() {
         </>
       )}
 
-      <div>
-        <Button variant="narrow" onClick={logout}>
+      <li>
+        <Button $variant="narrow" onClick={logout}>
           Log out
         </Button>
-      </div>
+      </li>
       <Tab href={`/profile/${username}/edit`}>Edit Profile</Tab>
       <Tab href={`/profile/${username}/bookings`}>My Bookings</Tab>
-    </div>
+        </ul>
+    </nav>
   );
 }

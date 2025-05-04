@@ -107,5 +107,9 @@ export interface ICreateBooking {
   venueId: string;
 }
 
+export interface IUpdateProfile {
+  avatar: IMedia
+}
+
 
 // other

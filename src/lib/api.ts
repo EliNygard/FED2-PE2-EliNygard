@@ -1,12 +1,19 @@
-import { IBooking, ICreateBooking, IProfile, IVenue } from "@/interface";
+import {
+  IBooking,
+  ICreateBooking,
+  IMedia,
+  IProfile,
+  IUser,
+  IVenue,
+} from "@/interface";
 import { getToken } from "@/stores/useAuthStore";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL;
 const API_KEY = process.env.API_KEY;
 
 const paramOwner = "_owner=true";
-const paramCustomer = '_customer=true'
-const paramVenue = '_venue=true'
+const paramCustomer = "_customer=true";
+const paramVenue = "_venue=true";
 // const paramVenues = '_venues=true'
 const paramBookings = "_bookings=true";
 const sortDate = "sort=created&sortOrder=desc";
@@ -44,7 +51,7 @@ async function fetcher<T>(
     throw new Error(`API error: ${response.status}: ${text}`);
   }
   const { data } = await response.json();
-  console.log(data);
+  console.log(data); //the new image I tried to update with is not in the response, it's still the old one
   return data as T;
 }
 
@@ -67,16 +74,26 @@ export function setBooking(booking: ICreateBooking) {
 }
 
 export function getSingleProfile(username: string) {
-  return fetcher<IProfile>(`/profiles/${username}?${paramBookings}&${paramVenue}`, {
-    
-  })
+  return fetcher<IProfile>(
+    `/profiles/${username}`,
+    { method: "GET", auth: true }
+  );
 }
 
 export function getBookingsByProfile(username: string) {
-  return fetcher<IBooking[]>(`/profiles/${username}/bookings?${paramCustomer}&${paramVenue}`, {
-    method: 'GET',
-    auth: true,
-  })
+  return fetcher<IBooking[]>(
+    `/profiles/${username}/bookings?${paramCustomer}&${paramVenue}`,
+    {
+      method: "GET",
+      auth: true,
+    }
+  );
 }
 
-
+export function setUpdateProfile(userName: string, avatar: IMedia) {
+  return fetcher<IUser>(`/profiles/${userName}`, {
+    method: "PUT",
+    body: JSON.stringify({ avatar }),
+    auth: true,
+  });
+}

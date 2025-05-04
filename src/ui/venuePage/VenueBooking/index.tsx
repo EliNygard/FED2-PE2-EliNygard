@@ -186,7 +186,7 @@ export default function VenueBooking({ venue }: { venue: IVenue }) {
                 type="submit"
                 // disabled={isLoading || !token}
                 title={!token ? "Log in to make a booking" : undefined}
-                variant={!token ? "disabled" : "primary"}
+                $variant={!token ? "disabled" : "primary"}
               >
                 Continue
               </Button>
@@ -227,12 +227,12 @@ export default function VenueBooking({ venue }: { venue: IVenue }) {
               onClick={handleSubmit(onConfirm)}
               disabled={isLoading || !token}
               title={!token ? "Log in to make a booking" : undefined}
-              variant={!token ? "disabled" : "primary"}
+              $variant={!token ? "disabled" : "primary"}
             >
               {isLoading ? "Loading" : "Confirm"}
             </Button>
             <DialogClose asChild>
-              <Button variant="secondary">Cancel</Button>
+              <Button $variant="secondary">Cancel</Button>
             </DialogClose>
           </DialogFooter>
         </DialogContent>

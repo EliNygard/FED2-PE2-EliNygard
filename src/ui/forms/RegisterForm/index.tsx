@@ -9,6 +9,7 @@ import { z } from "zod";
 import { StyledRegisterForm } from "./index.styles";
 import { Textarea } from "@/components/ui/textarea";
 import Button from "@/ui/Button";
+import { useAuthStore } from "@/stores/useAuthStore";
 
 const RegisterFormSchema = z.object({
   name: z
@@ -50,6 +51,7 @@ const RegisterFormSchema = z.object({
 });
 
 export function RegisterForm() {
+  const username = useAuthStore((store) => store.user?.name)
   const form = useForm<z.infer<typeof RegisterFormSchema>>({
     resolver: zodResolver(RegisterFormSchema),
     defaultValues: {
@@ -58,7 +60,7 @@ export function RegisterForm() {
       bio: "",
       avatar: {
         url: "https://images.unsplash.com/vector-1738925817850-4cfd13a45924?q=80&w=2360&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        alt: "",
+        alt: `Profile image of ${username}`,
       },
     },
   });
