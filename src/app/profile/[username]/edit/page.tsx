@@ -7,6 +7,7 @@ import Button from "@/ui/Button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 
 const UpdateProfileSchema = z.object({
@@ -46,6 +47,7 @@ export default function EditProfilePage() {
         avatar: { url: "", alt: "" },
       });
       router.push(`/profile/${username}`);
+      toast.success('Your profile is updated')
     } catch (error) {
       console.error(error);
     }
