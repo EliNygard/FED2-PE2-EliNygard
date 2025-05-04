@@ -8,7 +8,6 @@ import { useEffect, useState } from "react";
 
 export default function MyBookingsPage() {
   const username = useAuthStore((store) => store.user?.name) ?? "";
-  console.log(typeof username);
 
   const [bookings, setBookings] = useState<IBooking[] | null>(null);
   const [isLoading, setLoading] = useState(true);
@@ -19,8 +18,6 @@ export default function MyBookingsPage() {
     async function fetchBookings() {
       try {
         const data = await getBookingsByProfile(username);
-        console.log(data);
-
         setBookings(data);
       } catch (error) {
         console.error("Failed to fetch bookings", error);
