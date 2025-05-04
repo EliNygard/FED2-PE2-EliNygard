@@ -11,7 +11,7 @@ export function useLogin() {
   const [isError, setIsError] = useState<string | null>(null);
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
   
-  const setUser = useAuthStore((state) => state.setUser);
+  const setUser = useAuthStore((store) => store.setUser);
   // const userName = useAuthStore((state) => state.user?.name)
   // const router = useRouter()
   

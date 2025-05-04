@@ -1,4 +1,4 @@
-import { IBooking, ICreateBooking, IProfile, IVenue } from "@/interface";
+import { IBooking, ICreateBooking, IMedia, IProfile, IUser, IVenue } from "@/interface";
 import { getToken } from "@/stores/useAuthStore";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL;
@@ -79,6 +79,12 @@ export function getBookingsByProfile(username: string) {
   })
 }
 
-
+export function setUpdateProfile(userName: string, avatar: IMedia) {
+  return fetcher<IUser>(`/profiles/${userName}`, {
+    method: 'PUT',
+    body: JSON.stringify(avatar),
+    auth: true,
+  })
+}
 
 

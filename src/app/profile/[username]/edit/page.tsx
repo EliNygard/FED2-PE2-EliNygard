@@ -1,6 +1,7 @@
 "use client";
 
 import { Input } from "@/components/ui/input";
+import { useUpdateProfile } from "@/hooks/useUpdateProfile";
 import { useAuthStore } from "@/stores/useAuthStore";
 import Button from "@/ui/Button";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -18,6 +19,8 @@ const UpdateProfileSchema = z.object({
 
 export default function EditProfilePage() {
   const username = useAuthStore((store) => store.user?.name);
+  // console.log(username);
+  
   const form = useForm<z.infer<typeof UpdateProfileSchema>>({
     resolver: zodResolver(UpdateProfileSchema),
     defaultValues: {
@@ -28,27 +31,36 @@ export default function EditProfilePage() {
     },
   });
 
-  // async function onSubmit(values: z.infer<typeof UpdateProfileSchema>) {
-  //   const { avatar, } = values
+   const { updateProfile, isLoading, isError } = useUpdateProfile();
 
-  //   try {
-  //     const payload = await updateProfile({
-  //       avatar,
-  //     })
-  //     console.log(payload);
+  async function onSubmit(values: z.infer<typeof UpdateProfileSchema>) {
+    const { avatar } = values;
+    // console.log(avatar);
+    
 
-  //     form.reset({
-  //       avatar: { url: '', alt: ''},
-  //     })
+    try {
 
-  //   } catch (error) {
-  //     console.error(error);
+      console.log('Update with: ', avatar, username);
+      
 
-  //   }
-  // }
+      const payload = await updateProfile({ avatar });
+      console.log(payload);
+      
+      // do I need to store user? Update the store?
+
+      form.reset({
+        avatar: { url: "", alt: "" },
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   return (
-    <form className="max-w-80 flex flex-col gap-8">
+    <form
+      onSubmit={form.handleSubmit(onSubmit)}
+      className="max-w-80 flex flex-col gap-8"
+    >
       <h2>Update Profile</h2>
 
       <div className="flex flex-col gap-4">
