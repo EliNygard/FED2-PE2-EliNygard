@@ -24,7 +24,7 @@ export default function ProfileNav() {
 
     <Link href={href} passHref>
       <Button
-        variant="narrow"
+        $variant="narrow"
         className={path === href ? "bg-blue-600 text-white" : ""}
         >
         {children}
@@ -45,7 +45,7 @@ export default function ProfileNav() {
       )}
 
       <li>
-        <Button variant="narrow" onClick={logout}>
+        <Button $variant="narrow" onClick={logout}>
           Log out
         </Button>
       </li>

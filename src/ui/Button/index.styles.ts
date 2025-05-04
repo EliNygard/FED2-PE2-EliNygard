@@ -39,8 +39,8 @@ const variantStyles: Record<ButtonVariant, ReturnType<typeof css>> = {
     `,
 };
 
-export const StyledButton = styled.button<{ variant?: ButtonVariant }>`
-  ${({ variant = "primary" }) => variantStyles[variant]};
+export const StyledButton = styled.button<{ $variant?: ButtonVariant }>`
+  ${({ $variant = "primary" }) => variantStyles[$variant]};
   
   border-radius: 6px;
   font-weight: 500;

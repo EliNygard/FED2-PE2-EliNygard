@@ -5,10 +5,10 @@ import { StyledButton, ButtonVariant } from "./index.styles"
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
-  variant?: ButtonVariant;
+  $variant?: ButtonVariant;
 }
 
-export default function Button({ children, variant='primary', ...props }: ButtonProps) {
+export default function Button({ children, $variant='primary', ...props }: ButtonProps) {
 
-  return <StyledButton variant={variant} {...props}>{children}</StyledButton>
+  return <StyledButton $variant={$variant} {...props}>{children}</StyledButton>
 }
