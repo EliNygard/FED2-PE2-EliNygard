@@ -5,6 +5,7 @@ import { useUpdateProfile } from "@/hooks/useUpdateProfile";
 import { useAuthStore } from "@/stores/useAuthStore";
 import Button from "@/ui/Button";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -18,9 +19,12 @@ const UpdateProfileSchema = z.object({
 });
 
 export default function EditProfilePage() {
+  const router = useRouter()
   const username = useAuthStore((store) => store.user?.name);
-  // console.log(username);
-  
+  // const { getProfileData } = useGetSingleProfile();
+  const { updateProfile, isLoading, isError } = useUpdateProfile();
+  console.log(username);
+
   const form = useForm<z.infer<typeof UpdateProfileSchema>>({
     resolver: zodResolver(UpdateProfileSchema),
     defaultValues: {
@@ -31,26 +35,25 @@ export default function EditProfilePage() {
     },
   });
 
-   const { updateProfile, isLoading, isError } = useUpdateProfile();
+  // if (!username) {
+  //   console.error("Username is undefined. Cannot fetch profile data");
+  //   return <p>Please log in to edit your profile.</p>;
+  // }
+
+  // const profileData = getProfileData(username);
+  // console.log(profileData);
 
   async function onSubmit(values: z.infer<typeof UpdateProfileSchema>) {
     const { avatar } = values;
-    // console.log(avatar);
-    
 
     try {
-
-      console.log('Update with: ', avatar, username);
-      
-
       const payload = await updateProfile({ avatar });
       console.log(payload);
-      
-      // do I need to store user? Update the store?
 
       form.reset({
         avatar: { url: "", alt: "" },
       });
+      router.push(`/profile/${username}`);
     } catch (error) {
       console.error(error);
     }
@@ -72,6 +75,7 @@ export default function EditProfilePage() {
           type="text"
           id="avatarUrl"
           placeholder="Image link"
+          // value={profileData}
           {...form.register("avatar.url")}
         />
         {form.formState.errors.avatar?.url && (
@@ -80,7 +84,16 @@ export default function EditProfilePage() {
           </span>
         )}
       </div>
-      <Button>Update profile</Button>
+      <Button type="submit" disabled={isLoading} aria-busy={isLoading}>
+        {isLoading ? "Updating..." : "Update profile"}{" "}
+      </Button>
+
+      {isError && (
+        <div
+          className="text-alert-red text-[14px] mt-4"
+          role="alert"
+        >{`${isError}. Please try again.`}</div>
+      )}
     </form>
   );
 }
