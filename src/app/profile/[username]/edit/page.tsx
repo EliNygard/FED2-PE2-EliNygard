@@ -19,29 +19,21 @@ const UpdateProfileSchema = z.object({
 });
 
 export default function EditProfilePage() {
-  const router = useRouter()
+  const router = useRouter();
   const username = useAuthStore((store) => store.user?.name);
-  // const { getProfileData } = useGetSingleProfile();
+  const currentAvatar = useAuthStore((store) => store.user?.avatar.url);
+
   const { updateProfile, isLoading, isError } = useUpdateProfile();
-  console.log(username);
 
   const form = useForm<z.infer<typeof UpdateProfileSchema>>({
     resolver: zodResolver(UpdateProfileSchema),
     defaultValues: {
       avatar: {
-        url: "",
+        url: currentAvatar,
         alt: `Profile image of ${username}`,
       },
     },
   });
-
-  // if (!username) {
-  //   console.error("Username is undefined. Cannot fetch profile data");
-  //   return <p>Please log in to edit your profile.</p>;
-  // }
-
-  // const profileData = getProfileData(username);
-  // console.log(profileData);
 
   async function onSubmit(values: z.infer<typeof UpdateProfileSchema>) {
     const { avatar } = values;
@@ -75,7 +67,7 @@ export default function EditProfilePage() {
           type="text"
           id="avatarUrl"
           placeholder="Image link"
-          // value={profileData}
+          defaultValue={currentAvatar}
           {...form.register("avatar.url")}
         />
         {form.formState.errors.avatar?.url && (

@@ -1,5 +1,4 @@
-// import { login as apiLogin } from "@/app/api/auth/login";
-import { IUser } from "@/interface";
+import { IMedia, IUser } from "@/interface";
 import { create } from "zustand";
 import { persist, subscribeWithSelector } from "zustand/middleware";
 
@@ -9,7 +8,7 @@ interface AuthState {
   isAuthenticated: boolean;
   isVenueManager: boolean;
   setUser: (user: IUser) => void;
-  // login: (email: string, password: string) => Promise<void>;
+  updateAvatar: (avatar: IMedia) => void;
   logout: () => void;
 }
 
@@ -32,6 +31,17 @@ export const useAuthStore = create<AuthState>()(
           isAuthenticated: true,
           isVenueManager: !!user.venueManager,
         }),
+
+      updateAvatar: (avatar) => {
+        const user = get().user;
+        if (!user) return;
+        set({
+          user: {
+            ...user,
+            avatar,
+          },
+        });
+      },
 
       changeToManager: () => {
         // set up later. do something here if user edits profile and change to venue manager?
@@ -60,8 +70,9 @@ export const useAuthStore = create<AuthState>()(
 );
 
 // Subscribe to state changes and log them
+// DO I NEED THIS. DELETE IF NOT, IT IS LOGGING THE TOKEN ❗❗❗❗
 useAuthStore.subscribe((state) => {
-  console.log("[auth store] state changed: ", state);
+  console.log("[auth store] state changed: ", state.user);
 });
 
 export function getToken() {

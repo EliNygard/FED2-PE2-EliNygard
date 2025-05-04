@@ -11,7 +11,7 @@ import SearchBar from "../SearchBar";
 export default function Header() {
   const isLoggedIn = AuthGuard();
   const userPicture = useAuthStore((state) => state.user?.avatar.url);
-  const userName = useAuthStore((state) => state.user?.name);
+  const userName = useAuthStore((store) => store.user?.name);
 
   return (
     <header className="my-5 page-padding">
@@ -42,7 +42,7 @@ export default function Header() {
               <Link href={`/profile/${userName}`} title="Your profile page">
                 <div className="relative rounded-full h-10 w-10 overflow-hidden">
                   <Image
-                    src={userPicture || "/default-user.svg"}
+                    src={userPicture || "/default-user.png"}
                     alt={userName || "User"}
                     fill
                     sizes="33vw"
