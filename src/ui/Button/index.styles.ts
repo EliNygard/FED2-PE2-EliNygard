@@ -29,7 +29,7 @@ const variantStyles: Record<ButtonVariant, ReturnType<typeof css>> = {
     width: 100%;
     `,
   narrow: css`
-    background-color: var(--color-brand-blue);
+    /* background-color: var(--color-brand-blue); */
     color: #fff;
     padding: 0;
     text-transform: none;
