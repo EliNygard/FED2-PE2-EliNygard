@@ -7,8 +7,8 @@ export default function MyVenues({ venues }: {venues: IVenue[]}) {
   }
 
   return (
-    <section>
-      <h2>My Venues</h2>
+    <section className="max-w-xl">
+      <h2 className="mb-8">My Venues</h2>
       <ul>
     {venues.map((venue) => (
       <MyVenueCard key={venue.id} venue={venue} />
