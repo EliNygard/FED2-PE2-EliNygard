@@ -99,7 +99,7 @@ export function RegisterForm() {
 
       console.log(user);
 
-      // store user
+      // open login dialog
 
       form.reset({
         name: "",
@@ -110,8 +110,6 @@ export function RegisterForm() {
       });
     } catch (error) {
       console.error(error);
-    } finally {
-      // open login dialog
     }
   }
 
