@@ -16,6 +16,7 @@ const LoginFormSchema = z.object({
 });
 
 export default function LoginForm() {
+  const router = useRouter();
   const form = useForm<z.infer<typeof LoginFormSchema>>({
     resolver: zodResolver(LoginFormSchema),
     defaultValues: {
@@ -25,7 +26,8 @@ export default function LoginForm() {
   });
 
   const { handleLogin, isLoading, isError } = useLogin();
-  const router = useRouter();
+
+  console.log(isError);
 
   const delay = (ms: number) =>
     new Promise<void>((resolve) => setTimeout(resolve, ms));

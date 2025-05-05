@@ -25,7 +25,7 @@ export default function ProfileNav() {
     <Link href={href} passHref>
       <Button
         $variant="narrow"
-        className={path === href ? "bg-blue-600 text-white" : ""}
+        className={path === href ? "bg-interaction-blue text-white" : "bg-brand-blue"}
         >
         {children}
       </Button>
@@ -44,13 +44,13 @@ export default function ProfileNav() {
         </>
       )}
 
+      <Tab href={`/profile/${username}/edit`}>Edit Profile</Tab>
+      <Tab href={`/profile/${username}/bookings`}>My Bookings</Tab>
       <li>
-        <Button $variant="narrow" onClick={logout}>
+        <Button $variant="narrow" className="bg-brand-blue" onClick={logout}>
           Log out
         </Button>
       </li>
-      <Tab href={`/profile/${username}/edit`}>Edit Profile</Tab>
-      <Tab href={`/profile/${username}/bookings`}>My Bookings</Tab>
         </ul>
     </nav>
   );

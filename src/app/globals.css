@@ -129,13 +129,13 @@
     @apply bg-primary-background text-primary-font;
   }
   h1 {
-    @apply text-xl md:text-[22px] lg:text-2xl
+    @apply text-xl md:text-[22px] lg:text-2xl;
   }
   h2 {
-    @apply text-lg md:text-xl
+    @apply text-lg md:text-xl;
   }
   p {
-    @apply text-base lg:text-lg
+    @apply text-base lg:text-lg;
   }
   li {
     list-style: none;
@@ -144,17 +144,17 @@
 
 .calendar-container .rdp-root {
   /* default desktop: ~44×44px day cells */
-  --rdp-day-width: 2.5rem;      /* was 44px */
-  --rdp-day-height: 2.5rem;     /* was 44px */
-  --rdp-font-size: 0.875rem;    /* caption & weekday font */
+  --rdp-day-width: 2.5rem; /* was 44px */
+  --rdp-day-height: 2.5rem; /* was 44px */
+  --rdp-font-size: 0.875rem; /* caption & weekday font */
   /* max-width: 100%;              never overflow its parent */
-  --rdp-accent-color: var(--color-brand-blue)
+  --rdp-accent-color: var(--color-brand-blue);
 }
 
 /* tweak further on small screens */
 @media (max-width: 480px) {
   .calendar-container .rdp-root {
-    --rdp-day-width: 1rem;      /* ~32px cells */
+    --rdp-day-width: 1rem; /* ~32px cells */
     --rdp-day-height: 1rem;
     --rdp-font-size: 0.5rem;
   }
@@ -168,11 +168,11 @@
 
 @media (min-width: 768px) {
   .page-padding {
-    padding: 0 2.5rem 0 2.5rem; 
+    padding: 0 2.5rem 0 2.5rem;
   }
 }
 @media (min-width: 1536px) {
   .page-padding {
-    padding: 0 5rem 0 5rem; 
+    padding: 0 5rem 0 5rem;
   }
 }

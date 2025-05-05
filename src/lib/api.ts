@@ -51,7 +51,7 @@ async function fetcher<T>(
     throw new Error(`API error: ${response.status}: ${text}`);
   }
   const { data } = await response.json();
-  console.log(data); //the new image I tried to update with is not in the response, it's still the old one
+  console.log(data);
   return data as T;
 }
 
@@ -65,19 +65,21 @@ export function getVenueById(id: string) {
   return fetcher<IVenue>(`/venues/${id}?${paramOwner}&${paramBookings}`);
 }
 
-export function setBooking(booking: ICreateBooking) {
-  return fetcher<IBooking>(`/bookings`, {
-    method: "POST",
-    body: JSON.stringify(booking),
-    auth: true,
-  });
+export function getVenuesByProfile(username: string) {
+  return fetcher<IVenue[]>(
+    `/profiles/${username}/venues?${paramOwner}&${paramBookings}`,
+    {
+      method: "GET",
+      auth: true,
+    }
+  );
 }
 
 export function getSingleProfile(username: string) {
-  return fetcher<IProfile>(
-    `/profiles/${username}`,
-    { method: "GET", auth: true }
-  );
+  return fetcher<IProfile>(`/profiles/${username}`, {
+    method: "GET",
+    auth: true,
+  });
 }
 
 export function getBookingsByProfile(username: string) {
@@ -88,6 +90,14 @@ export function getBookingsByProfile(username: string) {
       auth: true,
     }
   );
+}
+
+export function setBooking(booking: ICreateBooking) {
+  return fetcher<IBooking>(`/bookings`, {
+    method: "POST",
+    body: JSON.stringify(booking),
+    auth: true,
+  });
 }
 
 export function setUpdateProfile(userName: string, avatar: IMedia) {

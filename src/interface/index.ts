@@ -1,4 +1,4 @@
-// API 
+// API
 
 export interface IRegisterRequest {
   method: string;
@@ -65,8 +65,8 @@ export interface IVenue {
     lat: number;
     lng: number;
   };
-  owner: IPerson
-  bookings: IBooking[]
+  owner: IPerson;
+  bookings: IBookingOnVenue[];
 }
 
 export interface IPerson {
@@ -82,11 +82,11 @@ export interface IProfile {
   avatar: IMedia;
   venueManager?: boolean;
   _count: {
-    venues: number
-    bookings: number
-  }
+    venues: number;
+    bookings: number;
+  };
   bookings: IBooking[];
-  venues: IVenue[]
+  venues: IVenue[];
 }
 
 export interface IBooking {
@@ -96,8 +96,8 @@ export interface IBooking {
   guests: number;
   created: string;
   updated: string;
-  customer: IPerson
-  venue: IVenue
+  customer: IPerson;
+  venue: IVenue;
 }
 
 export interface ICreateBooking {
@@ -108,8 +108,15 @@ export interface ICreateBooking {
 }
 
 export interface IUpdateProfile {
-  avatar: IMedia
+  avatar: IMedia;
 }
 
-
-// other
+export interface IBookingOnVenue {
+  id: string;
+  dateFrom: string;
+  dateTo: string;
+  guests: number;
+  created: string;
+  updated: string;
+  customer: IPerson;
+}
