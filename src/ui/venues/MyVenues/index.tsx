@@ -6,6 +6,8 @@ export default function MyVenues({ venues }: {venues: IVenue[]}) {
     return <p>You have no venues</p>
   }
 
+  
+
   return (
     <section className="max-w-xl">
       <h2 className="mb-8">My Venues</h2>

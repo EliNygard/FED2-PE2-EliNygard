@@ -199,6 +199,8 @@ export default function VenueBooking({ venue }: { venue: IVenue }) {
         </div>
       </section>
 
+      {/* Booking confirmation dialog */}
+
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogContent>
           <DialogHeader>

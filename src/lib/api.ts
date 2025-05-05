@@ -51,7 +51,7 @@ async function fetcher<T>(
     throw new Error(`API error: ${response.status}: ${text}`);
   }
   const { data } = await response.json();
-  console.log(data); //the new image I tried to update with is not in the response, it's still the old one
+  console.log(data);
   return data as T;
 }
 

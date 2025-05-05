@@ -20,6 +20,8 @@ export function useVenuesByProfile(username: string) {
       setError(null);
       try {
         const data = await getVenuesByProfile(username);
+        console.log(data);
+        
         setVenues(data);
       } catch (error: unknown) {
         const message =
