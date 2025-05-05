@@ -66,7 +66,7 @@ export function getVenueById(id: string) {
 }
 
 export function getVenuesByProfile(username: string) {
-  return fetcher<IVenue>(
+  return fetcher<IVenue[]>(
     `/profiles/${username}/venues?${paramOwner}&${paramBookings}`,
     {
       method: "GET",
