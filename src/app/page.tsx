@@ -1,9 +1,10 @@
 import { IVenue } from "@/interface";
+import { getVenues } from "@/lib/api";
 import VenueCard from "@/ui/VenueCard";
-import { getVenues } from "../lib/venues/getVenues";
+
 
 export default async function HomePage() {
-  const data = await getVenues();
+  const data = await getVenues()
 
   return (
     <section className="flex flex-col gap-[32px] page-padding">
