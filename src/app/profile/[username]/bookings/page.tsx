@@ -18,7 +18,7 @@ export default function MyBookingsPage() {
 
     async function fetchBookings() {
       try {
-        const data = await getBookingsByProfile(username);
+        const {data} = await getBookingsByProfile(username);
         setBookings(data);
       } catch (error) {
         console.error("Failed to fetch bookings", error);

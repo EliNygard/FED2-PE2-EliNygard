@@ -120,3 +120,13 @@ export interface IBookingOnVenue {
   updated: string;
   customer: IPerson;
 }
+
+export interface IPaginationMeta {
+  isFirstPage: boolean;
+  isLastPage: boolean;
+  currentPage: number;
+  previousPage: number | null;
+  nextPage: number | null;
+  pageCount: number;
+  totalCount: number;
+}

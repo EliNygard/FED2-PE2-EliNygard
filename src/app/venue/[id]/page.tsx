@@ -11,7 +11,10 @@ import VenueLocation from "@/ui/venuePage/VenueLocation";
 // add image slider
 
 export async function generateStaticParams() {
-  const venues = await getVenues();
+  const response = await getVenues();
+  const venues = response.data
+  console.log(venues);
+  
   return venues.map((venue) => ({
     id: venue.id,
   }));
@@ -24,7 +27,10 @@ export default async function VenuePage({
 }) {
   const { id } = await params;
 
-  const venue = await getVenueById(id);
+  const response = await getVenueById(id);
+  const venue = response.data
+  console.log(venue);
+  
 
   // add default image if array is empty
   const venueImages = Array.isArray(venue.media)
