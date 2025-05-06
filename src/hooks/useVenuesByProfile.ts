@@ -19,7 +19,8 @@ export function useVenuesByProfile(username: string) {
       setLoading(true);
       setError(null);
       try {
-        const data = await getVenuesByProfile(username);
+        const response = await getVenuesByProfile(username);
+        const data = response.data
         console.log(data);
         
         setVenues(data);

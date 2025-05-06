@@ -17,7 +17,7 @@ const paramCustomer = "_customer=true";
 const paramVenue = "_venue=true";
 // const paramVenues = '_venues=true'
 const paramBookings = "_bookings=true";
-const sortDate = "sort=created&sortOrder=desc";
+// const sortDate = "sort=created&sortOrder=desc";
 
 // pagination: limit and page
 
@@ -26,7 +26,7 @@ interface FetcherOptions extends Omit<RequestInit, "headers"> {
   auth?: boolean;
 }
 
-interface PaginatedResponse<T> {
+export interface PaginatedResponse<T> {
   data: T
   meta: IPaginationMeta
 }
@@ -57,6 +57,8 @@ async function fetcher<T>(
     throw new Error(`API error: ${response.status}: ${text}`);
   }
   const body = await response.json();
+  console.log(body);
+  
   
   return {
     data: body.data as T,
@@ -78,7 +80,7 @@ export function getVenues(page = 1, limit = 10): Promise<PaginatedResponse<IVenu
   );
 }
 
-export function getVenueById(id: string) {
+export function getVenueById(id: string): Promise<PaginatedResponse<IVenue>> {
   return fetcher<IVenue>(`/venues/${id}?${paramOwner}&${paramBookings}`);
 }
 
