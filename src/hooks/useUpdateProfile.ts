@@ -18,7 +18,8 @@ export function useUpdateProfile() {
     setIsError(null);
 
     try {
-      const userData = await setUpdateProfile(userName, avatar);
+      const response = await setUpdateProfile(userName, avatar);
+      const userData = response.data
       console.log(userData.avatar);
       updateAvatar(userData.avatar);
 
