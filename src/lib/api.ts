@@ -2,6 +2,7 @@ import {
   IBooking,
   ICreateBooking,
   IMedia,
+  IPaginationMeta,
   IProfile,
   IUser,
   IVenue,
@@ -25,10 +26,15 @@ interface FetcherOptions extends Omit<RequestInit, "headers"> {
   auth?: boolean;
 }
 
+interface PaginatedResponse<T> {
+  data: T
+  meta: IPaginationMeta
+}
+
 async function fetcher<T>(
   url: string,
   options: FetcherOptions = {}
-): Promise<T> {
+): Promise<PaginatedResponse<T>> {
   const { auth = false, headers: customHeaders, ...init } = options;
   const token = getToken();
 
@@ -50,14 +56,25 @@ async function fetcher<T>(
     const text = await response.text();
     throw new Error(`API error: ${response.status}: ${text}`);
   }
-  const { data } = await response.json();
-  console.log(data);
-  return data as T;
+  const body = await response.json();
+  
+  return {
+    data: body.data as T,
+    meta: body.meta as IPaginationMeta
+  }
 }
 
-export function getVenues() {
+export function getVenues(page = 1, limit = 10): Promise<PaginatedResponse<IVenue[]>> {
+  const qs = new URLSearchParams({
+    _owner: 'true',
+    _bookings: 'true',
+    sort: 'created',
+    order: 'desc',
+    limit: limit.toString(),
+    page: page.toString()
+  })
   return fetcher<IVenue[]>(
-    `/venues?${paramOwner}&${paramBookings}&${sortDate}`
+    `/venues?${qs.toString()}`
   );
 }
 
