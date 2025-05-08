@@ -5,6 +5,13 @@ import { useAuthStore } from "@/stores/useAuthStore";
 import MyVenues from "@/ui/venues/MyVenues";
 import Link from "next/link";
 
+/**
+ * Page component for displaying a list of the current Manager's venues.
+ *
+ * - Shows a loading state while fetching.
+ * - Renders <My Venues> or a 'no venues' call-to-action
+ */
+
 export default function MyVenuesPage() {
   const username = useAuthStore((state) => state.user?.name) ?? "";
   const { venues, loading, error } = useVenuesByProfile(username);

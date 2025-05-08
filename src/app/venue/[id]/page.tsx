@@ -7,18 +7,15 @@ import VenueInfo from "@/ui/venuePage/VenueInfo";
 import VenueLocation from "@/ui/venuePage/VenueLocation";
 
 // TODO
-// fix image urls (update venue, check venueCard)
-// add image slider
+// add image slider to mobile
 
-export async function generateStaticParams() {
-  const response = await getVenues();
-  const venues = response.data
-  console.log(venues);
-  
-  return venues.map((venue) => ({
-    id: venue.id,
-  }));
-}
+/**
+ * Page component for displaying details about a specific venue.
+ *
+ * @param props.params A promise that resolves to an object containing:
+ *  - `id`: The unique identifier for the venue to fetch.
+ * @returns A React element rendering the venue’s gallery, header, info, booking form, and location.
+ */
 
 export default async function VenuePage({
   params,
@@ -28,9 +25,8 @@ export default async function VenuePage({
   const { id } = await params;
 
   const response = await getVenueById(id);
-  const venue = response.data
+  const venue = response.data;
   console.log(venue);
-  
 
   // add default image if array is empty
   const venueImages = Array.isArray(venue.media)
@@ -39,8 +35,8 @@ export default async function VenuePage({
       ? [venue.media as IMedia]
       : [];
 
-      console.log(venue.bookings);
-      
+  console.log(venue.bookings);
+
   // const firstVenueImage = venueImages[0] || {};
 
   return (
@@ -62,4 +58,25 @@ export default async function VenuePage({
       </div>
     </section>
   );
+}
+
+/**
+ * Next.js “generateStaticParams” function to statically pre‐render this page
+ * for every venue in the system.
+ *
+ * Fetches the full list of venues, and returns an array of param objects,
+ * each containing an `id` string to be used by Next.js when building static
+ * pages.
+ *
+ * @returns An array of param objects `{ id: string }` for each venue.
+ */
+
+export async function generateStaticParams() {
+  const response = await getVenues();
+  const venues = response.data;
+  console.log(venues);
+
+  return venues.map((venue) => ({
+    id: venue.id,
+  }));
 }

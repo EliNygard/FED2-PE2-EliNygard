@@ -1,9 +1,15 @@
 import { IBooking } from "@/interface";
 import Image from "next/image";
 import Link from "next/link";
+import { JSX } from "react";
 
+/**
+ * BookingCard displays a single booking a user has made on a venue. The card is displayed on a users profile page, in the section `My Bookings`. 
+ * Including: venue image, location, dates and guest count.
+ * @param booking The booking data (dates, venue, guests).
+ */
 
-export default function BookingCard({ booking }: { booking: IBooking }) {
+export default function BookingCard({ booking }: { booking: IBooking }): JSX.Element {
   const dateFormat = new Intl.DateTimeFormat("no-NO", {
     year: "numeric",
     month: "numeric",

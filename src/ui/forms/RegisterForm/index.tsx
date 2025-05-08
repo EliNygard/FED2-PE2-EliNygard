@@ -66,7 +66,7 @@ export function RegisterForm() {
   });
 
   const {
-    registerUser,
+    handleRegister,
     isLoading,
     isError,
     isVenueManager,
@@ -88,7 +88,7 @@ export function RegisterForm() {
     try {
       await delay(3000);
 
-      const user = await registerUser({
+      const user = await handleRegister({
         name,
         email,
         password,

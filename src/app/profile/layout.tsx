@@ -1,6 +1,11 @@
 import ProfileHeader from "@/ui/ProfileHeader";
 import ProfileNav from "@/ui/ProfileNav";
 
+/**
+ * Layout component for /profile pages.
+ *
+ * - Renders <Profile Header> and <ProfileNav>
+ */
 export default function ProfileLayout({
 
   children,

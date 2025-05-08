@@ -31,6 +31,20 @@ export interface PaginatedResponse<T> {
   meta: IPaginationMeta
 }
 
+/**
+ * A wrapper around `fetch` that:
+ *  - prefixes the API base URL
+ *  - applies default headers (JSON & API-key)
+ *  - injects a Bearer token when `auth: true`
+ *  - checks for HTTP errors and throws
+ *
+ * @template T  The shape of the `data` payload returned by the API
+ * @param url           The endpoint path (e.g. "/venues/${id}?${paramOwner}&${paramBookings}")
+ * @param options.auth  If `true`, sends API-key + Authorization header
+ * @throws {Error}      When `response.ok === false`
+ * @returns             An object with `.data` of type `T` and pagination metadata `.meta`
+ */
+
 async function fetcher<T>(
   url: string,
   options: FetcherOptions = {}
