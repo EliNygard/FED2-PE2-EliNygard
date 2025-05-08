@@ -7,6 +7,17 @@ import {
 import { IVenue } from "@/interface";
 import { dateFormat } from "@/utils/dateFormat";
 
+/**
+ * BookingsAccordion displays info to the venue manager about each booking made on a specific venue:
+ * - The customers name
+ * - The guests count
+ * - The booked dates
+ * - The customer's email address
+ *  
+ * - The component is part of the MyVenueCard.
+ * @param venue The venue data.
+ */
+
 export default function BookingsAccordion({ venue }: { venue: IVenue }) {
   console.log(venue);
   const bookings = venue.bookings;

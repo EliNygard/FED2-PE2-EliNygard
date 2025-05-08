@@ -38,6 +38,14 @@ import { DayPicker } from "react-day-picker";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
+/**
+ * VenueBooking displays a calendar and a form so that the user can book a stay. 
+ * - The component is part of the VenuePage
+ * - The user selects dates and guests and is displayed the total cost before they can continue.
+ * - Button is disabled if user is not logged in
+ * @param venue The venue data.
+ */
+
 export default function VenueBooking({ venue }: { venue: IVenue }) {
   const [isOpen, setIsOpen] = useState(false);
   const [bookingData, setBookingData] = useState<{

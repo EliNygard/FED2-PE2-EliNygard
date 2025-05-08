@@ -4,6 +4,16 @@ import Image from "next/image";
 import Link from "next/link";
 import BookingsAccordion from "../BookingsOnVenue";
 
+/**
+ * MyVenueCard displays the venue manager's own venues that customers can book.
+ * - A link to the venue page
+ * - The venue's name
+ * - Buttons for the manager to either delete or edit the venue
+ *  
+ * - The component is part of the MyVenues.
+ * @param venue The venue data.
+ */
+
 export default function MyVenueCard({ venue }: { venue: IVenue }) {
   const firstImage = venue.media?.[0];
   const bookings = venue.bookings;

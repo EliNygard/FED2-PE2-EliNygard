@@ -43,7 +43,6 @@ export default function MyBookingsPage() {
   if (isLoading) {
     return <p>Loading bookings...</p>;
   }
-  
 
   return (
     <MyBookingsSection
@@ -57,6 +56,5 @@ export default function MyBookingsPage() {
         </div>
       }
     />
-    
   );
 }
