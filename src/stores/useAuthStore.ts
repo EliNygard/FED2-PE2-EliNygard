@@ -1,23 +1,36 @@
-import { IMedia, IUser } from "@/interface";
+import { AuthState } from "@/interface";
 import { create } from "zustand";
 import { persist, subscribeWithSelector } from "zustand/middleware";
 
-interface AuthState {
-  user: IUser | null;
-  token: string | null;
-  isAuthenticated: boolean;
-  isVenueManager: boolean;
-  setUser: (user: IUser) => void;
-  updateAvatar: (avatar: IMedia) => void;
-  logout: () => void;
-}
+/**
+ * @file authStore.ts
+ * @description A persisted Zustand store for authentication state (user, token, roles).
+ */
 
+/**
+ * Initial (unauthenticated) state for the auth store.
+ */
 const initialState = {
   user: null,
   token: null,
   isAuthenticated: false,
   isVenueManager: false,
 };
+
+/**
+ * A Zustand-powered auth store, persisted under "auth-storage".
+ * @property {IUser|null} user - {@link IUser} Currently authenticated user, or null if not logged in.
+ * @property {string|null} token - JWT or similar token for authenticated requests.
+ * @property {boolean} isAuthenticated - `true` if a user is logged in.
+ * @property {boolean} isVenueManager - `true` if the logged-in user has venue manager privileges.
+ * @property {(user: IUser) => void} setUser - {@link IUser} Update the user and authentication state.
+ * @property {(avatar: IMedia) => void} updateAvatar - {@link IMedia} Change the current user’s avatar.
+ * @property {() => void} logout - Log out the current user.
+ * @returns {AuthState} - {@link AuthState}The auth state slice and its actions.
+ *
+ * @example
+ * const isVenueManager = useAuthStore((state) => state.isVenueManager)
+ */
 
 export const useAuthStore = create<AuthState>()(
   persist(
@@ -75,6 +88,11 @@ useAuthStore.subscribe((state) => {
   console.log("[auth store] state changed: ", state.user);
 });
 
-export function getToken() {
+/**
+ * Grab the current auth token from the store.
+ * @returns {string|null} The persisted JWT (or null if logged out).
+ */
+
+export function getToken(): string | null {
   return useAuthStore.getState().token;
 }
