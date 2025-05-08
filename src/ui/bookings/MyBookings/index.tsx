@@ -1,9 +1,24 @@
 import { IBooking } from "@/interface";
+import React from "react";
 import BookingCard from "../BookingCard";
 
-export default function MyBookings({ bookings }: { bookings: IBooking[] }) {
-  if (!bookings || bookings.length === 0) {
-    return <p>You have no bookings</p>;
+/**
+ * MyBookingsSection displays a list with the users venue bookings.
+ *
+ * - Renders <BookingCard> with details about the booking.
+ */
+
+interface MyBookingsSectionProps {
+  bookings: IBooking[];
+  emptyState?: React.ReactNode;
+}
+
+export default function MyBookingsSection({
+  bookings,
+  emptyState = <p>You have no bookings yet.</p>,
+}: MyBookingsSectionProps) {
+  if (bookings.length === 0) {
+    return <>{emptyState}</>;
   }
 
   return (

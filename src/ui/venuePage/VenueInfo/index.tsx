@@ -1,5 +1,11 @@
 import { IVenue } from "@/interface";
 
+/**
+ * VenueInfo displays info about the venue to the user. 
+ * - The component is part of the VenuePage.
+ * @param venue The venue data.
+ */
+
 export default function VenueInfo({ venue }: { venue: IVenue }) {
   return (
     <section>

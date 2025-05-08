@@ -18,10 +18,17 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 
-// TODO
+// @todo
 // gallery opens: self made grid on mobile?
 // gallery opens: shadcn Carousel for md screens and up
 // if fewer images, edit grid
+
+/**
+ * VenueGallery displays a grid of the venue image(s). 
+ * - The component is part of the VenuePage
+ * - The user can click on an image in the grid and a full screen view opens.
+ * @param venue The venue images.
+ */
 
 export default function VenueGallery({
   venueImages,

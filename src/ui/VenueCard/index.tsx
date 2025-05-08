@@ -5,6 +5,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { roboto } from "../fonts";
 
+/**
+ * VenueCard displays a single venue with only the basic information. 
+ * Including: venue image, city and rate.
+ * @param venue The venue data.
+ */
+
 export default function VenueCard({ venue }: { venue: IVenue }) {
   // lift out of component
   const firstImage = venue.media?.[0];

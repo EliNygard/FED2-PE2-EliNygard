@@ -12,6 +12,13 @@ export const metadata: Metadata = {
   description: "Escape the Ordinary, Embrace the Extraordinary",
 };
 
+/**
+ * Root Layout component for all pages.
+ *
+ * - Renders React components for toaster, header and footer, and children
+ * - Includes a toast provider to make sure the toasters are displayed if the user is directed to a new page
+ */
+
 export default function RootLayout({
   children,
 }: Readonly<{

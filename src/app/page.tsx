@@ -14,6 +14,13 @@ import { getVenues } from "@/lib/api";
 import VenueCard from "@/ui/VenueCard";
 import { useEffect, useState } from "react";
 
+/**
+ * Page component for displaying the home page with a list of all venues available on Holidaze.
+ *
+ * - Shows a loading state while fetching data.
+ * - Renders <VenueCard>
+ */
+
 export default function HomePage() {
   // create a VenueList component and add to home page
 

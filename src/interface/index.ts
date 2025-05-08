@@ -130,3 +130,15 @@ export interface IPaginationMeta {
   pageCount: number;
   totalCount: number;
 }
+
+// other
+
+export interface AuthState {
+  user: IUser | null;
+  token: string | null;
+  isAuthenticated: boolean;
+  isVenueManager: boolean;
+  setUser: (user: IUser) => void;
+  updateAvatar: (avatar: IMedia) => void;
+  logout: () => void;
+}

@@ -3,6 +3,12 @@ import Image from "next/image";
 import Link from "next/link";
 import styles from "./styles.module.css";
 
+/**
+ * VenueHeader displays info to the user: the profile image and name of the host, and the venue's rate. 
+ * - The component is part of the VenuePage.
+ * @param venue The venue data.
+ */
+
 export default function VenueHeader({ venue }: { venue: IVenue }) {
   return (
     <header className={styles.header}>

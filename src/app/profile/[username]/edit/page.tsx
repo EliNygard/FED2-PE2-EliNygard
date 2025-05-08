@@ -19,10 +19,20 @@ const UpdateProfileSchema = z.object({
   }),
 });
 
+/**
+ * Page component for displaying the update profile form.
+ *
+ * - Renders a form where the user can update their profile image
+ * - Shows a loading state on the button while fetching.
+ * - Updates the profile image
+ * - Redirects to profile page on success
+ * - Displays a message if error
+ */
+
 export default function EditProfilePage() {
   const router = useRouter();
-  const username = useAuthStore((store) => store.user?.name);
-  const currentAvatar = useAuthStore((store) => store.user?.avatar.url);
+  const username = useAuthStore((state) => state.user?.name);
+  const currentAvatar = useAuthStore((state) => state.user?.avatar.url);
 
   const { updateProfile, isLoading, isError } = useUpdateProfile();
 

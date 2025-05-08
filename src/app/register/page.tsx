@@ -3,6 +3,12 @@
 import { RegisterForm } from "@/ui/forms/RegisterForm";
 import Image from "next/image";
 
+/**
+ * Page component for displaying the register form.
+ *
+ * - Renders <RegisterForm> and a brand image based on screen size (mobile or md)
+ */
+
 export default function RegisterPage() {
   return (
     <section className="max-w-4xl m-auto">

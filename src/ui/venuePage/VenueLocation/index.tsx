@@ -1,5 +1,12 @@
 import { IVenue } from "@/interface";
 
+/**
+ * VenueLocation displays the venue's address to the user.
+ * - The user can see a map frame and click on it to be taken to google maps. 
+ * - The component is part of the VenuePage.
+ * @param venue The venue data.
+ */
+
 export default function VenueLocation({ venue }: { venue: IVenue }) {
   const city = venue.location.city;
   const embedSrc = `https://www.google.com/maps?q=${encodeURIComponent(city)}&z=15&output=embed`;

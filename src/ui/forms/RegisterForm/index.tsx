@@ -1,16 +1,20 @@
 "use client";
 
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { useRegister } from "@/hooks/useRegister";
+import { useAuthStore } from "@/stores/useAuthStore";
+import Button from "@/ui/Button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { FaChevronRight } from "react-icons/fa";
 import { z } from "zod";
 import { StyledRegisterForm } from "./index.styles";
-import { Textarea } from "@/components/ui/textarea";
-import Button from "@/ui/Button";
-import { useAuthStore } from "@/stores/useAuthStore";
 
+/**
+ * @schema RegisterFormSchema
+ * @description Zod schema for validating a user registration form.
+ */
 const RegisterFormSchema = z.object({
   name: z
     .string()
@@ -50,8 +54,18 @@ const RegisterFormSchema = z.object({
   }),
 });
 
+/**
+ * RegisterForm component.
+ *
+ * Renders a register form with the fields: name, email, password, confirm password, bio and profile image.
+ * The form handles validation and submission.
+ * The form fields are reset on successful register.
+ *
+ * @component
+ */
+
 export function RegisterForm() {
-  const username = useAuthStore((store) => store.user?.name)
+  const username = useAuthStore((state) => state.user?.name);
   const form = useForm<z.infer<typeof RegisterFormSchema>>({
     resolver: zodResolver(RegisterFormSchema),
     defaultValues: {
@@ -66,7 +80,7 @@ export function RegisterForm() {
   });
 
   const {
-    registerUser,
+    handleRegister,
     isLoading,
     isError,
     isVenueManager,
@@ -76,6 +90,11 @@ export function RegisterForm() {
   const delay = (ms: number) =>
     new Promise<void>((resolve) => setTimeout(resolve, ms));
 
+  /**
+   * Submit handler invoked when the form is submitted and passes validation.
+   *
+   * @param values - The validated form values.
+   */
   async function onSubmit(values: z.infer<typeof RegisterFormSchema>) {
     const {
       name,
@@ -88,7 +107,7 @@ export function RegisterForm() {
     try {
       await delay(3000);
 
-      const user = await registerUser({
+      const user = await handleRegister({
         name,
         email,
         password,
@@ -162,7 +181,6 @@ export function RegisterForm() {
 
       <StyledRegisterForm>
         <form
-          
           onSubmit={form.handleSubmit(onSubmit, (errors) => {
             console.log("Validation failed", errors);
           })}
@@ -172,7 +190,12 @@ export function RegisterForm() {
           <div className="input-wrapper">
             <div>
               <label htmlFor="name">Name</label>
-              <Input type="text" id="name" placeholder="Name" {...form.register("name")} />
+              <Input
+                type="text"
+                id="name"
+                placeholder="Name"
+                {...form.register("name")}
+              />
               {form.formState.errors.name && (
                 <span aria-live="polite">
                   {form.formState.errors.name.message}
@@ -182,7 +205,13 @@ export function RegisterForm() {
 
             <div>
               <label htmlFor="email">Email</label>
-              <Input type="email" id="email" autoComplete="email" placeholder="Email" {...form.register("email")} />
+              <Input
+                type="email"
+                id="email"
+                autoComplete="email"
+                placeholder="Email"
+                {...form.register("email")}
+              />
               {form.formState.errors.email && (
                 <span aria-live="polite">
                   {form.formState.errors.email.message}
@@ -251,7 +280,10 @@ export function RegisterForm() {
             </Button>
 
             {isError && (
-              <p className="error-message" role="alert">{`${isError}. Please try again.`}</p>
+              <p
+                className="error-message"
+                role="alert"
+              >{`${isError}. Please try again.`}</p>
             )}
           </div>
         </form>

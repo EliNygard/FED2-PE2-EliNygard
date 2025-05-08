@@ -10,11 +10,25 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+/**
+ * @schema LoginFormSchema.
+ *
+ * @description Uses Zod to ensure both email and password are trimmed non-empty strings.
+ */
 const LoginFormSchema = z.object({
   email: z.string().trim(),
   password: z.string().trim(),
 });
 
+/**
+ * LoginForm component.
+ *
+ * Renders a login form with email and password fields, handles validation,
+ * submission, and redirects to the user's profile on successful login.
+ * The form fields are reset on successful login.
+ *
+ * @component
+ */
 export default function LoginForm() {
   const router = useRouter();
   const form = useForm<z.infer<typeof LoginFormSchema>>({
@@ -32,6 +46,11 @@ export default function LoginForm() {
   const delay = (ms: number) =>
     new Promise<void>((resolve) => setTimeout(resolve, ms));
 
+   /**
+   * Submit handler invoked when the form is submitted and passes validation.
+   *
+   * @param values - The validated form values containing email and password.
+   */
   async function onSubmit(values: z.infer<typeof LoginFormSchema>) {
     const { email, password } = values;
 
