@@ -5,6 +5,7 @@ import { useUpdateProfile } from "@/hooks/useUpdateProfile";
 import { useAuthStore } from "@/stores/useAuthStore";
 import Button from "@/ui/Button";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -32,7 +33,7 @@ const UpdateProfileSchema = z.object({
 export default function EditProfilePage() {
   const router = useRouter();
   const username = useAuthStore((state) => state.user?.name);
-  const currentAvatar = useAuthStore((state) => state.user?.avatar.url);
+  const currentUserPicture = useAuthStore((state) => state.user?.avatar.url);
 
   const { updateProfile, isLoading, isError } = useUpdateProfile();
 
@@ -40,7 +41,7 @@ export default function EditProfilePage() {
     resolver: zodResolver(UpdateProfileSchema),
     defaultValues: {
       avatar: {
-        url: currentAvatar,
+        url: currentUserPicture,
         alt: `Profile image of ${username}`,
       },
     },
@@ -57,7 +58,7 @@ export default function EditProfilePage() {
         avatar: { url: "", alt: "" },
       });
       router.push(`/profile/${username}`);
-      toast.success('Your profile is updated')
+      toast.success("Your profile is updated");
     } catch (error) {
       console.error(error);
     }
@@ -74,14 +75,25 @@ export default function EditProfilePage() {
         <label htmlFor="avatarUrl">
           <h3>Update your profile image</h3>
         </label>
-        <p className="text-sm">The image must be a valid url link</p>
+
+        <div className="relative rounded-full h-12 w-12 overflow-hidden">
+          <Image
+            src={currentUserPicture || "/default-user.png"}
+            alt={username || "User"}
+            fill
+            sizes="33vw"
+            className="w-full object-cover rounded-full"
+          />
+        </div>
+
         <Input
           type="text"
           id="avatarUrl"
           placeholder="Image link"
-          defaultValue={currentAvatar}
+          defaultValue={currentUserPicture}
           {...form.register("avatar.url")}
         />
+        <p className="text-sm">The image must be a valid url link</p>
         {form.formState.errors.avatar?.url && (
           <span className="text-alert-red text-sm" aria-live="polite">
             {form.formState.errors.avatar.url.message}
