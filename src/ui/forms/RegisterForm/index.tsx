@@ -51,7 +51,7 @@ const RegisterFormSchema = z.object({
 });
 
 export function RegisterForm() {
-  const username = useAuthStore((store) => store.user?.name)
+  const username = useAuthStore((state) => state.user?.name)
   const form = useForm<z.infer<typeof RegisterFormSchema>>({
     resolver: zodResolver(RegisterFormSchema),
     defaultValues: {

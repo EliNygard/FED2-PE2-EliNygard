@@ -6,7 +6,7 @@ import MyVenues from "@/ui/venues/MyVenues";
 import Link from "next/link";
 
 export default function MyVenuesPage() {
-  const username = useAuthStore((s) => s.user?.name) ?? "";
+  const username = useAuthStore((state) => state.user?.name) ?? "";
   const { venues, loading, error } = useVenuesByProfile(username);
 
   if (!username) {

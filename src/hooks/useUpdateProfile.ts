@@ -7,8 +7,8 @@ export function useUpdateProfile() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isError, setIsError] = useState<string | null>(null);
 
-  const updateAvatar = useAuthStore((store) => store.updateAvatar);
-  const userName = useAuthStore((store) => store.user?.name);
+  const updateAvatar = useAuthStore((state) => state.updateAvatar);
+  const userName = useAuthStore((state) => state.user?.name);
 
   const updateProfile = async ({ avatar }: { avatar: IMedia }) => {
     if (!userName) {

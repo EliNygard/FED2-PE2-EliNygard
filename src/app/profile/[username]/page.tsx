@@ -3,7 +3,7 @@
 import { useAuthStore } from "@/stores/useAuthStore";
 
 export default function ProfilePage() {
-    const isVenueManager = useAuthStore((store) => store.isVenueManager)
+    const isVenueManager = useAuthStore((state) => state.isVenueManager)
 
   return (
     <section className="">

@@ -21,8 +21,8 @@ const UpdateProfileSchema = z.object({
 
 export default function EditProfilePage() {
   const router = useRouter();
-  const username = useAuthStore((store) => store.user?.name);
-  const currentAvatar = useAuthStore((store) => store.user?.avatar.url);
+  const username = useAuthStore((state) => state.user?.name);
+  const currentAvatar = useAuthStore((state) => state.user?.avatar.url);
 
   const { updateProfile, isLoading, isError } = useUpdateProfile();
 

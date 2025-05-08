@@ -11,7 +11,7 @@ import SearchBar from "../SearchBar";
 export default function Header() {
   const isLoggedIn = AuthGuard();
   const userPicture = useAuthStore((state) => state.user?.avatar.url);
-  const userName = useAuthStore((store) => store.user?.name);
+  const userName = useAuthStore((state) => state.user?.name);
 
   return (
     <header className="my-5 page-padding">

@@ -2,6 +2,7 @@ import { IBooking } from "@/interface";
 import Image from "next/image";
 import Link from "next/link";
 
+
 export default function BookingCard({ booking }: { booking: IBooking }) {
   const dateFormat = new Intl.DateTimeFormat("no-NO", {
     year: "numeric",

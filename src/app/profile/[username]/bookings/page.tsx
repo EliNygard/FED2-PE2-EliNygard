@@ -8,7 +8,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function MyBookingsPage() {
-  const username = useAuthStore((store) => store.user?.name) ?? "";
+  const username = useAuthStore((state) => state.user?.name) ?? "";
 
   const [bookings, setBookings] = useState<IBooking[] | null>(null);
   const [isLoading, setLoading] = useState(true);

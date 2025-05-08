@@ -4,7 +4,7 @@ import { useCallback } from "react";
 // import { toast } from 'sonner'
 
 export function useLogout() {
-  const logout = useAuthStore((store) => store.logout)
+  const logout = useAuthStore((state) => state.logout)
   const router = useRouter()
 
   return useCallback(() => {
