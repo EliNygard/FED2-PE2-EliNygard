@@ -1,5 +1,6 @@
 "use client";
 
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Form,
   FormControl,
@@ -10,15 +11,48 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import Button from "@/ui/Button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+const items = [
+  {
+    id: "wifi",
+    label: "Wifi",
+  },
+  {
+    id: "parking",
+    label: "Parking",
+  },
+  {
+    id: "breakfast",
+    label: "Breakfast",
+  },
+  {
+    id: "pets",
+    label: "Pets",
+  },
+] as const;
+
 const venueFormSchema = z.object({
-  name: z.string(),
-  description: z.string(),
-  rate: z.number(),
-  guests: z.number(),
+  name: z
+    .string()
+    .nonempty("A venue name is required.")
+    .min(3, "The venue name must be at least 3 characters"),
+  description: z
+    .string()
+    .nonempty("A description of the venue is required.")
+    .min(10, "Description must be at least 10 characters"),
+  rate: z.coerce
+    .number({ invalid_type_error: "You must set a price per night." })
+    .min(0, "The price must be 0 or greater"),
+  guests: z.coerce
+    .number({ invalid_type_error: "The maximum amount of guests is required." })
+    .int("Guests must be a number")
+    .min(1, "You must accommodate for at least one guest."),
+  items: z.array(z.string()),
 });
 
 /**
@@ -35,6 +69,10 @@ export default function VenueForm() {
     resolver: zodResolver(venueFormSchema),
     defaultValues: {
       name: "",
+      description: "",
+      rate: 0,
+      guests: 1,
+      items: [],
     },
   });
 
@@ -44,6 +82,8 @@ export default function VenueForm() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
+        {/* Venue name */}
+
         <FormField
           control={form.control}
           name="name"
@@ -59,12 +99,14 @@ export default function VenueForm() {
                 charm.
               </FormDescription>
               <FormControl>
-                <Input placeholder="Name of the venue" {...field} />
+                <Input {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
+
+        {/* Description */}
 
         <FormField
           control={form.control}
@@ -81,44 +123,14 @@ export default function VenueForm() {
                 features and inviting atmosphere.
               </FormDescription>
               <FormControl>
-                <Input {...field} />
+                <Textarea {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
 
-        <div>
-          <h2>Add images of your venue</h2>
-          <FormDescription>
-            <p>
-              Show off your space! Upload a few photos that capture the unique
-              style and inviting atmosphere of your venue.
-            </p>
-            <p className="image-link">The image must be a valid url link</p>
-          </FormDescription>
-
-          <div>
-            <FormLabel htmlFor="img">Image</FormLabel>
-            <Input type="text" placeholder="Image link" />
-          </div>
-          <div>
-            <FormLabel htmlFor="img">Image</FormLabel>
-            <Input type="text" placeholder="Image link" />
-          </div>
-          <div>
-            <FormLabel htmlFor="img">Image</FormLabel>
-            <Input type="text" placeholder="Image link" />
-          </div>
-          <div>
-            <FormLabel htmlFor="img">Image</FormLabel>
-            <Input type="text" placeholder="Image link" />
-          </div>
-          <div>
-            <FormLabel htmlFor="img">Image</FormLabel>
-            <Input type="text" placeholder="Image link" />
-          </div>
-        </div>
+        {/* Price per night */}
 
         <FormField
           control={form.control}
@@ -142,38 +154,76 @@ export default function VenueForm() {
           )}
         />
 
-        <div>
-          <FormField
-            control={form.control}
-            name="rate"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>
-                  Maximum number of guests
-                  <span aria-hidden="true">*</span>
-                  <span className="sr-only">(required)</span>
-                </FormLabel>
-                <FormDescription>
-                  Specify the highest number of people your venue can
-                  comfortably accommodate. This allows you to manage capacity
-                  and ensures a safe, enjoyable experience.
-                </FormDescription>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
+        {/* Guests */}
 
-        <div>
-          <FormLabel htmlFor="facilities">Facilities at your venue</FormLabel>
-          <FormDescription>
-            Select the amenities that make your venue extra inviting. Check all
-            that apply.
-          </FormDescription>
-        </div>
+        <FormField
+          control={form.control}
+          name="guests"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>
+                Maximum number of guests
+                <span aria-hidden="true">*</span>
+                <span className="sr-only">(required)</span>
+              </FormLabel>
+              <FormDescription>
+                Specify the highest number of people your venue can comfortably
+                accommodate. This allows you to manage capacity and ensures a
+                safe, enjoyable experience.
+              </FormDescription>
+              <FormControl>
+                <Input {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        {/* Facilities */}
+
+        <FormField
+          control={form.control}
+          name="items"
+          render={() => (
+            <FormItem>
+              <FormLabel>Facilities at your venue</FormLabel>
+              <FormDescription>
+                Select the amenities that make your venue extra inviting. Check
+                all that apply.
+              </FormDescription>
+              {items.map((item) => (
+                <FormField
+                  key={item.id}
+                  control={form.control}
+                  name="items"
+                  render={({ field }) => {
+                    return (
+                      <FormItem key={item.id}>
+                        <FormControl>
+                          <Checkbox
+                            checked={field.value?.includes(item.id)}
+                            onCheckedChange={(checked) => {
+                              return checked
+                                ? field.onChange([...field.value, item.id])
+                                : field.onChange(
+                                    field.value?.filter(
+                                      (value) => value === item.id
+                                    )
+                                  );
+                            }}
+                          />
+                        </FormControl>
+                        <FormLabel>{item.label}</FormLabel>
+                      </FormItem>
+                    );
+                  }}
+                />
+              ))}
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button type="submit">Submit</Button>
       </form>
     </Form>
   );
