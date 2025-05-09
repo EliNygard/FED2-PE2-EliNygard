@@ -1,3 +1,5 @@
+// Reference on useFieldArray: https://youtu.be/4MrbfGSFY2A
+
 "use client";
 
 import { Checkbox } from "@/components/ui/checkbox";
@@ -12,12 +14,12 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { venueFormSchema, VenueFormValues } from "@/lib/schemas";
 import Button from "@/ui/Button";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { useFieldArray, useForm } from "react-hook-form";
 
-const items = [
+const meta = [
   {
     id: "wifi",
     label: "Wifi",
@@ -36,26 +38,6 @@ const items = [
   },
 ] as const;
 
-const venueFormSchema = z.object({
-  name: z
-    .string()
-    .nonempty("A venue name is required.")
-    .min(3, "The venue name must be at least 3 characters"),
-  description: z
-    .string()
-    .nonempty("A description of the venue is required.")
-    .min(10, "Description must be at least 10 characters"),
-  // images: z.array(z.string().url("Image must be a valid URL")),
-  rate: z.coerce
-    .number({ invalid_type_error: "You must set a price per night." })
-    .min(0, "The price must be 0 or greater"),
-  guests: z.coerce
-    .number({ invalid_type_error: "The maximum amount of guests is required." })
-    .int("Guests must be a number")
-    .min(1, "You must accommodate for at least one guest."),
-  items: z.array(z.string()),
-});
-
 /**
  * VenueForm component.
  *
@@ -66,25 +48,45 @@ const venueFormSchema = z.object({
  */
 
 export default function VenueForm() {
-  const form = useForm<z.infer<typeof venueFormSchema>>({
+  const form = useForm<VenueFormValues>({
     resolver: zodResolver(venueFormSchema),
     defaultValues: {
       name: "",
       description: "",
+      media: [
+        {
+          url: "",
+          alt: "",
+        },
+      ],
       rate: 0,
       guests: 1,
-      items: [],
+      meta: [],
+      location: {
+        address: "",
+        city: "",
+        zip: "",
+        country: "",
+      },
     },
   });
 
+  const { fields, append, remove } = useFieldArray({
+    name: "media",
+    control: form.control,
+    rules: {
+      required: "Please add at least one image of your venue",
+    },
+  });
 
-  function onSubmit(values: z.infer<typeof venueFormSchema>) {
-    console.log(values);
+  function onSubmit(data: VenueFormValues) {
+    console.log(data);
   }
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        {/* Venue name */}
+        {/* Venue Name */}
 
         <FormField
           control={form.control}
@@ -134,7 +136,61 @@ export default function VenueForm() {
 
         {/* Images */}
 
-        
+        <FormLabel>Add images of your venue</FormLabel>
+        <FormDescription>
+          Show off your space! Upload a few photos that capture the unique style
+          and inviting atmosphere of your venue.
+        </FormDescription>
+
+        {fields.map((field, index) => {
+          return (
+            <div key={field.id}>
+              <FormField
+                control={form.control}
+                name={`media.${index}.url`}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>{`Image ${index + 1}`}</FormLabel>
+                    <FormControl>
+                      <Input {...field} type="url" />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name={`media.${index}.alt`}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>{`Describe image ${index + 1}`}</FormLabel>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              {fields.length > 1 && (
+                <button type="button" onClick={() => remove(index)}>
+                  Remove
+                </button>
+              )}
+            </div>
+          );
+        })}
+
+        <button
+          type="button"
+          onClick={() => {
+            append({
+              url: "",
+              alt: "",
+            });
+          }}
+        >
+          Add image
+        </button>
 
         {/* Price per night */}
 
@@ -189,7 +245,7 @@ export default function VenueForm() {
 
         <FormField
           control={form.control}
-          name="items"
+          name="meta"
           render={() => (
             <FormItem>
               <FormLabel>Facilities at your venue</FormLabel>
@@ -197,29 +253,29 @@ export default function VenueForm() {
                 Select the amenities that make your venue extra inviting. Check
                 all that apply.
               </FormDescription>
-              {items.map((item) => (
+              {meta.map((m) => (
                 <FormField
-                  key={item.id}
+                  key={m.id}
                   control={form.control}
-                  name="items"
+                  name="meta"
                   render={({ field }) => {
                     return (
-                      <FormItem key={item.id}>
+                      <FormItem key={m.id}>
                         <FormControl>
                           <Checkbox
-                            checked={field.value?.includes(item.id)}
+                            checked={field.value?.includes(m.id)}
                             onCheckedChange={(checked) => {
                               return checked
-                                ? field.onChange([...field.value, item.id])
+                                ? field.onChange([...field.value, m.id])
                                 : field.onChange(
                                     field.value?.filter(
-                                      (value) => value === item.id
+                                      (value) => value === m.id
                                     )
                                   );
                             }}
                           />
                         </FormControl>
-                        <FormLabel>{item.label}</FormLabel>
+                        <FormLabel>{m.label}</FormLabel>
                       </FormItem>
                     );
                   }}
@@ -229,6 +285,65 @@ export default function VenueForm() {
             </FormItem>
           )}
         />
+
+        {/* Location */}
+
+        <FormLabel>Location details</FormLabel>
+        <FormDescription>Enter your venue&apos;s address</FormDescription>
+
+        <FormField
+          control={form.control}
+          name="location.address"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Street</FormLabel>
+              <FormControl>
+                <Input {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="location.city"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>City</FormLabel>
+              <FormControl>
+                <Input {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="location.zip"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Zip code</FormLabel>
+              <FormControl>
+                <Input {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="location.country"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Country</FormLabel>
+              <FormControl>
+                <Input {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
         <Button type="submit">Submit</Button>
       </form>
     </Form>

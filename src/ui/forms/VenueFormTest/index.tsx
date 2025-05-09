@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { venueFormSchema, VenueFormValues } from "@/lib/shemas";
+import { venueFormSchema, VenueFormValues } from "@/lib/schemas";
 import Button from "@/ui/Button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useFieldArray, useForm } from "react-hook-form";
@@ -80,11 +80,16 @@ export default function VenueFormTest() {
       rate: 0,
       guests: 1,
       meta: [],
-      
+      location: {
+        address: "",
+        city: "",
+        zip: "",
+        country: "",
+      },
     },
   });
 
-  const { register } = form
+  const { register } = form;
 
   const { fields, append, remove } = useFieldArray({
     name: "media",
@@ -149,16 +154,22 @@ export default function VenueFormTest() {
 
         {/* Images */}
 
+        <FormLabel>Add images of your venue</FormLabel>
+        <FormDescription>
+          Show off your space! Upload a few photos that capture the unique style
+          and inviting atmosphere of your venue.
+        </FormDescription>
+
         {fields.map((field, index) => {
           return (
             <section key={field.id}>
-              <label>
+              <label htmlFor="url">
                 <span>Image</span>
-                <input {...register(`media.${index}.url`)} />
+                <input id="url" {...register(`media.${index}.url`)} />
               </label>
-              <label>
+              <label htmlFor="alt">
                 <span>Image description</span>
-                <input {...register(`media.${index}.alt`)} />
+                <input id="alt" {...register(`media.${index}.alt`)} />
               </label>
               <button type="button" onClick={() => remove(index)}>
                 Remove
@@ -275,60 +286,114 @@ export default function VenueFormTest() {
 
         {/* Location */}
 
-        
-        
+        <FormLabel>Location details</FormLabel>
+        <FormDescription>Enter your venue&apos;s address</FormDescription>
+
+        <FormField
+          control={form.control}
+          name="location.address"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Street</FormLabel>
+              <FormControl>
+                <Input {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="location.city"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>City</FormLabel>
+              <FormControl>
+                <Input {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="location.zip"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Zip code</FormLabel>
+              <FormControl>
+                <Input {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="location.country"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Country</FormLabel>
+              <FormControl>
+                <Input {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
         <Button type="submit">Submit</Button>
       </form>
     </Form>
-  )}
-    // <div>
-    //   <form onSubmit={handleSubmit(onSubmit)}>
-    //     <label>
-    //       <span>Name</span>
-    //       <input type="text" placeholder="Venue Name" {...register("name")} />
-    //     </label>
-    //     <label>
-    //       <span>Description</span>
-    //       <input
-    //         type="text"
-    //         placeholder="Venue Description"
-    //         {...register("description")}
-    //       />
-    //     </label>
-    //     {fields.map((field, index) => {
-    //       return (
-    //         <section key={field.id}>
-    //           <label>
-    //             <span>Image</span>
-    //             <input {...register(`media.${index}.url`)} />
-    //           </label>
-    //           <label>
-    //             <span>Image description</span>
-    //             <input {...register(`media.${index}.alt`)} />
-    //           </label>
-    //           <button type="button" onClick={() => remove(index)}>
-    //             Remove
-    //           </button>
-    //         </section>
-    //       );
-    //     })}
-    //     <button
-    //       type="button"
-    //       onClick={() => {
-    //         append({
-    //           url: "abc",
-    //           alt: "",
-    //         });
-    //       }}
-    //     >
-    //       Append
-    //     </button>
-    //     <p>{errors.media?.root?.message}</p>
-    //     <button type="submit">Submit</button>
-    //   </form>
-    // </div>
-  // );
+  );
+}
+// <div>
+//   <form onSubmit={handleSubmit(onSubmit)}>
+//     <label>
+//       <span>Name</span>
+//       <input type="text" placeholder="Venue Name" {...register("name")} />
+//     </label>
+//     <label>
+//       <span>Description</span>
+//       <input
+//         type="text"
+//         placeholder="Venue Description"
+//         {...register("description")}
+//       />
+//     </label>
+//     {fields.map((field, index) => {
+//       return (
+//         <section key={field.id}>
+//           <label>
+//             <span>Image</span>
+//             <input {...register(`media.${index}.url`)} />
+//           </label>
+//           <label>
+//             <span>Image description</span>
+//             <input {...register(`media.${index}.alt`)} />
+//           </label>
+//           <button type="button" onClick={() => remove(index)}>
+//             Remove
+//           </button>
+//         </section>
+//       );
+//     })}
+//     <button
+//       type="button"
+//       onClick={() => {
+//         append({
+//           url: "abc",
+//           alt: "",
+//         });
+//       }}
+//     >
+//       Append
+//     </button>
+//     <p>{errors.media?.root?.message}</p>
+//     <button type="submit">Submit</button>
+//   </form>
+// </div>
+// );
 // }
 
 // "use client";

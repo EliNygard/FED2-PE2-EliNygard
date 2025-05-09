@@ -1,5 +1,4 @@
-// import VenueForm from "@/ui/forms/VenueForm";
-import VenueFormTest from "@/ui/forms/VenueFormTest";
+import VenueForm from "@/ui/forms/VenueForm";
 
 /**
  * CreateVenuePage displays the form where a venue manager can create a new venue.
@@ -10,9 +9,8 @@ import VenueFormTest from "@/ui/forms/VenueFormTest";
 export default function CreateVenuePage() {
   return (
     <section>
-    <h1>Create new venue</h1>
-    <VenueFormTest />
+      <h1>Create new venue</h1>
+      <VenueForm />
     </section>
-
-  )
+  );
 }

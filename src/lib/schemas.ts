@@ -31,7 +31,7 @@ export const venueFormSchema = z.object({
       url: z
         .string()
         .url("The image must be a valid URL.")
-        .startsWith("https://", { message: "Must provide secure URL" }),
+        .startsWith("https://", { message: "Please provide a secure and valid URL" }),
       alt: z.string(),
     })
   ),
