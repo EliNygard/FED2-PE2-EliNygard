@@ -45,6 +45,7 @@ const venueFormSchema = z.object({
     .string()
     .nonempty("A description of the venue is required.")
     .min(10, "Description must be at least 10 characters"),
+  // images: z.array(z.string().url("Image must be a valid URL")),
   rate: z.coerce
     .number({ invalid_type_error: "You must set a price per night." })
     .min(0, "The price must be 0 or greater"),
@@ -75,6 +76,7 @@ export default function VenueForm() {
       items: [],
     },
   });
+
 
   function onSubmit(values: z.infer<typeof venueFormSchema>) {
     console.log(values);
@@ -130,6 +132,10 @@ export default function VenueForm() {
           )}
         />
 
+        {/* Images */}
+
+        
+
         {/* Price per night */}
 
         <FormField
@@ -147,7 +153,7 @@ export default function VenueForm() {
                 set clear financial expectations for your bookings.
               </FormDescription>
               <FormControl>
-                <Input {...field} />
+                <Input type="number" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -172,7 +178,7 @@ export default function VenueForm() {
                 safe, enjoyable experience.
               </FormDescription>
               <FormControl>
-                <Input {...field} />
+                <Input type="number" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
