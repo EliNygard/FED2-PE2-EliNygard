@@ -1,6 +1,6 @@
 // Reference on useFieldArray: https://youtu.be/4MrbfGSFY2A
 
-"use client";
+// "use client";
 
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -15,6 +15,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { venueFormSchema, VenueFormValues } from "@/lib/schemas";
 import Button from "@/ui/Button";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import {
   StyledFieldset,
@@ -22,24 +23,30 @@ import {
   StyledVenueForm,
 } from "./index.styles";
 
-const meta = [
-  {
-    id: "wifi",
-    label: "Wifi",
-  },
-  {
-    id: "parking",
-    label: "Parking",
-  },
-  {
-    id: "breakfast",
-    label: "Breakfast",
-  },
-  {
-    id: "pets",
-    label: "Pets",
-  },
-] as const;
+// const meta = [
+//   {
+//     id: "wifi",
+//     label: "Wifi",
+//   },
+//   {
+//     id: "parking",
+//     label: "Parking",
+//   },
+//   {
+//     id: "breakfast",
+//     label: "Breakfast",
+//   },
+//   {
+//     id: "pets",
+//     label: "Pets",
+//   },
+// ] as const;
+
+interface VenueFormProps {
+  initialValues?: VenueFormValues;
+  onSubmit: (values: VenueFormValues) => Promise<void> | void;
+  submitLabel: string;
+}
 
 /**
  * VenueForm component.
@@ -50,7 +57,11 @@ const meta = [
  * @component
  */
 
-export default function VenueForm() {
+export default function VenueForm({
+  initialValues,
+  onSubmit,
+  submitLabel,
+}: VenueFormProps) {
   const form = useForm<VenueFormValues>({
     resolver: zodResolver(venueFormSchema),
     defaultValues: {
@@ -62,9 +73,14 @@ export default function VenueForm() {
           alt: "",
         },
       ],
-      rate: 0,
-      guests: 1,
-      meta: [],
+      price: 0,
+      maxGuests: 1,
+      meta: {
+        wifi: false,
+        parking: false,
+        breakfast: false,
+        pets: false,
+      },
       location: {
         address: "",
         city: "",
@@ -74,6 +90,8 @@ export default function VenueForm() {
     },
   });
 
+  const { reset } = form;
+
   const { fields, append, remove } = useFieldArray({
     name: "media",
     control: form.control,
@@ -82,14 +100,19 @@ export default function VenueForm() {
     },
   });
 
-  function onSubmit(data: VenueFormValues) {
-    console.log(data);
+  useEffect(() => {
+    if (initialValues) reset(initialValues);
+  }, [initialValues, reset]);
+
+  async function handle(data: VenueFormValues) {
+    // console.log(data);
+    await onSubmit(data);
   }
 
   return (
     <Form {...form}>
       {/* <form onSubmit={form.handleSubmit(onSubmit)} className="mt-8 flex flex-col gap-6"> */}
-      <StyledVenueForm onSubmit={form.handleSubmit(onSubmit)}>
+      <StyledVenueForm onSubmit={form.handleSubmit(handle)}>
         {/* Venue Name */}
 
         <FormField
@@ -217,7 +240,7 @@ export default function VenueForm() {
 
         <FormField
           control={form.control}
-          name="rate"
+          name="price"
           render={({ field }) => (
             <FormItem>
               <label>
@@ -241,7 +264,7 @@ export default function VenueForm() {
 
         <FormField
           control={form.control}
-          name="guests"
+          name="maxGuests"
           render={({ field }) => (
             <FormItem>
               <label>
@@ -263,52 +286,85 @@ export default function VenueForm() {
         />
 
         {/* Facilities */}
+        <FormItem>
+          <label>Facilities at your venue</label>
+          <p>
+            Select the amenities that make your venue extra inviting. Check all
+            that apply.
+          </p>
 
-        <FormField
-          control={form.control}
-          name="meta"
-          render={() => (
-            <FormItem>
-              <label>Facilities at your venue</label>
-              <p>
-                Select the amenities that make your venue extra inviting. Check
-                all that apply.
-              </p>
-              {meta.map((m) => (
-                <FormField
-                  key={m.id}
-                  control={form.control}
-                  name="meta"
-                  render={({ field }) => {
-                    return (
-                      <FormItem
-                        key={m.id}
-                        className="flex flex-row gap-3 items-center justify-start"
-                      >
-                        <FormControl>
-                          <Checkbox
-                            checked={field.value?.includes(m.id)}
-                            onCheckedChange={(checked) => {
-                              return checked
-                                ? field.onChange([...field.value, m.id])
-                                : field.onChange(
-                                    field.value?.filter(
-                                      (value) => value !== m.id
-                                    )
-                                  );
-                            }}
-                          />
-                        </FormControl>
-                        <label>{m.label}</label>
-                      </FormItem>
-                    );
-                  }}
-                />
-              ))}
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+          <FormField
+            control={form.control}
+            name="meta"
+            render={({ field }) => (
+              <>
+                {(["wifi", "parking", "breakfast", "pets"] as const).map(
+                  (key) => (
+                    <FormItem
+                      key={key}
+                      className="flex flex-row gap-3 items-center justify-start capitalize"
+                    >
+                      <FormControl>
+                        <Checkbox
+                          key={key}
+                          checked={field.value[key]}
+                          onCheckedChange={(checked) => {
+                            field.onChange({
+                              ...field.value,
+                              [key]: checked,
+                            });
+                          }}
+                        />
+                      </FormControl>
+                      <label>{key}</label>
+                      <FormMessage />
+                    </FormItem>
+                  )
+                )}
+              </>
+
+              // <FormItem>
+              //   <label>Facilities at your venue</label>
+              //   <p>
+              //     Select the amenities that make your venue extra inviting. Check
+              //     all that apply.
+              //   </p>
+              //   {meta.map((m) => (
+              //     <FormField
+              //       key={m.id}
+              //       control={form.control}
+              //       name="meta"
+              //       render={({ field }) => {
+              //         return (
+              //           <FormItem
+              //             key={m.id}
+              //             className="flex flex-row gap-3 items-center justify-start"
+              //           >
+              //             <FormControl>
+              //               <Checkbox
+              //                 checked={field.value?.includes(m.id)}
+              //                 onCheckedChange={(checked) => {
+              //                   return checked
+              //                     ? field.onChange([...field.value, m.id])
+              //                     : field.onChange(
+              //                         field.value?.filter(
+              //                           (value) => value !== m.id
+              //                         )
+              //                       );
+              //                 }}
+              //               />
+              //             </FormControl>
+              //             <label>{m.label}</label>
+              //           </FormItem>
+              //         );
+              //       }}
+              //     />
+              //   ))}
+              //   <FormMessage />
+              // </FormItem>
+            )}
+          />
+        </FormItem>
 
         {/* Location */}
 
@@ -370,7 +426,7 @@ export default function VenueForm() {
           />
         </StyledFieldset>
         <div className="lg:w-72">
-          <Button type="submit">Submit</Button>
+          <Button type="submit">{submitLabel}</Button>
         </div>
       </StyledVenueForm>
       {/* </form> */}

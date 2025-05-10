@@ -1,6 +1,7 @@
 import {
   IBooking,
   ICreateBooking,
+  ICreateVenue,
   IMedia,
   IPaginationMeta,
   IProfile,
@@ -139,4 +140,12 @@ export function setUpdateProfile(userName: string, avatar: IMedia) {
     body: JSON.stringify({ avatar }),
     auth: true,
   });
+}
+
+export function setCreateNewVenue(venue: ICreateVenue) {
+  return fetcher<IVenue>(`/venues`, {
+    method: 'POST',
+    body: JSON.stringify(venue),
+    auth: true,
+  })
 }
