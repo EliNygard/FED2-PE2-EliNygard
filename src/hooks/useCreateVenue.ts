@@ -1,3 +1,7 @@
+import { IVenueRequest } from "@/interface";
+import { setCreateVenue } from "@/lib/api";
+import { useState } from "react";
+
 /**
  * A React hook that manages creating a new venue.
  * Sends a request with the venue data to the API and updates loading/error states.
@@ -11,10 +15,6 @@
  * const { createVenue, isLoading, isError } = useCreateVenue()
  */
 
-import { ICreateVenue } from "@/interface";
-import { setCreateVenue } from "@/lib/api";
-import { useState } from "react";
-
 export function useCreateVenue() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isError, setIsError] = useState<string | null>(null);
@@ -22,10 +22,10 @@ export function useCreateVenue() {
   /**
    * Performs a create request with the given credentials.
    *
-   * @param data {@link ICreateVenue} - The details of the new venue (i.e. venue name, description, images etc.)
+   * @param data {@link IVenueRequest} - The details of the new venue (i.e. venue name, description, images etc.)
    * @returns - The new venue data
    */
-  const createVenue = async (data: ICreateVenue) => {
+  const createVenue = async (data: IVenueRequest) => {
     if (!data) {
       return;
     }

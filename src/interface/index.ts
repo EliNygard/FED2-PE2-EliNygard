@@ -69,7 +69,7 @@ export interface IVenue {
   bookings: IBookingOnVenue[];
 }
 
-export interface ICreateVenue {
+export interface IVenueRequest {
   name: string;
   description: string;
   media?: IMedia[];
@@ -86,7 +86,6 @@ export interface ICreateVenue {
     city: string;
     zip: string;
     country: string;
-    
   };
 }
 
