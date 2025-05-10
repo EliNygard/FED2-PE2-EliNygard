@@ -46,6 +46,7 @@ interface VenueFormProps {
   initialValues?: VenueFormValues;
   onSubmit: (values: VenueFormValues) => Promise<void> | void;
   submitLabel: string;
+  isLoading: boolean
 }
 
 /**
@@ -61,6 +62,7 @@ export default function VenueForm({
   initialValues,
   onSubmit,
   submitLabel,
+  isLoading,
 }: VenueFormProps) {
   const form = useForm<VenueFormValues>({
     resolver: zodResolver(venueFormSchema),
@@ -107,6 +109,7 @@ export default function VenueForm({
   async function handle(data: VenueFormValues) {
     // console.log(data);
     await onSubmit(data);
+    form.reset()
   }
 
   return (
@@ -426,7 +429,9 @@ export default function VenueForm({
           />
         </StyledFieldset>
         <div className="lg:w-72">
-          <Button type="submit">{submitLabel}</Button>
+          <Button type="submit" disabled={isLoading} >
+            {isLoading ? 'Loading' : `${submitLabel}`}
+          </Button>
         </div>
       </StyledVenueForm>
       {/* </form> */}

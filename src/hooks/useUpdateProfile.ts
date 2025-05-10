@@ -19,7 +19,7 @@ export function useUpdateProfile() {
   const updateAvatar = useAuthStore((state) => state.updateAvatar);
   const userName = useAuthStore((state) => state.user?.name);
 
-    /**
+  /**
    * Performs a update request with the given credentials.
    *
    * @param avatar – The user’s profile image.
@@ -38,7 +38,7 @@ export function useUpdateProfile() {
 
     try {
       const response = await setUpdateProfile(userName, avatar);
-      const userData = response.data
+      const userData = response.data;
       console.log(userData.avatar);
       updateAvatar(userData.avatar);
 
