@@ -35,14 +35,19 @@ export const venueFormSchema = z.object({
       alt: z.string(),
     })
   ),
-  rate: z.coerce
+  price: z.coerce
     .number({ invalid_type_error: "You must set a price per night." })
     .min(0, "The price must be 0 or greater."),
-  guests: z.coerce
+  maxGuests: z.coerce
     .number({ invalid_type_error: "The maximum amount of guests is required." })
     .int("Please enter a number")
     .min(1, "You must accommodate for at least one guest."),
-  meta: z.array(z.string()),
+  meta: z.object({
+    wifi: z.boolean(),
+    parking: z.boolean(),
+    breakfast: z.boolean(),
+    pets: z.boolean(),
+  }),
   location:
     z.object({
       address: z.string(),
