@@ -56,8 +56,8 @@ export default function MyVenueCard({ venue }: { venue: IVenue }) {
           </Link>
         </div>
 
-        <div className="md:col-start-2 md:row-start-2 md:content-end md:align-bottom">
-          <div className="flex gap-6 md:justify-end md:items-end">
+        <div className="md:col-start-2 md:row-start-2 md:content-end md:align-bottom md:justify-items-end">
+          <div className="flex gap-6 w-2/3 md:justify-end md:items-end">
             <Button $variant="narrow" className="bg-accent-green">
               Update
             </Button>
