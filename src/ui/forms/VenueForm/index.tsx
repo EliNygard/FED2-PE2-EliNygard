@@ -70,10 +70,7 @@ export default function VenueForm({
       name: "",
       description: "",
       media: [
-        {
-          url: "",
-          alt: "",
-        },
+        
       ],
       price: 0,
       maxGuests: 1,

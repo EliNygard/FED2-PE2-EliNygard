@@ -34,7 +34,7 @@ export const venueFormSchema = z.object({
         .startsWith("https://", { message: "Please provide a secure and valid URL" }),
       alt: z.string(),
     })
-  ),
+  ).optional(),
   price: z.coerce
     .number({ invalid_type_error: "You must set a price per night." })
     .min(0, "The price must be 0 or greater."),
