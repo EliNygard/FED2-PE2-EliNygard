@@ -26,7 +26,7 @@ import {
 import { useCreateBooking } from "@/hooks/useCreateBooking";
 
 import { ICreateBooking, IVenue } from "@/interface";
-import { BookFormSchema, FormValues } from "@/lib/shemas";
+import { BookFormSchema, FormValues } from "@/lib/schemas";
 import { useAuthStore } from "@/stores/useAuthStore";
 import Button from "@/ui/Button";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -39,7 +39,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
 /**
- * VenueBooking displays a calendar and a form so that the user can book a stay. 
+ * VenueBooking displays a calendar and a form so that the user can book a stay.
  * - The component is part of the VenuePage
  * - The user selects dates and guests and is displayed the total cost before they can continue.
  * - Button is disabled if user is not logged in
@@ -58,7 +58,7 @@ export default function VenueBooking({ venue }: { venue: IVenue }) {
 
   const { createBooking, isLoading, isError } = useCreateBooking();
   const router = useRouter();
-  const token = useAuthStore((state) => state.user?.accessToken)
+  const token = useAuthStore((state) => state.user?.accessToken);
 
   const form = useForm<FormValues>({
     resolver: zodResolver(BookFormSchema),

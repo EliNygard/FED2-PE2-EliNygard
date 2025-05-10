@@ -69,6 +69,26 @@ export interface IVenue {
   bookings: IBookingOnVenue[];
 }
 
+export interface IVenueRequest {
+  name: string;
+  description: string;
+  media?: IMedia[];
+  price: number;
+  maxGuests: number;
+  meta: {
+    wifi: boolean;
+    parking: boolean;
+    breakfast: boolean;
+    pets: boolean;
+  };
+  location: {
+    address: string;
+    city: string;
+    zip: string;
+    country: string;
+  };
+}
+
 export interface IPerson {
   name: string;
   email: string;

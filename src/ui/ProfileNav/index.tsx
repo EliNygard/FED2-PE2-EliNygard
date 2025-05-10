@@ -21,37 +21,41 @@ export default function ProfileNav() {
     children: React.ReactNode;
   }) => (
     <li>
-
-    <Link href={href} passHref>
-      <Button
-        $variant="narrow"
-        className={path === href ? "bg-interaction-blue text-white" : "bg-brand-blue"}
+      <Link href={href} passHref>
+        <Button
+          $variant="narrow"
+          className={
+            path === href ? "bg-interaction-blue text-white" : "bg-brand-blue"
+          }
         >
-        {children}
-      </Button>
-    </Link>
-        </li>
+          {children}
+        </Button>
+      </Link>
+    </li>
   );
 
   return (
-    <nav >
+    <nav>
       <ul className="flex flex-wrap gap-3.5 md:flex-col md:gap-8 mb-4 md:mb-0">
+        {isVenueManager && (
+          <>
+            <Tab href={`/profile/${username}/venues/new`}>Create New Venue</Tab>
+            <Tab href={`/profile/${username}/venues`}>My Venues</Tab>
+          </>
+        )}
 
-      {isVenueManager && (
-        <>
-          <Tab href={`/profile/${username}/venues/new`}>Create New Venue</Tab>
-          <Tab href={`/profile/${username}/venues`}>My Venues</Tab>
-        </>
-      )}
-
-      <Tab href={`/profile/${username}/edit`}>Edit Profile</Tab>
-      <Tab href={`/profile/${username}/bookings`}>My Bookings</Tab>
-      <li>
-        <Button $variant="narrow" className="bg-brand-blue" onClick={logout}>
-          Log out
-        </Button>
-      </li>
-        </ul>
+        <Tab href={`/profile/${username}/edit`}>Edit Profile</Tab>
+        <Tab href={`/profile/${username}/bookings`}>My Bookings</Tab>
+        <li>
+          <Button
+            $variant="narrow"
+            className="bg-primary-font"
+            onClick={logout}
+          >
+            Log out
+          </Button>
+        </li>
+      </ul>
     </nav>
   );
 }
