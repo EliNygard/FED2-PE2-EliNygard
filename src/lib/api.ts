@@ -142,10 +142,12 @@ export function setUpdateProfile(userName: string, avatar: IMedia) {
   });
 }
 
-export function setCreateNewVenue(venue: ICreateVenue) {
+export function setCreateVenue(venue: ICreateVenue) {
   return fetcher<IVenue>(`/venues`, {
     method: 'POST',
     body: JSON.stringify(venue),
     auth: true,
   })
 }
+
+export function setUpdateVenue

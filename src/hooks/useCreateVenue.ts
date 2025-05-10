@@ -12,7 +12,7 @@
  */
 
 import { ICreateVenue } from "@/interface";
-import { setCreateNewVenue } from "@/lib/api";
+import { setCreateVenue } from "@/lib/api";
 import { useState } from "react";
 
 export function useCreateVenue() {
@@ -33,7 +33,7 @@ export function useCreateVenue() {
     setIsError(null);
 
     try {
-      const response = await setCreateNewVenue(data);
+      const response = await setCreateVenue(data);
       console.log(response);
 
       return response;
