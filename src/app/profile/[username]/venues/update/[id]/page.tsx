@@ -11,6 +11,7 @@ import { toast } from "sonner";
 
 export default function UpdateVenuePage() {
   const { id } = useParams();
+  
   const { updateVenue, isLoading, isError } = useUpdateVenue();
   const [venue, setVenue] = useState<IVenue | null>(null);
 
