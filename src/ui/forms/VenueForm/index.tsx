@@ -23,30 +23,11 @@ import {
   StyledVenueForm,
 } from "./index.styles";
 
-// const meta = [
-//   {
-//     id: "wifi",
-//     label: "Wifi",
-//   },
-//   {
-//     id: "parking",
-//     label: "Parking",
-//   },
-//   {
-//     id: "breakfast",
-//     label: "Breakfast",
-//   },
-//   {
-//     id: "pets",
-//     label: "Pets",
-//   },
-// ] as const;
-
 interface VenueFormProps {
   initialValues?: VenueFormValues;
   onSubmit: (values: VenueFormValues) => Promise<void> | void;
   submitLabel: string;
-  isLoading: boolean
+  isLoading: boolean;
 }
 
 /**
@@ -69,9 +50,7 @@ export default function VenueForm({
     defaultValues: {
       name: "",
       description: "",
-      media: [
-        
-      ],
+      media: [{ url: "", alt: "" }],
       price: 0,
       maxGuests: 1,
       meta: {
@@ -106,7 +85,7 @@ export default function VenueForm({
   async function handle(data: VenueFormValues) {
     // console.log(data);
     await onSubmit(data);
-    form.reset()
+    form.reset();
   }
 
   return (
@@ -322,46 +301,6 @@ export default function VenueForm({
                   )
                 )}
               </>
-
-              // <FormItem>
-              //   <label>Facilities at your venue</label>
-              //   <p>
-              //     Select the amenities that make your venue extra inviting. Check
-              //     all that apply.
-              //   </p>
-              //   {meta.map((m) => (
-              //     <FormField
-              //       key={m.id}
-              //       control={form.control}
-              //       name="meta"
-              //       render={({ field }) => {
-              //         return (
-              //           <FormItem
-              //             key={m.id}
-              //             className="flex flex-row gap-3 items-center justify-start"
-              //           >
-              //             <FormControl>
-              //               <Checkbox
-              //                 checked={field.value?.includes(m.id)}
-              //                 onCheckedChange={(checked) => {
-              //                   return checked
-              //                     ? field.onChange([...field.value, m.id])
-              //                     : field.onChange(
-              //                         field.value?.filter(
-              //                           (value) => value !== m.id
-              //                         )
-              //                       );
-              //                 }}
-              //               />
-              //             </FormControl>
-              //             <label>{m.label}</label>
-              //           </FormItem>
-              //         );
-              //       }}
-              //     />
-              //   ))}
-              //   <FormMessage />
-              // </FormItem>
             )}
           />
         </FormItem>
@@ -426,8 +365,8 @@ export default function VenueForm({
           />
         </StyledFieldset>
         <div className="lg:w-72">
-          <Button type="submit" disabled={isLoading} >
-            {isLoading ? 'Loading' : `${submitLabel}`}
+          <Button type="submit" disabled={isLoading}>
+            {isLoading ? "Loading" : `${submitLabel}`}
           </Button>
         </div>
       </StyledVenueForm>
