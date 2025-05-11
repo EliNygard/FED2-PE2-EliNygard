@@ -15,6 +15,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { venueFormSchema, VenueFormValues } from "@/lib/schemas";
 import Button from "@/ui/Button";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Image from "next/image";
 import { useEffect } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import {
@@ -90,7 +91,6 @@ export default function VenueForm({
 
   return (
     <Form {...form}>
-      {/* <form onSubmit={form.handleSubmit(onSubmit)} className="mt-8 flex flex-col gap-6"> */}
       <StyledVenueForm onSubmit={form.handleSubmit(handle)}>
         {/* Venue Name */}
 
@@ -143,15 +143,11 @@ export default function VenueForm({
         {/* Images */}
 
         <StyledFieldset>
-          {/* <StyledLegend> */}
-          {/* <FormItem> */}
           <h3>Add images of your venue</h3>
           <p>
             Show off your space! Upload a few photos that capture the unique
             style and inviting atmosphere of your venue.
           </p>
-          {/* </FormItem> */}
-          {/* </StyledLegend> */}
 
           {fields.map((field, index) => {
             return (
@@ -166,6 +162,40 @@ export default function VenueForm({
                         <Input {...field} type="url" />
                       </FormControl>
                       <FormMessage />
+
+                      {/* Image preview and remove image button */}
+
+                      <div className="flex flex-row justify-between mt-2">
+                        {field.value && (
+                          <div className="relative h-16 md:h-20 aspect-video overflow-hidden rounded-md">
+                            <Image
+                              src={field.value}
+                              alt={`Preview of image ${index + 1}`}
+                              fill
+                              sizes="30vw"
+                              style={{
+                                objectFit: "cover",
+                                overflow: "hidden",
+                                borderRadius: "6px",
+                                aspectRatio: "inherit",
+                              }}
+                            />
+                          </div>
+                        )}
+
+                        {fields.length > 1 && (
+                          <div className="max-w-24">
+                            <Button
+                              $variant="narrow"
+                              className="bg-primary-font"
+                              type="button"
+                              onClick={() => remove(index)}
+                            >
+                              Remove
+                            </Button>
+                          </div>
+                        )}
+                      </div>
                     </FormItem>
                   )}
                 />
@@ -182,18 +212,6 @@ export default function VenueForm({
                     </FormItem>
                   )}
                 />
-                {fields.length > 1 && (
-                  <div className="max-w-24">
-                    <Button
-                      $variant="narrow"
-                      className="bg-primary-font"
-                      type="button"
-                      onClick={() => remove(index)}
-                    >
-                      Remove
-                    </Button>
-                  </div>
-                )}
               </StyledImageItem>
             );
           })}
@@ -265,6 +283,7 @@ export default function VenueForm({
         />
 
         {/* Facilities */}
+
         <FormItem>
           <label>Facilities at your venue</label>
           <p>
@@ -370,7 +389,6 @@ export default function VenueForm({
           </Button>
         </div>
       </StyledVenueForm>
-      {/* </form> */}
     </Form>
   );
 }
