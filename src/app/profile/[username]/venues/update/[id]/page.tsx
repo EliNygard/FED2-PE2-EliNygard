@@ -5,12 +5,13 @@ import { IVenue } from "@/interface";
 import { getVenueById } from "@/lib/api";
 import { VenueFormValues } from "@/lib/schemas";
 import VenueForm from "@/ui/forms/VenueForm";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 export default function UpdateVenuePage() {
   const { id } = useParams();
+  const router = useRouter()
   
   const { updateVenue, isLoading, isError } = useUpdateVenue();
   const [venue, setVenue] = useState<IVenue | null>(null);
@@ -40,6 +41,7 @@ export default function UpdateVenuePage() {
     try {
       await updateVenue(data, id as string);
       toast("Your venue was successfully added!");
+      router.push(`/venue/${id}`)
       console.log("Updated: ", data);
     } catch (error) {
       console.error(error);
