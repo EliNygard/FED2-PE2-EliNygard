@@ -29,7 +29,10 @@ export default function RootLayout({
         className={`${roboto.className} antialiased min-h-screen flex flex-col`}
       >
         <Header />
-        <main className="flex-1">{children}</main>
+        {/* <Suspense fallback={<Loading />}> */}
+          <main className="flex-1">{children}</main>
+        {/* </Suspense> */}
+
         <ToastProvider />
         <Footer />
       </body>

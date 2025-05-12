@@ -4,6 +4,7 @@ import { useVenuesByProfile } from "@/hooks/useVenuesByProfile";
 import { useAuthStore } from "@/stores/useAuthStore";
 import MyVenues from "@/ui/venues/MyVenues";
 import Link from "next/link";
+import Loading from "../loading";
 
 /**
  * Page component for displaying a list of the current Manager's venues.
@@ -16,12 +17,8 @@ export default function MyVenuesPage() {
   const username = useAuthStore((state) => state.user?.name) ?? "";
   const { venues, loading, error } = useVenuesByProfile(username);
 
-  if (!username) {
-    return <p>Please log in to view your venues</p>;
-  }
-
   if (loading) {
-    return <p>Loading venues...</p>;
+    return <Loading />;
   }
 
   if (error) {
@@ -39,11 +36,13 @@ export default function MyVenuesPage() {
         <MyVenues venues={venues} />
       ) : (
         <div>
-
-        <p className="mb-6">
-          You have not added any venues yet.
-        </p>
-          <Link className="border-b-1 border-primary-font" href={`/profile/${username}/venues/new`}>Create your first venue</Link>
+          <p className="mb-6">You have not added any venues yet.</p>
+          <Link
+            className="border-b-1 border-primary-font"
+            href={`/profile/${username}/venues/new`}
+          >
+            Create your first venue
+          </Link>
         </div>
       )}
     </section>

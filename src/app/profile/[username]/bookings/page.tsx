@@ -6,6 +6,7 @@ import { useAuthStore } from "@/stores/useAuthStore";
 import MyBookingsSection from "@/ui/bookings/MyBookings";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import Loading from "../loading";
 
 /**
  * Page component for displaying the bookings section.
@@ -36,12 +37,12 @@ export default function MyBookingsPage() {
     fetchBookings();
   }, [username]);
 
-  if (!username) {
-    return <p>Please log in to view your bookings</p>;
+  if (isLoading) {
+    return <Loading />;
   }
 
-  if (isLoading) {
-    return <p>Loading bookings...</p>;
+  if (!username) {
+    return <p>Please log in to view your bookings</p>;
   }
 
   return (

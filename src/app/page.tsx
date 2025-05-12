@@ -31,8 +31,11 @@ export default async function HomePage({
           <VenueCard key={venue.id} venue={venue} />
         ))}
       </ul>
-
+      <div>
       <PaginationPanel meta={meta} />
+
+      </div>
+
     </section>
   );
 }

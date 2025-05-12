@@ -1,5 +1,6 @@
 import { IVenue } from "@/interface";
 import { getVenuesByProfile } from "@/lib/api";
+// import { delay } from "@/utils/delay";
 import { useEffect, useState } from "react";
 
 /**
@@ -33,6 +34,7 @@ export function useVenuesByProfile(username: string) {
       setLoading(true);
       setError(null);
       try {
+        // await delay(3000)
         const response = await getVenuesByProfile(username);
         const data = response.data;
         console.log(data);
