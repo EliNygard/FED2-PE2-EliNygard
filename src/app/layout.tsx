@@ -3,7 +3,6 @@ import Footer from "@/ui/Footer";
 import Header from "@/ui/header/Header";
 import { ToastProvider } from "@/ui/ToastProvider";
 import type { Metadata } from "next";
-import { Toaster } from "sonner";
 import "tw-animate-css";
 import "./globals.css";
 
@@ -29,7 +28,6 @@ export default function RootLayout({
       <body
         className={`${roboto.className} antialiased min-h-screen flex flex-col`}
       >
-        <Toaster position="top-right" />
         <Header />
         <main className="flex-1">{children}</main>
         <ToastProvider />
