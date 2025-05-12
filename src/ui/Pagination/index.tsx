@@ -3,7 +3,9 @@
 import {
   Pagination,
   PaginationContent,
+  PaginationEllipsis,
   PaginationItem,
+  PaginationLink,
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
@@ -12,7 +14,8 @@ import { useRouter } from "next/navigation";
 
 export default function PaginationPanel({ meta }: { meta: IPaginationMeta }) {
   const router = useRouter();
-  console.log(meta);
+  const { pageCount, currentPage, previousPage, nextPage } = meta
+  const pages = Array.from({ length: pageCount }, (_, i) => i + 1);
 
   const goToPage = (page: number | null) => {
     if (!page) return;
@@ -38,29 +41,37 @@ export default function PaginationPanel({ meta }: { meta: IPaginationMeta }) {
           />
         </PaginationItem>
 
-        <PaginationItem>{meta.currentPage}</PaginationItem>
-
-        {/* Dynamic page buttons */}
-        {/* {pages && pages.map((page, index) =>
-              page === DOTS ? (
-                <PaginationItem key={`dots-${index}`}>
-                  <PaginationEllipsis />
-                </PaginationItem>
-              ) : (
-                <PaginationItem key={page}>
-                  <PaginationLink
-                    href="#"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setPage(page);
-                    }}
-                    isActive={page === page}
-                  >
-                    {page}
-                  </PaginationLink>
-                </PaginationItem>
-              )
-            )} */}
+        {/* Page buttons */}
+        {pages.map((page, index) => (
+          <PaginationItem key={index}>
+            <PaginationLink
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                goToPage(page);
+              }}
+            >
+              {page}
+            </PaginationLink>
+          </PaginationItem>
+        ))}
+        <PaginationItem>
+          <PaginationEllipsis />
+        </PaginationItem>
+        {/* <PaginationItem>
+          <PaginationLink href="#">1</PaginationLink>
+        </PaginationItem>
+        <PaginationItem>
+          <PaginationLink href="#" isActive>
+            2
+          </PaginationLink>
+        </PaginationItem>
+        <PaginationItem>
+          <PaginationLink href="#">3</PaginationLink>
+        </PaginationItem>
+        <PaginationItem>
+          <PaginationEllipsis />
+        </PaginationItem> */}
 
         {/* Next page button */}
         <PaginationItem>
