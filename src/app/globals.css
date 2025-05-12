@@ -134,6 +134,9 @@
   h2 {
     @apply text-lg md:text-xl;
   }
+  h3 {
+    @apply text-base md:text-lg;
+  }
   p {
     @apply text-base lg:text-lg;
   }

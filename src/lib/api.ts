@@ -6,6 +6,7 @@ import {
   IProfile,
   IUser,
   IVenue,
+  IVenueRequest,
 } from "@/interface";
 import { getToken } from "@/stores/useAuthStore";
 
@@ -27,8 +28,8 @@ interface FetcherOptions extends Omit<RequestInit, "headers"> {
 }
 
 export interface PaginatedResponse<T> {
-  data: T
-  meta: IPaginationMeta
+  data: T;
+  meta: IPaginationMeta;
 }
 
 /**
@@ -72,26 +73,26 @@ async function fetcher<T>(
   }
   const body = await response.json();
   console.log(body);
-  
-  
+
   return {
     data: body.data as T,
-    meta: body.meta as IPaginationMeta
-  }
+    meta: body.meta as IPaginationMeta,
+  };
 }
 
-export function getVenues(page = 1, limit = 10): Promise<PaginatedResponse<IVenue[]>> {
+export function getVenues(
+  page = 1,
+  limit = 10
+): Promise<PaginatedResponse<IVenue[]>> {
   const qs = new URLSearchParams({
-    _owner: 'true',
-    _bookings: 'true',
-    sort: 'created',
-    order: 'desc',
+    _owner: "true",
+    _bookings: "true",
+    sort: "created",
+    order: "desc",
     limit: limit.toString(),
-    page: page.toString()
-  })
-  return fetcher<IVenue[]>(
-    `/venues?${qs.toString()}`
-  );
+    page: page.toString(),
+  });
+  return fetcher<IVenue[]>(`/venues?${qs.toString()}`);
 }
 
 export function getVenueById(id: string): Promise<PaginatedResponse<IVenue>> {
@@ -137,6 +138,22 @@ export function setUpdateProfile(userName: string, avatar: IMedia) {
   return fetcher<IUser>(`/profiles/${userName}`, {
     method: "PUT",
     body: JSON.stringify({ avatar }),
+    auth: true,
+  });
+}
+
+export function setCreateVenue(venue: IVenueRequest) {
+  return fetcher<IVenue>(`/venues`, {
+    method: "POST",
+    body: JSON.stringify(venue),
+    auth: true,
+  });
+}
+
+export function setUpdateVenue(venue: IVenueRequest, id: string) {
+  return fetcher<IVenue>(`/venues/${id}`, {
+    method: "PUT",
+    body: JSON.stringify(venue),
     auth: true,
   });
 }
