@@ -1,18 +1,7 @@
-"use client";
-
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
-// import { usePagination } from "@/hooks/usePagination";
-
-import { IPaginationMeta, IVenue } from "@/interface";
+import { IVenue } from "@/interface";
 import { getVenues } from "@/lib/api";
+import PaginationPanel from "@/ui/Pagination";
 import VenueCard from "@/ui/VenueCard";
-import { useEffect, useState } from "react";
 
 /**
  * Page component for displaying the home page with a list of all venues available on Holidaze.
@@ -21,27 +10,19 @@ import { useEffect, useState } from "react";
  * - Renders <VenueCard>
  */
 
-export default function HomePage() {
-  // create a VenueList component and add to home page
+export default async function HomePage({
+  searchParams,
+}: {
+  searchParams: Promise<{ page?: string }>;
+}) {
+  const { page = "1" } = await searchParams;
+  const pageNumber = parseInt(page, 10);
+  console.log(pageNumber);
 
-  const [page, setPage] = useState(1);
-  const [venues, setVenues] = useState<IVenue[]>([]);
-  const [meta, setMeta] = useState<IPaginationMeta | null>(null);
-
-  useEffect(() => {
-    getVenues(page, 10).then(({ data, meta }) => {
-      setVenues(data);
-      setMeta(meta);
-    });
-  }, [page]);
-
-  // const pages = meta;
-  // usePagination({
-  //   currentPage: page,
-  //   totalPages: meta?.pageCount ?? 1,
-  //   siblingCount: 1,
-  //   boundaryCount: 1,
-  // });
+  const { data: venues, meta: meta } = await getVenues(pageNumber, 10);
+  console.log("Venues: ", venues);
+  console.log("Meta: ", meta);
+  console.log(meta.currentPage);
 
   return (
     <section className="flex flex-col gap-[32px] page-padding">
@@ -51,77 +32,7 @@ export default function HomePage() {
         ))}
       </ul>
 
-      {meta && (
-        <Pagination>
-          <PaginationContent>
-            {/* Previous page button */}
-            <PaginationItem>
-              <PaginationPrevious
-                href="#"
-                onClick={(e) => {
-                  e.preventDefault();
-                  if (meta?.previousPage) {
-                    setPage(meta.previousPage);
-                  }
-                  window.scrollTo({ top: 0, left: 100, behavior: "smooth" });
-                }}
-                aria-disabled={!meta?.previousPage}
-                tabIndex={!meta?.previousPage ? -1 : undefined}
-                className={
-                  !meta?.previousPage
-                    ? "pointer-events-none opacity-50"
-                    : undefined
-                }
-              />
-            </PaginationItem>
-
-            <PaginationItem>
-              {meta.currentPage}
-            </PaginationItem>
-
-            {/* Dynamic page buttons */}
-            {/* {pages && pages.map((page, index) =>
-              page === DOTS ? (
-                <PaginationItem key={`dots-${index}`}>
-                  <PaginationEllipsis />
-                </PaginationItem>
-              ) : (
-                <PaginationItem key={page}>
-                  <PaginationLink
-                    href="#"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setPage(page);
-                    }}
-                    isActive={page === page}
-                  >
-                    {page}
-                  </PaginationLink>
-                </PaginationItem>
-              )
-            )} */}
-
-            {/* Next page button */}
-            <PaginationItem>
-              <PaginationNext
-                href="#"
-                onClick={(e) => {
-                  e.preventDefault();
-                  if (meta?.nextPage) {
-                    setPage(meta.nextPage);
-                  }
-                  window.scrollTo({ top: 0, left: 100, behavior: "smooth" });
-                }}
-                aria-disabled={!meta?.nextPage}
-                tabIndex={!meta?.nextPage ? -1 : undefined}
-                className={
-                  !meta?.nextPage ? "pointer-events-none opacity-50" : undefined
-                }
-              />
-            </PaginationItem>
-          </PaginationContent>
-        </Pagination>
-      )}
+      <PaginationPanel meta={meta} />
     </section>
   );
 }
