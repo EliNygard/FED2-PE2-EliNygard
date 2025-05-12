@@ -1,20 +1,17 @@
-import { deleteVenue } from "@/app/api/deleteVenue";
+import { deleteVenueFetch } from "@/app/api/deleteVenueFetch";
 import { useState } from "react";
-import { toast } from "sonner";
 
 export function useDeleteVenue() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isError, setIsError] = useState<string | null>(null);
 
-  async function handleDeleteVenue(id: string) {
+  async function deleteVenue(id: string) {
     setIsLoading(true);
     setIsError(null);
 
     try {
-      await deleteVenue(id);
+      await deleteVenueFetch(id);
       console.log("venue deleted ", id);
-      toast.success('The venue was deleted')
-      // refresh page
     } catch (error: unknown) {
       const message =
         error instanceof Error
@@ -26,5 +23,5 @@ export function useDeleteVenue() {
       setIsLoading(false);
     }
   }
-  return { handleDeleteVenue, isLoading, isError };
+  return { deleteVenue, isLoading, isError };
 }

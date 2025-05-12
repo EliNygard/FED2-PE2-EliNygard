@@ -1,10 +1,13 @@
-import { useDeleteVenue } from "@/hooks/useDeleteVenue";
+// import { useDeleteVenue } from "@/hooks/useDeleteVenue";
 import { IVenue } from "@/interface";
 import { useAuthStore } from "@/stores/useAuthStore";
+// import AlertConfirmDialog from "@/ui/AlertDeleteVenue";
 import Button from "@/ui/Button";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+// import { toast } from "sonner";
+import DeleteVenueButton from "@/ui/DeleteVenueButton";
 import BookingsAccordion from "../BookingsOnVenue";
 
 /**
@@ -22,8 +25,6 @@ export default function MyVenueCard({ venue }: { venue: IVenue }) {
   const firstImage = venue.media?.[0];
   const bookings = venue.bookings;
   const username = useAuthStore((state) => state.user?.name);
-  const venueId = venue.id;
-  const { handleDeleteVenue, isLoading, isError } = useDeleteVenue();
 
   return (
     <li className="mb-16">
@@ -74,21 +75,9 @@ export default function MyVenueCard({ venue }: { venue: IVenue }) {
             >
               Update
             </Button>
-            <Button
-              $variant="narrow"
-              className="bg-brand-blue"
-              disabled={isLoading}
-              onClick={() => {
-                console.log(venueId);
-                
-                handleDeleteVenue(venueId);
-              }}
-            >
-              Delete
-            </Button>
+            <DeleteVenueButton venueId={venue.id} />
           </div>
         </div>
-        {isError && <p>{isError}</p>}
       </div>
 
       {/* Bookings on venue section */}
