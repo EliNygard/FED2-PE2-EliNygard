@@ -98,6 +98,7 @@ export default function VenueGallery({
         ))}
       </div>
 
+
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogContent>
           <DialogHeader className="sr-only">
