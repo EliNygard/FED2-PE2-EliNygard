@@ -57,7 +57,7 @@ export default function VenueGallery({
   const imageCount = venueImages.length;
   let gridClasses = "";
   if (imageCount <= 2) {
-    gridClasses = "grid-cols-1 md:grid-cols-2 md:grid-rows-1";
+    gridClasses = "grid-cols-1 xl:max-w-[1040px] m-auto";
   } else if (imageCount >= 5) {
     gridClasses =
       "grid-cols-1 md:grid-cols-[65%_1fr] md:grid-rows-2 xl:grid-cols-[55%_1fr_1fr] xl:grid-rows-2";
@@ -112,8 +112,9 @@ export default function VenueGallery({
         ))}
       </div>
 
+
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogContent>
+        <DialogContent className="p-1">
           <DialogHeader className="sr-only">
             <DialogTitle>Image Carousel</DialogTitle>
           </DialogHeader>
@@ -128,26 +129,26 @@ export default function VenueGallery({
             <CarouselContent>
               {venueImages.map((image, index) => (
                 <CarouselItem defaultValue={index.toString()} key={image.url}>
-                  <div className="relative aspect-video">
+                  <div className="relative aspect-video rounded-md">
                     <Image
                       src={image.url}
                       alt={image.alt}
                       fill
                       sizes="50vw"
-                      style={{ objectFit: "contain" }}
+                      style={{ objectFit: "contain", borderRadius: '6px' }}
                       className="bg-primary-font"
                     />
                   </div>
                   {image.alt ? (
-                  <div className="pt-1.5">
-                    <p className="text-center">
+                  <div className="pt-1.5 text-xs md:text-sm">
+                    <p className="text-center text-sm md:text-base">
                       {`Image ${index + 1}: ${image.alt}`}
                     </p>
                   </div>
 
                   ) : (
                     <div className="pt-1.5">
-                    <p className="text-center">
+                    <p className="text-center text-xs md:text-sm">
                       {`Image ${index + 1} of ${venueImages.length}`}
                     </p>
                   </div>
@@ -158,9 +159,13 @@ export default function VenueGallery({
             <CarouselPrevious aria-label="Previous Image" />
             <CarouselNext aria-label="Next Image" />
           </Carousel>
+
+          
           
         </DialogContent>
+       
       </Dialog>
+
     </>
   );
 }
