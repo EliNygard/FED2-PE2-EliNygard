@@ -44,8 +44,8 @@ export default function ProfileNav() {
           </>
         )}
 
-        <Tab href={`/profile/${username}/edit`}>Edit Profile</Tab>
         <Tab href={`/profile/${username}/bookings`}>My Bookings</Tab>
+        <Tab href={`/profile/${username}/edit`}>Edit Profile</Tab>
         <li>
           <Button
             $variant="narrow"

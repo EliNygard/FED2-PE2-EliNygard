@@ -68,7 +68,7 @@ export default function EditProfilePage() {
   return (
     <form
       onSubmit={form.handleSubmit(onSubmit)}
-      className="max-w-80 flex flex-col gap-8"
+      className="max-w-xl flex flex-col gap-8"
     >
       <h2>Update Profile</h2>
 
@@ -77,23 +77,25 @@ export default function EditProfilePage() {
           <h3>Update your profile image</h3>
         </label>
 
-        <div className="relative rounded-full h-12 w-12 overflow-hidden">
-          <Image
-            src={currentUserPicture || "/default-user.png"}
-            alt={username || "User"}
-            fill
-            sizes="33vw"
-            className="w-full object-cover rounded-full"
+        <div className="grid min-[400px]:grid-cols-[auto_1fr] gap-2 items-center">
+          <div className="relative rounded-full h-12 w-12 overflow-hidden">
+            <Image
+              src={currentUserPicture || "/default-user.png"}
+              alt={username || "User"}
+              fill
+              sizes="33vw"
+              className="w-full object-cover rounded-full"
+            />
+          </div>
+
+          <Input
+            type="text"
+            id="avatarUrl"
+            placeholder="Image link"
+            defaultValue={currentUserPicture}
+            {...form.register("avatar.url")}
           />
         </div>
-
-        <Input
-          type="text"
-          id="avatarUrl"
-          placeholder="Image link"
-          defaultValue={currentUserPicture}
-          {...form.register("avatar.url")}
-        />
         <p className="text-sm">The image must be a valid url link</p>
         {form.formState.errors.avatar?.url && (
           <span className="text-alert-red text-sm" aria-live="polite">
@@ -101,7 +103,8 @@ export default function EditProfilePage() {
           </span>
         )}
       </div>
-      <Button type="submit" disabled={isLoading} aria-busy={isLoading}>
+      
+      <Button className="max-w-80" type="submit" disabled={isLoading} aria-busy={isLoading}>
         {isLoading ? <ButtonSpinner /> : "Update profile"}{" "}
       </Button>
 

@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { RegisterForm } from "@/ui/forms/RegisterForm";
 import Image from "next/image";
@@ -11,8 +11,8 @@ import Image from "next/image";
 
 export default function RegisterPage() {
   return (
-    <section className="max-w-4xl m-auto">
-      <div className="mt-3 grid grid-cols-1 md:grid-cols-2 md:gap-1.5 md:items-start">
+    <section className="max-w-4xl m-auto page-padding">
+      <div className="mt-3 grid grid-cols-1 gap-7 md:grid-cols-2 md:gap-1.5 md:items-start">
         <div className="block md:hidden">
           <Image
             src="/LogoMountainsV.svg"
