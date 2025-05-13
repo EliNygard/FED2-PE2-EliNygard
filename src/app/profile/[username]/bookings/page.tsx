@@ -7,6 +7,7 @@ import MyBookingsSection from "@/ui/bookings/MyBookings";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import Loading from "../loading";
+import { useRouter } from "next/navigation";
 
 /**
  * Page component for displaying the bookings section.
@@ -16,33 +17,46 @@ import Loading from "../loading";
  */
 
 export default function MyBookingsPage() {
+  const router = useRouter()
   const username = useAuthStore((state) => state.user?.name) ?? "";
-
-  const [bookings, setBookings] = useState<IBooking[] | null>(null);
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  const [bookings, setBookings] = useState<IBooking[]>([]);
   const [isLoading, setLoading] = useState(true);
+  const [isError, setIsError] = useState<string | null>(null)
 
   useEffect(() => {
-    if (!username || "") return;
+    if (!isAuthenticated) {
+      router.replace(`/login?from=${encodeURIComponent(window.location.pathname)}`)
+    }
+  }, [isAuthenticated, router])
+
+  useEffect(() => {
+    if (!isAuthenticated || !username) return;
 
     async function fetchBookings() {
+      setLoading(true);
+      setIsError(null)
       try {
         const { data } = await getBookingsByProfile(username);
         setBookings(data);
       } catch (error) {
         console.error("Failed to fetch bookings", error);
+        setIsError('Could not load your bookings. Please try again.')
       } finally {
         setLoading(false);
       }
     }
     fetchBookings();
-  }, [username]);
+  }, [username, isAuthenticated]);
 
-  if (isLoading) {
+    if (isLoading) {
     return <Loading />;
   }
 
-  if (!username) {
-    return <p>Please log in to view your bookings</p>;
+  if (isError) {
+    return <div>
+      {isError}
+    </div>
   }
 
   return (

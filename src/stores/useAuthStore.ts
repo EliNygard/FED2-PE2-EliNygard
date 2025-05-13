@@ -37,6 +37,9 @@ export const useAuthStore = create<AuthState>()(
     subscribeWithSelector((set, get) => ({
       ...initialState,
 
+      isHydrating: true,
+      setHydrating: (status) => set({ isHydrating: status }),
+
       setUser: (user) =>
         set({
           user,
@@ -78,15 +81,18 @@ export const useAuthStore = create<AuthState>()(
         isAuthenticated: state.isAuthenticated,
         isVenueManager: state.isVenueManager,
       }),
+      onRehydrateStorage: () => (state) => {
+        state?.setHydrating(false)
+      }
     }
   )
 );
 
 // Subscribe to state changes and log them
 // DO I NEED THIS. DELETE IF NOT, IT IS LOGGING THE TOKEN ❗❗❗❗
-useAuthStore.subscribe((state) => {
-  console.log("[auth store] state changed: ", state.user);
-});
+// useAuthStore.subscribe((state) => {
+//   console.log("[auth store] state changed: ", state.user);
+// });
 
 /**
  * Grab the current auth token from the store.
