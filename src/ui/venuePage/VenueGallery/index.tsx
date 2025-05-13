@@ -24,7 +24,7 @@ import { useMediaQuery } from "react-responsive";
 // if fewer images, edit grid
 
 /**
- * VenueGallery displays a grid of the venue image(s). 
+ * VenueGallery displays a grid of the venue image(s).
  * - The component is part of the VenuePage
  * - The user can click on an image in the grid and a full screen view opens.
  * @param venue The venue images.
@@ -54,8 +54,20 @@ export default function VenueGallery({
     return <div className="aspect-video max-h-[500px] w-full bg-gray-100" />;
   }
 
+  const imageCount = venueImages.length;
+  let gridClasses = "";
+  if (imageCount <= 2) {
+    gridClasses = "grid-cols-1 md:grid-cols-2 md:grid-rows-1";
+  } else if (imageCount >= 5) {
+    gridClasses =
+      "grid-cols-1 md:grid-cols-[65%_1fr] md:grid-rows-2 xl:grid-cols-[55%_1fr_1fr] xl:grid-rows-2";
+  } else {
+    gridClasses = "grid-cols-1 md:grid-cols-[65%_1fr] md:grid-rows-2";
+  }
+
   const count = isXl ? 5 : isMd ? 3 : 1;
   const imagesToShow = venueImages.slice(0, count);
+
   const spanClasses = (index: number) => {
     if (isMd && !isXl) {
       if (index === 0) return "md:col-start-1 md:row-span-2";
@@ -76,7 +88,9 @@ export default function VenueGallery({
 
   return (
     <>
-      <div className="aspect-video max-h-[500px] w-full grid grid-cols-1 md:grid-cols-[65%_1fr] md:grid-rows-2 xl:grid-cols-[55%_1fr_1fr] xl:grid-rows-2 gap-2">
+      <div
+        className={`aspect-video max-h-[500px] w-full grid gap-2 ${gridClasses}`}
+      >
         {imagesToShow.map((img, index) => (
           <button
             key={img.url}
@@ -98,7 +112,6 @@ export default function VenueGallery({
         ))}
       </div>
 
-
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogContent>
           <DialogHeader className="sr-only">
@@ -108,6 +121,9 @@ export default function VenueGallery({
             defaultValue={activeIndex.toString()}
             onChange={(value) => setActiveIndex(Number(value))}
             className="w-full h-full"
+            opts={{
+              loop: true,
+            }}
           >
             <CarouselContent>
               {venueImages.map((image, index) => (
@@ -122,12 +138,27 @@ export default function VenueGallery({
                       className="bg-primary-font"
                     />
                   </div>
+                  {image.alt ? (
+                  <div className="pt-1.5">
+                    <p className="text-center">
+                      {`Image ${index + 1}: ${image.alt}`}
+                    </p>
+                  </div>
+
+                  ) : (
+                    <div className="pt-1.5">
+                    <p className="text-center">
+                      {`Image ${index + 1} of ${venueImages.length}`}
+                    </p>
+                  </div>
+                  )}
                 </CarouselItem>
               ))}
             </CarouselContent>
             <CarouselPrevious aria-label="Previous Image" />
             <CarouselNext aria-label="Next Image" />
           </Carousel>
+          
         </DialogContent>
       </Dialog>
     </>
