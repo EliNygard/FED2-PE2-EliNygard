@@ -12,15 +12,13 @@ export default function Loading() {
   );
 }
 
-export function SkeletonCard() {
+function SkeletonCard() {
   return (
-    <>
       <div className="flex flex-col gap-3">
         <Skeleton className="w-full h-60" />
         <Skeleton className="w-2/3 h-4 rounded-md mb-2.5" />
         <Skeleton className="w-1/4 h-4 rounded-md" />
         <Skeleton className="w-1/3 h-4 rounded-md" />
       </div>
-    </>
   );
 }
