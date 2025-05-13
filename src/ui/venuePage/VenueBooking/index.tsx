@@ -211,7 +211,7 @@ export default function VenueBooking({ venue }: { venue: IVenue }) {
       {/* Booking confirmation dialog */}
 
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogContent>
+        <DialogContent className="md:max-w-2xl max-w-[calc(100%-1rem)]">
           <DialogHeader>
             <DialogTitle>Booking confirmation</DialogTitle>
             <DialogDescription>

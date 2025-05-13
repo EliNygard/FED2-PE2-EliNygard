@@ -16,7 +16,7 @@ export default function LoginButton() {
       <DialogTrigger asChild>
         <Button>Log in</Button>
       </DialogTrigger>
-      <DialogContent className="bg-secondary-background max-h-[calc(100vh-4rem)] overflow-y-auto touch-pan-y">
+      <DialogContent className="bg-secondary-background max-h-[calc(100vh-4rem)] overflow-y-auto touch-pan-y md:max-w-2xl max-w-[calc(100%-1rem)]">
         <div className="grid md:grid-cols-2">
           <div className="md:py-4 md:pr-8 mt-11">
             <DialogTitle className="text-xl mb-10">
