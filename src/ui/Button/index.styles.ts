@@ -12,6 +12,9 @@ const variantStyles: Record<ButtonVariant, ReturnType<typeof css>> = {
     transition:
       background-color 0.3s,
       color 0.3s;
+      &:hover {
+    background-color: var(--color-interaction-blue);
+  }
   `,
   secondary: css`
     background-color: #fff;
@@ -21,6 +24,10 @@ const variantStyles: Record<ButtonVariant, ReturnType<typeof css>> = {
     text-transform: uppercase;
     font-size: 1rem;
     width: 100%;
+    &:hover {
+    background-color: var(--color-disabled-blue);
+
+  }
   `,
   disabled: css`
     background-color: var(--color-disabled-blue);
@@ -29,6 +36,7 @@ const variantStyles: Record<ButtonVariant, ReturnType<typeof css>> = {
     text-transform: uppercase;
     font-size: 1rem;
     width: 100%;
+    
   `,
   narrow: css`
     color: #fff;
@@ -38,6 +46,9 @@ const variantStyles: Record<ButtonVariant, ReturnType<typeof css>> = {
     padding: 0;
     width: auto;
     text-transform: capitalize;
+    &:hover {
+    background-color: var(--color-interaction-blue);
+  }
   `,
 };
 
@@ -47,14 +58,12 @@ export const StyledButton = styled.button<{ $variant?: ButtonVariant }>`
   border-radius: 6px;
   font-weight: 500;
   padding: 4px 16px 4px 16px;
-  transition: background-color 0.2s;
+  transition: background-color 0.3s; 
   width: 100%;
   cursor: pointer;
-  &:hover {
-    background-color: var(--color-interaction-blue);
-  }
+  
   &:disabled {
-    background-color: gray;
+    background-color: var(--color-disabled-blue);
     pointer-events: none;
   }
 `;

@@ -36,7 +36,7 @@ export default function AlertConfirmDialog({
             Are you sure you want to delete this venue?
           </AlertDialogTitle>
           <AlertDialogDescription>
-            The venue will be permanently deleted and guests can no longer book
+            The venue will be permanently deleted, bookings on this venue will be cancelled and guests can no longer book
             a stay.
           </AlertDialogDescription>
         </AlertDialogHeader>
