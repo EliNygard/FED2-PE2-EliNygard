@@ -20,15 +20,16 @@ export default function MyBookingsPage() {
   const router = useRouter()
   const username = useAuthStore((state) => state.user?.name) ?? "";
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  const isHydrating = useAuthStore((state) => state.isHydrating)
   const [bookings, setBookings] = useState<IBooking[]>([]);
   const [isLoading, setLoading] = useState(true);
   const [isError, setIsError] = useState<string | null>(null)
 
   useEffect(() => {
-    if (!isAuthenticated) {
+    if (!isHydrating && !isAuthenticated) {
       router.replace(`/login?from=${encodeURIComponent(window.location.pathname)}`)
     }
-  }, [isAuthenticated, router])
+  }, [isHydrating, isAuthenticated, router])
 
   useEffect(() => {
     if (!isAuthenticated || !username) return;
@@ -49,12 +50,12 @@ export default function MyBookingsPage() {
     fetchBookings();
   }, [username, isAuthenticated]);
 
-    if (isLoading) {
+    if (isHydrating || isLoading) {
     return <Loading />;
   }
 
   if (isError) {
-    return <div>
+    return <div role="alert">
       {isError}
     </div>
   }
