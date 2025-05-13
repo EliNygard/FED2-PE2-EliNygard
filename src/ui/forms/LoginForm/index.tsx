@@ -4,6 +4,7 @@ import { DialogClose } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { useLogin } from "@/hooks/useLogin";
 import Button from "@/ui/Button";
+import ButtonSpinner from "@/ui/ButtonSpinner";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -46,7 +47,7 @@ export default function LoginForm() {
   const delay = (ms: number) =>
     new Promise<void>((resolve) => setTimeout(resolve, ms));
 
-   /**
+  /**
    * Submit handler invoked when the form is submitted and passes validation.
    *
    * @param values - The validated form values containing email and password.
@@ -113,7 +114,7 @@ export default function LoginForm() {
 
         <div className="mt-7">
           <Button type="submit" disabled={isLoading} aria-busy={isLoading}>
-            {isLoading ? "Logging in..." : "Log in"}{" "}
+            {isLoading ? <ButtonSpinner /> : "Log in"}{" "}
           </Button>
 
           {isError && (

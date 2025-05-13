@@ -29,6 +29,7 @@ import { ICreateBooking, IVenue } from "@/interface";
 import { BookFormSchema, FormValues } from "@/lib/schemas";
 import { useAuthStore } from "@/stores/useAuthStore";
 import Button from "@/ui/Button";
+import ButtonSpinner from "@/ui/ButtonSpinner";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { DialogTitle } from "@radix-ui/react-dialog";
 import { differenceInCalendarDays } from "date-fns";
@@ -239,7 +240,7 @@ export default function VenueBooking({ venue }: { venue: IVenue }) {
               title={!token ? "Log in to make a booking" : undefined}
               $variant={!token ? "disabled" : "primary"}
             >
-              {isLoading ? "Loading" : "Confirm"}
+              {isLoading ? <ButtonSpinner /> : "Confirm"}
             </Button>
             <DialogClose asChild>
               <Button $variant="secondary">Cancel</Button>

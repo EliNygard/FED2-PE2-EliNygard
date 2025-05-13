@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { useUpdateProfile } from "@/hooks/useUpdateProfile";
 import { useAuthStore } from "@/stores/useAuthStore";
 import Button from "@/ui/Button";
+import ButtonSpinner from "@/ui/ButtonSpinner";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -101,7 +102,7 @@ export default function EditProfilePage() {
         )}
       </div>
       <Button type="submit" disabled={isLoading} aria-busy={isLoading}>
-        {isLoading ? "Updating..." : "Update profile"}{" "}
+        {isLoading ? <ButtonSpinner /> : "Update profile"}{" "}
       </Button>
 
       {isError && (

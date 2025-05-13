@@ -10,6 +10,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import Button from "../Button";
+import ButtonSpinner from "../ButtonSpinner";
 
 interface AlertConfirmDialogProps {
   isLoading: boolean;
@@ -25,7 +26,9 @@ export default function AlertConfirmDialog({
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button $variant="narrow" className="bg-brand-blue" >Delete</Button>
+        <Button $variant="narrow" className="bg-brand-blue">
+          Delete
+        </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
@@ -39,8 +42,12 @@ export default function AlertConfirmDialog({
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction className="" disabled={isLoading} onClick={onConfirm}>
-            {isLoading ? "Loading" : `${submitLabel}`}
+          <AlertDialogAction
+            className=""
+            disabled={isLoading}
+            onClick={onConfirm}
+          >
+            {isLoading ? <ButtonSpinner /> : `${submitLabel}`}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
