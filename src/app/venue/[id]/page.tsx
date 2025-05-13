@@ -9,6 +9,28 @@ import VenueLocation from "@/ui/venuePage/VenueLocation";
 // TODO
 // add image slider to mobile
 
+import type { Metadata } from "next";
+
+type Props = {
+  params: Promise<{ id: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+};
+
+export async function generateMetadata(
+  { params }: Props,
+  
+): Promise<Metadata> {
+  const id = (await params).id;
+
+  // fetch post information
+  const venue = (await getVenueById(id)).data;
+
+  return {
+    title: `${venue.name} | ${venue.location.city}, ${venue.location.country}`,
+    description: `Located in ${venue.location.city}, ${venue.location.country}`,
+  };
+}
+
 /**
  * Page component for displaying details about a specific venue.
  *
