@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { venueFormSchema, VenueFormValues } from "@/lib/schemas";
 import Button from "@/ui/Button";
+import ButtonSpinner from "@/ui/ButtonSpinner";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import { useEffect } from "react";
@@ -385,7 +386,7 @@ export default function VenueForm({
         </StyledFieldset>
         <div className="lg:w-72">
           <Button type="submit" disabled={isLoading}>
-            {isLoading ? "Loading" : `${submitLabel}`}
+            {isLoading ? <ButtonSpinner /> : `${submitLabel}`}
           </Button>
         </div>
       </StyledVenueForm>

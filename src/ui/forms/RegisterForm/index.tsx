@@ -5,6 +5,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useRegister } from "@/hooks/useRegister";
 import { useAuthStore } from "@/stores/useAuthStore";
 import Button from "@/ui/Button";
+import ButtonSpinner from "@/ui/ButtonSpinner";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { FaChevronRight } from "react-icons/fa";
@@ -105,7 +106,7 @@ export function RegisterForm() {
     } = values;
 
     try {
-      await delay(3000);
+      await delay(9000);
 
       const user = await handleRegister({
         name,
@@ -276,7 +277,7 @@ export function RegisterForm() {
             </div>
 
             <Button type="submit" disabled={isLoading} aria-busy={isLoading}>
-              {isLoading ? "Registering" : "Register"}
+              {isLoading ? <ButtonSpinner /> : "Register"}
             </Button>
 
             {isError && (

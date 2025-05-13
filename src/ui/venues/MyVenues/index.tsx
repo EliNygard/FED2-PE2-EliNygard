@@ -9,9 +9,9 @@ import MyVenueCard from "../MyVenueCard";
  */
 
 export default function MyVenues({ venues }: { venues: IVenue[] }) {
-  if (!venues || venues.length === 0) {
-    return <p>You have no venues</p>;
-  }
+  // if (!venues || venues.length === 0) {
+  //   return <p>You have no venues</p>;
+  // }
 
   return (
     <section className="max-w-xl">

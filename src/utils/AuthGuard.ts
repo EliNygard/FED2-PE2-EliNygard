@@ -6,6 +6,7 @@ export function AuthGuard() {
   const accessToken = useAuthStore((state) => state.user?.accessToken)
 
   if (!accessToken) {
+
     // redirect to login
     return false
   }

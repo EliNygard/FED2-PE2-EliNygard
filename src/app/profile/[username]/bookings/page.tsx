@@ -6,6 +6,8 @@ import { useAuthStore } from "@/stores/useAuthStore";
 import MyBookingsSection from "@/ui/bookings/MyBookings";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import Loading from "../loading";
+import { useRouter } from "next/navigation";
 
 /**
  * Page component for displaying the bookings section.
@@ -15,33 +17,47 @@ import { useEffect, useState } from "react";
  */
 
 export default function MyBookingsPage() {
+  const router = useRouter()
   const username = useAuthStore((state) => state.user?.name) ?? "";
-
-  const [bookings, setBookings] = useState<IBooking[] | null>(null);
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  const isHydrating = useAuthStore((state) => state.isHydrating)
+  const [bookings, setBookings] = useState<IBooking[]>([]);
   const [isLoading, setLoading] = useState(true);
+  const [isError, setIsError] = useState<string | null>(null)
 
   useEffect(() => {
-    if (!username || "") return;
+    if (!isHydrating && !isAuthenticated) {
+      router.replace(`/login?from=${encodeURIComponent(window.location.pathname)}`)
+    }
+  }, [isHydrating, isAuthenticated, router])
+
+  useEffect(() => {
+    if (!isAuthenticated || !username) return;
 
     async function fetchBookings() {
+      setLoading(true);
+      setIsError(null)
       try {
         const { data } = await getBookingsByProfile(username);
         setBookings(data);
       } catch (error) {
         console.error("Failed to fetch bookings", error);
+        setIsError('Could not load your bookings. Please try again.')
       } finally {
         setLoading(false);
       }
     }
     fetchBookings();
-  }, [username]);
+  }, [username, isAuthenticated]);
 
-  if (!username) {
-    return <p>Please log in to view your bookings</p>;
+    if (isHydrating || isLoading) {
+    return <Loading />;
   }
 
-  if (isLoading) {
-    return <p>Loading bookings...</p>;
+  if (isError) {
+    return <div role="alert">
+      {isError}
+    </div>
   }
 
   return (

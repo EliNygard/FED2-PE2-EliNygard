@@ -158,6 +158,8 @@ export interface AuthState {
   token: string | null;
   isAuthenticated: boolean;
   isVenueManager: boolean;
+  isHydrating: boolean;
+  setHydrating: (status: boolean) => void
   setUser: (user: IUser) => void;
   updateAvatar: (avatar: IMedia) => void;
   logout: () => void;
