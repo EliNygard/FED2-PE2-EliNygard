@@ -4,9 +4,9 @@ import { useVenuesByProfile } from "@/hooks/useVenuesByProfile";
 import { useAuthStore } from "@/stores/useAuthStore";
 import MyVenues from "@/ui/venues/MyVenues";
 import Link from "next/link";
-import Loading from "../loading";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import Loading from "../loading";
 
 /**
  * Page component for displaying a list of the current Manager's venues.
@@ -16,19 +16,21 @@ import { useEffect } from "react";
  */
 
 export default function MyVenuesPage() {
-  const router = useRouter()
+  const router = useRouter();
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
-  const isHydrating = useAuthStore((state) => state.isHydrating)
+  const isHydrating = useAuthStore((state) => state.isHydrating);
   const username = useAuthStore((state) => state.user?.name) ?? "";
   const { venues, loading, error } = useVenuesByProfile(username);
 
   useEffect(() => {
-      if (!isHydrating && !isAuthenticated) {
-        router.replace(`/login?from=${encodeURIComponent(window.location.pathname)}`)
-      }
-    }, [isHydrating, isAuthenticated, router])
-  
-    if (isHydrating || loading) {
+    if (!isHydrating && !isAuthenticated) {
+      router.replace(
+        `/login?from=${encodeURIComponent(window.location.pathname)}`
+      );
+    }
+  }, [isHydrating, isAuthenticated, router]);
+
+  if (isHydrating || loading) {
     return <Loading />;
   }
 

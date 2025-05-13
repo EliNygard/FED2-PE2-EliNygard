@@ -64,7 +64,7 @@ async function fetcher<T>(
       : {}),
   };
 
-  await delay(8000)
+  await delay(1000)
   const response = await fetch(`${API_BASE}${url}`, {
     ...init,
     headers: { ...defaultHeaders, ...customHeaders },

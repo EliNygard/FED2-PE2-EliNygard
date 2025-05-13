@@ -12,6 +12,7 @@ const override: CSSProperties = {
 
 export default function ButtonSpinner() {
   return (
+    <div className="h-full w-full">
       <ClipLoader
         color="#004B7E"
         cssOverride={override}
@@ -19,5 +20,6 @@ export default function ButtonSpinner() {
         aria-label="Loading Spinner"
         data-testid="loader"
       />
+    </div>
   );
 }
