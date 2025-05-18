@@ -27,7 +27,7 @@ export async function generateMetadata(
 
   return {
     title: `${venue.name} | ${venue.location.city}, ${venue.location.country}`,
-    description: `Located in ${venue.location.city}, ${venue.location.country}`,
+    description: `Read about the venue and book a stay`,
   };
 }
 

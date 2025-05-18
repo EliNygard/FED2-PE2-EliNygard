@@ -2,7 +2,6 @@ import Loading from "@/app/loading";
 import ProfileHeader from "@/ui/ProfileHeader";
 import ProfileNav from "@/ui/ProfileNav";
 import { Suspense } from "react";
-
 import type { Metadata } from "next";
 
 type Props = {
@@ -10,17 +9,11 @@ type Props = {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 
-export async function generateMetadata(
-  { params }: Props,
-  
-): Promise<Metadata> {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const username = (await params).username;
 
-  // fetch post information
-  // const venue = (await getVenueById(id)).data;
-
   return {
-    title: `Profile page ${username} `,
+    title: `${username} - profile page`,
     description: `${username}'s profile page`,
   };
 }
