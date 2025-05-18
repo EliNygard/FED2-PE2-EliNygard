@@ -5,9 +5,9 @@ import { getBookingsByProfile } from "@/lib/api";
 import { useAuthStore } from "@/stores/useAuthStore";
 import MyBookingsSection from "@/ui/bookings/MyBookings";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Loading from "../loading";
-import { useRouter } from "next/navigation";
 
 /**
  * Page component for displaying the bookings section.
@@ -16,33 +16,36 @@ import { useRouter } from "next/navigation";
  * - Renders <MyBookingsSection> or a `no bookings` element if no bookings.
  */
 
+
 export default function MyBookingsPage() {
-  const router = useRouter()
+  const router = useRouter();
   const username = useAuthStore((state) => state.user?.name) ?? "";
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
-  const isHydrating = useAuthStore((state) => state.isHydrating)
+  const isHydrating = useAuthStore((state) => state.isHydrating);
   const [bookings, setBookings] = useState<IBooking[]>([]);
   const [isLoading, setLoading] = useState(true);
-  const [isError, setIsError] = useState<string | null>(null)
+  const [isError, setIsError] = useState<string | null>(null);
 
   useEffect(() => {
     if (!isHydrating && !isAuthenticated) {
-      router.replace(`/login?from=${encodeURIComponent(window.location.pathname)}`)
+      router.replace(
+        `/login?from=${encodeURIComponent(window.location.pathname)}`
+      );
     }
-  }, [isHydrating, isAuthenticated, router])
+  }, [isHydrating, isAuthenticated, router]);
 
   useEffect(() => {
     if (!isAuthenticated || !username) return;
 
     async function fetchBookings() {
       setLoading(true);
-      setIsError(null)
+      setIsError(null);
       try {
         const { data } = await getBookingsByProfile(username);
         setBookings(data);
       } catch (error) {
         console.error("Failed to fetch bookings", error);
-        setIsError('Could not load your bookings. Please try again.')
+        setIsError("Could not load your bookings. Please try again.");
       } finally {
         setLoading(false);
       }
@@ -50,14 +53,12 @@ export default function MyBookingsPage() {
     fetchBookings();
   }, [username, isAuthenticated]);
 
-    if (isHydrating || isLoading) {
+  if (isHydrating || isLoading) {
     return <Loading />;
   }
 
   if (isError) {
-    return <div role="alert">
-      {isError}
-    </div>
+    return <div role="alert">{isError}</div>;
   }
 
   return (
