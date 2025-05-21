@@ -7,7 +7,16 @@ import { IVenue } from "@/interface";
  */
 
 export default function VenueInfo({ venue }: { venue: IVenue }) {
-  console.log(venue.meta.parking);
+  console.log(venue.maxGuests);
+  let guestsString = "";
+
+  if (venue.maxGuests === 1) {
+    guestsString = "guest";
+  } else {
+    guestsString = "guests";
+  }
+
+  console.log(guestsString);
 
   return (
     <section>
@@ -15,7 +24,7 @@ export default function VenueInfo({ venue }: { venue: IVenue }) {
       <div className="mt-4 flex flex-col gap-5">
         <ul className="flex flex-col gap-1.5">
           <li>
-            <p>{`${venue.maxGuests} guests`}</p>
+            <p>{`${venue.maxGuests} ${guestsString}`}</p>
           </li>
           {venue.meta.parking && (
             <li>
