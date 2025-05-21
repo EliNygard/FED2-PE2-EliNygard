@@ -9,11 +9,26 @@ import styles from "./styles.module.css";
  */
 
 export default function VenueHeader({ venue }: { venue: IVenue }) {
+  console.log(typeof venue.location.city);
+
+  const { city, country } = venue.location || {};
+  const isCity = city.length > 0;
+  const isCountry = country.length > 0;
+  let locationString = "";
+
+  if (isCity && isCountry) {
+    locationString = `${city}, ${country}`;
+  } else if (isCity) {
+    locationString = city;
+  } else if (isCountry) {
+    locationString = country;
+  }
+
   return (
     <header className={styles.header}>
       <section className="capitalize">
         <h1>{venue.name}</h1>
-        <p>{`${venue.location.city}, ${venue.location.country}`}</p>
+        {locationString ? <p>{locationString}</p> : null}
       </section>
       <div className={styles.headerDetails}>
         <div>

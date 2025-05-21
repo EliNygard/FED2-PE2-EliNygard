@@ -16,17 +16,14 @@ type Props = {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 
-export async function generateMetadata(
-  { params }: Props,
-  
-): Promise<Metadata> {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const id = (await params).id;
 
   // fetch post information
   const venue = (await getVenueById(id)).data;
 
   return {
-    title: `${venue.name} | ${venue.location.city}, ${venue.location.country}`,
+    title: venue.name,
     description: `Read about the venue and book a stay`,
   };
 }
@@ -75,9 +72,11 @@ export default async function VenuePage({
       <div className="md:col-start-2 md:row-start-3 md:row-end-5">
         <VenueBooking venue={venue} />
       </div>
-      <div className="md:col-start-1">
-        <VenueLocation venue={venue} />
-      </div>
+      {venue.location.city && (
+        <div className="md:col-start-1">
+          <VenueLocation venue={venue} />
+        </div>
+      )}
     </section>
   );
 }
