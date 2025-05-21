@@ -11,8 +11,8 @@ import { toast } from "sonner";
 
 export default function UpdateVenuePage() {
   const { id } = useParams();
-  const router = useRouter()
-  
+  const router = useRouter();
+
   const { updateVenue, isLoading, isError } = useUpdateVenue();
   const [venue, setVenue] = useState<IVenue | null>(null);
 
@@ -40,8 +40,8 @@ export default function UpdateVenuePage() {
     }
     try {
       await updateVenue(data, id as string);
-      toast("Your venue was successfully added!");
-      router.push(`/venue/${id}`)
+      toast.success("Your venue was successfully updated!");
+      router.push(`/venue/${id}`);
       console.log("Updated: ", data);
     } catch (error) {
       console.error(error);
