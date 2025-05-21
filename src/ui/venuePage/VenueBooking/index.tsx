@@ -74,10 +74,13 @@ export default function VenueBooking({ venue }: { venue: IVenue }) {
   const { watch, handleSubmit } = form;
   const { dateRange } = watch();
   const nights = useMemo(
-    () =>
-      dateRange.from && dateRange.to
-        ? differenceInCalendarDays(dateRange.to, dateRange.from)
-        : 0,
+    () => {
+      const from = dateRange?.from;
+      const to = dateRange?.to;
+      return from && to 
+      ? differenceInCalendarDays(to, from)
+      : 0;
+    },
     [dateRange]
   );
   const venueId = venue.id;
@@ -129,6 +132,7 @@ export default function VenueBooking({ venue }: { venue: IVenue }) {
         <div className="mt-4 flex flex-col gap-5">
           <Form {...form}>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+              
               {/* Calendar field */}
               <FormField
                 control={form.control}
@@ -140,13 +144,13 @@ export default function VenueBooking({ venue }: { venue: IVenue }) {
                       <DayPicker
                         mode="range"
                         selected={{
-                          from: field.value.from,
-                          to: field.value.to,
+                          from: field.value?.from,
+                          to: field.value?.to,
                         }}
                         disabled={[{ before: new Date() }, ...bookedPeriods]}
                         excludeDisabled
                         numberOfMonths={1}
-                        onSelect={(range) => field.onChange(range!)}
+                        onSelect={(range) => {if (range && range.from) { field.onChange(range) }}}
                         modifiers={{ booked: bookedPeriods }}
                         modifiersClassNames={{
                           booked: "bg-red-200 cursor-not-allowed",
