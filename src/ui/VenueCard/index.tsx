@@ -6,7 +6,7 @@ import Link from "next/link";
 import { roboto } from "../fonts";
 
 /**
- * VenueCard displays a single venue with only the basic information. 
+ * VenueCard displays a single venue with only the basic information.
  * Including: venue image, city and rate.
  * @param venue The venue data.
  */
@@ -14,6 +14,18 @@ import { roboto } from "../fonts";
 export default function VenueCard({ venue }: { venue: IVenue }) {
   // lift out of component
   const firstImage = venue.media?.[0];
+  const { city, country } = venue.location || {};
+  let locationString = null;
+  console.log(city, country);
+  if (city && country) {
+    locationString = `${city}, ${country}`;
+  } else if (city) {
+    locationString = city;
+  } else if (country) {
+    locationString = country;
+  } else if (!city && !country) {
+    locationString = venue.name;
+  }
 
   return (
     <li className="flex flex-col gap-1">
@@ -38,7 +50,9 @@ export default function VenueCard({ venue }: { venue: IVenue }) {
             />
           )}
         </div>
-        <h1 className="text-base mt-1.5 capitalize">{`${venue.location.city}, ${venue.location.country}`}</h1>
+        {locationString && (
+          <h1 className="text-base mt-1.5 capitalize">{locationString}</h1>
+        )}
         <div className="mt-4 flex flex-col gap-1">
           <p>{`${venue.maxGuests} guests`}</p>
           <p>

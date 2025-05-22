@@ -10,17 +10,16 @@ import styles from "./styles.module.css";
 
 export default function VenueHeader({ venue }: { venue: IVenue }) {
   console.log(typeof venue.location.city);
+  console.log(venue);
 
   const { city, country } = venue.location || {};
-  const isCity = city.length > 0;
-  const isCountry = country.length > 0;
-  let locationString = "";
+  let locationString = null;
 
-  if (isCity && isCountry) {
+  if (city && country) {
     locationString = `${city}, ${country}`;
-  } else if (isCity) {
+  } else if (city) {
     locationString = city;
-  } else if (isCountry) {
+  } else if (country) {
     locationString = country;
   }
 
