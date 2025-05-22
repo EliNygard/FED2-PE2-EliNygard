@@ -8,7 +8,13 @@ import MyVenueCard from "../MyVenueCard";
  * @param venue The venue data.
  */
 
-export default function MyVenues({ venues }: { venues: IVenue[] }) {
+export default function MyVenues({
+  venues,
+  onVenueDeleted,
+}: {
+  venues: IVenue[];
+  onVenueDeleted: () => Promise<void>;
+}) {
   // if (!venues || venues.length === 0) {
   //   return <p>You have no venues</p>;
   // }
@@ -18,7 +24,11 @@ export default function MyVenues({ venues }: { venues: IVenue[] }) {
       <h2 className="mb-8">My Venues</h2>
       <ul>
         {venues.map((venue) => (
-          <MyVenueCard key={venue.id} venue={venue} />
+          <MyVenueCard
+            key={venue.id}
+            venue={venue}
+            onVenueDeleted={onVenueDeleted}
+          />
         ))}
       </ul>
     </section>

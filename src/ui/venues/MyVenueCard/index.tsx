@@ -20,7 +20,13 @@ import BookingsAccordion from "../BookingsOnVenue";
  * @param venue The venue data.
  */
 
-export default function MyVenueCard({ venue }: { venue: IVenue }) {
+export default function MyVenueCard({
+  venue,
+  onVenueDeleted,
+}: {
+  venue: IVenue;
+  onVenueDeleted: () => Promise<void>;
+}) {
   const router = useRouter();
   const firstImage = venue.media?.[0];
   const bookings = venue.bookings;
@@ -75,7 +81,7 @@ export default function MyVenueCard({ venue }: { venue: IVenue }) {
             >
               Update
             </Button>
-            <DeleteVenueButton venueId={venue.id} />
+            <DeleteVenueButton venueId={venue.id} onSuccess={onVenueDeleted} />
           </div>
         </div>
       </div>

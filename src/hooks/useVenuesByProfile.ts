@@ -1,7 +1,7 @@
 import { IVenue } from "@/interface";
 import { getVenuesByProfile } from "@/lib/api";
 // import { delay } from "@/utils/delay";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 /**
  * A React hook to load a users's venues by their profile name.
@@ -22,40 +22,39 @@ export function useVenuesByProfile(username: string) {
   const [error, setError] = useState<string | null>(null);
   // const [error, setError] = useState<Error | null>(null); IError?
 
+  const fetchVenues = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      // await delay(3000)
+      const response = await getVenuesByProfile(username);
+      const data = response.data;
+      console.log(data);
+
+      setVenues(data);
+    } catch (error: unknown) {
+      const message =
+        error instanceof Error
+          ? error.message
+          : "Unknown error. Please try again";
+      console.error(message);
+      console.error(error);
+
+      setError(message);
+      return;
+    } finally {
+      setLoading(false);
+    }
+  }, [username]);
+
   useEffect(() => {
     if (!username) {
       setVenues(null);
       setError(null);
       setLoading(false);
       return;
-    }
+    } else if (username) fetchVenues();
+  }, [username, fetchVenues]);
 
-    async function fetchVenues() {
-      setLoading(true);
-      setError(null);
-      try {
-        // await delay(3000)
-        const response = await getVenuesByProfile(username);
-        const data = response.data;
-        console.log(data);
-
-        setVenues(data);
-      } catch (error: unknown) {
-        const message =
-          error instanceof Error
-            ? error.message
-            : "Unknown error. Please try again";
-        console.error(message);
-        console.error(error);
-
-        setError(message);
-        return;
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchVenues();
-  }, [username]);
-
-  return { venues, loading, error };
+  return { venues, loading, error, refetch: fetchVenues };
 }
