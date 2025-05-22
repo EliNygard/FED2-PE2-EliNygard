@@ -1,6 +1,10 @@
-"use client";
-
 import CreateFormWrapper from "@/ui/CreateFormWrapper";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: 'Holidaze - Create new venue',
+  description: 'Creates a new venue for customers to book a stay',
+}
 
 /**
  * CreateVenuePage holds the form wrapper, which displays the form where a venue manager can create a new venue.
