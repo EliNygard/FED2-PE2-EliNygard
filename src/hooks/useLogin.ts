@@ -1,7 +1,6 @@
 import { login } from "@/app/api/auth/login";
 import { ILogin, IUser } from "@/interface";
 import { useAuthStore } from "@/stores/useAuthStore";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 /**
@@ -20,8 +19,6 @@ export function useLogin() {
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
 
   const setUser = useAuthStore((state) => state.setUser);
-  const userName = useAuthStore((state) => state.user?.name);
-  const router = useRouter();
 
   /**
    * Performs a login request with the given credentials.
@@ -46,7 +43,6 @@ export function useLogin() {
       const userData = await login({ email, password });
       setUser(userData);
       setIsSuccess(true);
-      router.push(`/profile/${userName}`);
       return userData;
     } catch (error: unknown) {
       const message =
