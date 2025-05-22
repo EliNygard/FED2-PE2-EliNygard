@@ -47,7 +47,7 @@ export default function VenueInfo({ venue }: { venue: IVenue }) {
             </li>
           )}
         </ul>
-        <p className="mt-3 capitalize">{venue.description}</p>
+        <p className="mt-3">{venue.description}</p>
       </div>
     </section>
   );
