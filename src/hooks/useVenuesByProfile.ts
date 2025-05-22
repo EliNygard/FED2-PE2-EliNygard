@@ -53,7 +53,8 @@ export function useVenuesByProfile(username: string) {
       setError(null);
       setLoading(false);
       return;
-    } else if (username) fetchVenues();
+    } 
+    fetchVenues()
   }, [username, fetchVenues]);
 
   return { venues, loading, error, refetch: fetchVenues };
