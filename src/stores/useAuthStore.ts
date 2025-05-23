@@ -1,6 +1,6 @@
 import { AuthState } from "@/interface";
 import { create } from "zustand";
-import { persist, subscribeWithSelector } from "zustand/middleware";
+import { persist } from "zustand/middleware";
 
 /**
  * @file authStore.ts
@@ -15,6 +15,7 @@ const initialState = {
   token: null,
   isAuthenticated: false,
   isVenueManager: false,
+  isLoading: true,
 };
 
 /**
@@ -34,11 +35,15 @@ const initialState = {
 
 export const useAuthStore = create<AuthState>()(
   persist(
-    subscribeWithSelector((set, get) => ({
+    (set, get) => ({
       ...initialState,
 
       isHydrating: true,
       setHydrating: (status) => set({ isHydrating: status }),
+
+      setLoading: (loading: boolean) => set({ isLoading: loading }),
+
+      isLoading: true,
 
       setUser: (user) =>
         set({
@@ -46,6 +51,7 @@ export const useAuthStore = create<AuthState>()(
           token: user.accessToken,
           isAuthenticated: true,
           isVenueManager: !!user.venueManager,
+          isLoading: false
         }),
 
       updateAvatar: (avatar) => {
@@ -70,9 +76,10 @@ export const useAuthStore = create<AuthState>()(
           token: null,
           isVenueManager: false,
           isAuthenticated: false,
+          isLoading: false,
         });
       },
-    })),
+    }),
     {
       name: "auth-storage",
       partialize: (state) => ({
@@ -82,7 +89,11 @@ export const useAuthStore = create<AuthState>()(
         isVenueManager: state.isVenueManager,
       }),
       onRehydrateStorage: () => (state) => {
-        state?.setHydrating(false)
+        if (state) {
+          state.setLoading(false);
+          state.setHydrating(false)
+        }
+        // state?.setHydrating(false),
       }
     }
   )
