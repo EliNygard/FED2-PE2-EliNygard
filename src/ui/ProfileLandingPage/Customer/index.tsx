@@ -9,7 +9,7 @@ import {
 
 export default function Customer({ username }: { username: string }) {
   return (
-    <section className="flex flex-col gap-9 mb-6">
+    <div className="flex flex-col gap-9 mb-6">
       <header className="flex flex-col gap-3">
         <h1>Welcome back to Holidaze, {username}!</h1>
         <h2 className="flex gap-2 items-center">
@@ -56,6 +56,6 @@ export default function Customer({ username }: { username: string }) {
           or “sea view” to discover your perfect getaway.
         </p>
       </div>
-    </section>
+    </div>
   );
 }
