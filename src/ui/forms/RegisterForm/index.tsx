@@ -7,6 +7,7 @@ import { useAuthStore } from "@/stores/useAuthStore";
 import Button from "@/ui/Button";
 import ButtonSpinner from "@/ui/ButtonSpinner";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { FaChevronRight } from "react-icons/fa";
 import { z } from "zod";
@@ -66,6 +67,7 @@ const RegisterFormSchema = z.object({
  */
 
 export function RegisterForm() {
+  const router = useRouter();
   const username = useAuthStore((state) => state.user?.name);
   const form = useForm<z.infer<typeof RegisterFormSchema>>({
     resolver: zodResolver(RegisterFormSchema),
@@ -119,7 +121,7 @@ export function RegisterForm() {
 
       console.log(user);
 
-      // open login dialog
+      router.push(`/profile/${name}`);
 
       form.reset({
         name: "",

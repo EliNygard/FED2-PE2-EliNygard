@@ -20,7 +20,7 @@ export default function MyVenuesPage() {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
   const isHydrating = useAuthStore((state) => state.isHydrating);
   const username = useAuthStore((state) => state.user?.name) ?? "";
-  const { venues, loading, error } = useVenuesByProfile(username);
+  const { venues, loading, error, refetch } = useVenuesByProfile(username);
 
   useEffect(() => {
     if (!isHydrating && !isAuthenticated) {
@@ -46,7 +46,7 @@ export default function MyVenuesPage() {
   return (
     <section>
       {venues && venues.length > 0 ? (
-        <MyVenues venues={venues} />
+        <MyVenues venues={venues} onVenueDeleted={refetch} />
       ) : (
         <div>
           <p className="mb-6">You have not added any venues yet.</p>

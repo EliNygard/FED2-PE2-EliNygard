@@ -58,8 +58,11 @@ export default function VenueBooking({ venue }: { venue: IVenue }) {
   } | null>(null);
 
   const { createBooking, isLoading, isError } = useCreateBooking();
+
   const router = useRouter();
   const token = useAuthStore((state) => state.user?.accessToken);
+  const username = useAuthStore((state) => state.user?.name);
+  console.log(username);
 
   const form = useForm<FormValues>({
     resolver: zodResolver(BookFormSchema),
@@ -73,13 +76,11 @@ export default function VenueBooking({ venue }: { venue: IVenue }) {
   });
   const { watch, handleSubmit } = form;
   const { dateRange } = watch();
-  const nights = useMemo(
-    () =>
-      dateRange.from && dateRange.to
-        ? differenceInCalendarDays(dateRange.to, dateRange.from)
-        : 0,
-    [dateRange]
-  );
+  const nights = useMemo(() => {
+    const from = dateRange?.from;
+    const to = dateRange?.to;
+    return from && to ? differenceInCalendarDays(to, from) : 0;
+  }, [dateRange]);
   const venueId = venue.id;
   const maxGuests = venue.maxGuests;
   const bookings = venue.bookings;
@@ -115,7 +116,7 @@ export default function VenueBooking({ venue }: { venue: IVenue }) {
         "Booking confirmed. Thank you for choosing Holidaze. Enjoy your stay!"
       );
       setIsOpen(false);
-      router.push("/");
+      router.push(`/profile/${username}/bookings`);
     } catch (error) {
       console.error(error);
       toast.error(isError || "Error trying to add booking. Please try again.");
@@ -140,13 +141,17 @@ export default function VenueBooking({ venue }: { venue: IVenue }) {
                       <DayPicker
                         mode="range"
                         selected={{
-                          from: field.value.from,
-                          to: field.value.to,
+                          from: field.value?.from,
+                          to: field.value?.to,
                         }}
                         disabled={[{ before: new Date() }, ...bookedPeriods]}
                         excludeDisabled
                         numberOfMonths={1}
-                        onSelect={(range) => field.onChange(range!)}
+                        onSelect={(range) => {
+                          if (range && range.from) {
+                            field.onChange(range);
+                          }
+                        }}
                         modifiers={{ booked: bookedPeriods }}
                         modifiersClassNames={{
                           booked: "bg-red-200 cursor-not-allowed",

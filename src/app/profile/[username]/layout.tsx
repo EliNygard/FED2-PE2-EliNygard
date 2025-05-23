@@ -2,6 +2,20 @@ import Loading from "@/app/loading";
 import ProfileHeader from "@/ui/ProfileHeader";
 import ProfileNav from "@/ui/ProfileNav";
 import { Suspense } from "react";
+import type { Metadata } from "next";
+
+type Props = {
+  params: Promise<{ username: string }>;
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const username = (await params).username;
+
+  return {
+    title: `${username}'s Dashboard | Holidaze`,
+    description: `Manage bookings, view hosted venues and edit ${username}'s Holidaze dashboard`,
+  };
+}
 
 /**
  * Layout component for /profile pages.

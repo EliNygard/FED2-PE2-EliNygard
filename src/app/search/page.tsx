@@ -13,10 +13,10 @@ import SearchClient from "../../ui/SearchClient";
 
 export default function SearchPage() {
   return (
-    <div>
+    <section className="flex flex-col gap-[32px] page-padding">
       <Suspense>
         <SearchClient />
       </Suspense>
-    </div>
+    </section>
   );
 }

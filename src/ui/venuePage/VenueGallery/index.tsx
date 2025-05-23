@@ -18,11 +18,6 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 
-// @todo
-// gallery opens: self made grid on mobile?
-// gallery opens: shadcn Carousel for md screens and up
-// if fewer images, edit grid
-
 /**
  * VenueGallery displays a grid of the venue image(s).
  * - The component is part of the VenuePage
@@ -55,6 +50,8 @@ export default function VenueGallery({
   }
 
   const imageCount = venueImages.length;
+  // console.log(venueImages);
+
   let gridClasses = "";
   if (imageCount <= 2) {
     gridClasses = "grid-cols-1 xl:max-w-[1040px] m-auto";
@@ -67,6 +64,7 @@ export default function VenueGallery({
 
   const count = isXl ? 5 : isMd ? 3 : 1;
   const imagesToShow = venueImages.slice(0, count);
+  console.log(imagesToShow);
 
   const spanClasses = (index: number) => {
     if (isMd && !isXl) {
@@ -91,27 +89,38 @@ export default function VenueGallery({
       <div
         className={`aspect-video max-h-[500px] w-full grid gap-2 ${gridClasses}`}
       >
-        {imagesToShow.map((img, index) => (
-          <button
-            key={img.url}
-            className={`relative overflow-hidden rounded ${spanClasses(index)}`}
-            aria-label={`View image ${index + 1} of ${venueImages.length}`}
-            onClick={() => openGallery(index)}
-          >
+        {imagesToShow.length >= 1 ? (
+          imagesToShow.map((img, index) => (
+            <button
+              key={img.url}
+              className={`relative overflow-hidden rounded ${spanClasses(index)}`}
+              aria-label={`View image ${index + 1} of ${venueImages.length}`}
+              onClick={() => openGallery(index)}
+            >
+              <Image
+                src={img.url}
+                alt={img.alt}
+                fill
+                sizes="(max-width: 768px) 50vw, (max-width: 1200px) 50vw, 33vw"
+                style={{ objectFit: "cover" }}
+                loading="lazy"
+                className="rounded cursor-pointer"
+                quality={30}
+              />
+            </button>
+          ))
+        ) : (
+          <div className="relative">
             <Image
-              src={img.url}
-              alt={img.alt}
+              src="/LogoMountainsV.svg"
+              alt="default image of venue"
               fill
-              sizes="(max-width: 768px) 50vw, (max-width: 1200px) 50vw, 33vw"
               style={{ objectFit: "cover" }}
               loading="lazy"
-              className="rounded"
-              quality={30}
             />
-          </button>
-        ))}
+          </div>
+        )}
       </div>
-
 
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogContent className="p-1">
@@ -135,23 +144,22 @@ export default function VenueGallery({
                       alt={image.alt}
                       fill
                       sizes="50vw"
-                      style={{ objectFit: "contain", borderRadius: '6px' }}
+                      style={{ objectFit: "contain", borderRadius: "6px" }}
                       className="bg-primary-font"
                     />
                   </div>
                   {image.alt ? (
-                  <div className="pt-1.5 text-xs md:text-sm">
-                    <p className="text-center text-sm md:text-base">
-                      {`Image ${index + 1}: ${image.alt}`}
-                    </p>
-                  </div>
-
+                    <div className="pt-1.5 text-xs md:text-sm">
+                      <p className="text-center text-sm md:text-base">
+                        {`Image ${index + 1}: ${image.alt}`}
+                      </p>
+                    </div>
                   ) : (
                     <div className="pt-1.5">
-                    <p className="text-center text-xs md:text-sm">
-                      {`Image ${index + 1} of ${venueImages.length}`}
-                    </p>
-                  </div>
+                      <p className="text-center text-xs md:text-sm">
+                        {`Image ${index + 1} of ${venueImages.length}`}
+                      </p>
+                    </div>
                   )}
                 </CarouselItem>
               ))}
@@ -159,13 +167,8 @@ export default function VenueGallery({
             <CarouselPrevious aria-label="Previous Image" />
             <CarouselNext aria-label="Next Image" />
           </Carousel>
-
-          
-          
         </DialogContent>
-       
       </Dialog>
-
     </>
   );
 }
