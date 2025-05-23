@@ -4,15 +4,15 @@ import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 
 export default function SearchBar() {
-  const router = useRouter()
-  const [searchTerm, setSearchTerm] = useState('');
+  const router = useRouter();
+  const [searchTerm, setSearchTerm] = useState("");
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!searchTerm.trim()) {
       return;
     }
-    router.push(`/search?search=${encodeURIComponent(searchTerm)}`)
+    router.push(`/search?search=${encodeURIComponent(searchTerm)}`);
   };
 
   return (
@@ -38,8 +38,12 @@ export default function SearchBar() {
             }}
           />
         </div>
-        <Button className="flex justify-center items-center max-w-12">
-          <FaSearch />
+        <Button
+          className="flex justify-center items-center max-w-12"
+          type="submit"
+        >
+          <span className="sr-only">Search</span>
+          <FaSearch aria-hidden="true" focusable="false" />
         </Button>
       </form>
     </div>

@@ -24,6 +24,7 @@ export default function Header() {
                 alt="Holidaze logo"
                 width={144}
                 height={30}
+                priority
               />
             </Link>
           </li>
