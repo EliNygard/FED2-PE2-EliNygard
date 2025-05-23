@@ -24,7 +24,7 @@ export default function Header() {
                 alt="Holidaze logo"
                 width={144}
                 height={30}
-                className="w-full h-auto object-contain"
+                className="w-auto h-full object-contain"
               />
             </Link>
           </li>
