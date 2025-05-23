@@ -6,7 +6,7 @@ Delivery: May 2025
 This is my final exam at Noroff. The goal of this assigmnet was to take the skills I have learned over the last two years and take on an extensive project. This is a web site for the fictional client Holidaze.
 <br/>
 <br/>
-[![Website home page](/public/LogoHolidaze.png)](https://pe-holidaze.vercel.app/)
+[![Website home page](/public/LogoMountainsV.png)](https://pe-holidaze.vercel.app/)
 <br/>
 <br/>
 [Figma Design File](https://www.figma.com/design/yfdN1ViBVSqE8gXnqMcoII/Holidaze-design-files?node-id=1-88&t=JZ8SsaYjAGsDR51D-1) ·
