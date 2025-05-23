@@ -42,11 +42,6 @@ export default function LoginForm() {
 
   const { handleLogin, isLoading, isError } = useLogin();
 
-  console.log(isError);
-
-  const delay = (ms: number) =>
-    new Promise<void>((resolve) => setTimeout(resolve, ms));
-
   /**
    * Submit handler invoked when the form is submitted and passes validation.
    *
@@ -56,8 +51,6 @@ export default function LoginForm() {
     const { email, password } = values;
 
     try {
-      await delay(4000);
-
       const user = await handleLogin({
         email,
         password,

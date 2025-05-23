@@ -35,7 +35,6 @@ export function useUpdateVenue() {
 
     try {
       const response = await setUpdateVenue(data, id);
-      console.log(response);
       return response;
     } catch (error: unknown) {
       const message =

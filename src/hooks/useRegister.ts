@@ -21,7 +21,6 @@ export function useRegister() {
   const [isError, setIsError] = useState<string | null>(null);
   const [isVenueManager, setIsVenueManager] = useState<boolean>(false);
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
-
   const setUser = useAuthStore((state) => state.setUser);
 
   /**
@@ -61,7 +60,6 @@ export function useRegister() {
         venueManager,
       });
       const userData = await login({ email, password });
-      console.log(userData);
       setUser(userData);
       setIsSuccess(true);
       return userData;

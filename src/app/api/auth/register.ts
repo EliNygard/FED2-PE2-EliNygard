@@ -15,11 +15,12 @@ export async function register({
   });
 
   const json = await response.json();
-  // console.log(json);
 
   if (!response.ok) {
     console.error(json.errors[0].message);
-    throw new Error(json.errors[0].message || "Registration failed. Please try again");
+    throw new Error(
+      json.errors[0].message || "Registration failed. Please try again"
+    );
   }
 
   const { data } = json;

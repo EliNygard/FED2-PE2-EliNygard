@@ -30,7 +30,6 @@ export function useCreateBooking() {
       setIsError(null);
       setIsLoading(true);
 
-      // @todo consider destructuring payload properties for clarity
       try {
         const booking = await setBooking(payload);
         return booking;

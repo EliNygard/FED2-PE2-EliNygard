@@ -34,8 +34,6 @@ export function useCreateVenue() {
 
     try {
       const response = await setCreateVenue(data);
-      console.log(response);
-
       return response;
     } catch (error: unknown) {
       const message =

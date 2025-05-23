@@ -1,6 +1,6 @@
 // Reference on useFieldArray: https://youtu.be/4MrbfGSFY2A
 
-'use client'
+"use client";
 
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -85,7 +85,6 @@ export default function VenueForm({
   }, [initialValues, reset]);
 
   async function handle(data: VenueFormValues) {
-    // console.log(data);
     await onSubmit(data);
     form.reset();
   }
@@ -100,7 +99,7 @@ export default function VenueForm({
           name="name"
           render={({ field }) => (
             <FormItem>
-              <label>
+              <label htmlFor="name">
                 The name of the venue
                 <span aria-hidden="true"> *</span>
                 <span className="sr-only">(required)</span>
@@ -110,7 +109,7 @@ export default function VenueForm({
                 charm.
               </p>
               <FormControl>
-                <Input {...field} />
+                <Input id="name" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -124,9 +123,9 @@ export default function VenueForm({
           name="description"
           render={({ field }) => (
             <FormItem>
-              <label>
+              <label htmlFor="description">
                 Description
-                <span aria-hidden="true">*</span>
+                <span aria-hidden="true"> *</span>
                 <span className="sr-only">(required)</span>
               </label>
               <p>
@@ -134,7 +133,7 @@ export default function VenueForm({
                 features and inviting atmosphere.
               </p>
               <FormControl>
-                <Textarea {...field} />
+                <Textarea id="description" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -144,7 +143,7 @@ export default function VenueForm({
         {/* Images */}
 
         <StyledFieldset>
-          <h3>Add images of your venue</h3>
+          <legend className="mb-2">Add images of your venue</legend>
           <p>
             Show off your space! Upload a few photos that capture the unique
             style and inviting atmosphere of your venue.
@@ -158,9 +157,9 @@ export default function VenueForm({
                   name={`media.${index}.url`}
                   render={({ field }) => (
                     <FormItem>
-                      <label>{`Image ${index + 1}`}</label>
+                      <label htmlFor="image">{`Image ${index + 1}`}</label>
                       <FormControl>
-                        <Input {...field} type="url" />
+                        <Input id="image" {...field} type="url" />
                       </FormControl>
                       <FormMessage />
 
@@ -205,9 +204,9 @@ export default function VenueForm({
                   name={`media.${index}.alt`}
                   render={({ field }) => (
                     <FormItem>
-                      <label>{`Describe image ${index + 1}`}</label>
+                      <label htmlFor="img-alt">{`Describe image ${index + 1}`}</label>
                       <FormControl>
-                        <Input {...field} />
+                        <Input id="img-alt" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -241,9 +240,9 @@ export default function VenueForm({
           name="price"
           render={({ field }) => (
             <FormItem>
-              <label>
+              <label htmlFor="price">
                 Price per night
-                <span aria-hidden="true">*</span>
+                <span aria-hidden="true"> *</span>
                 <span className="sr-only">(required)</span>
               </label>
               <p>
@@ -251,7 +250,7 @@ export default function VenueForm({
                 set clear financial expectations for your bookings.
               </p>
               <FormControl>
-                <Input type="number" {...field} className="w-1/3" />
+                <Input id="price" type="number" {...field} className="w-1/3" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -265,9 +264,9 @@ export default function VenueForm({
           name="maxGuests"
           render={({ field }) => (
             <FormItem>
-              <label>
+              <label htmlFor="maxGuests">
                 Maximum number of guests
-                <span aria-hidden="true">*</span>
+                <span aria-hidden="true"> *</span>
                 <span className="sr-only">(required)</span>
               </label>
               <p>
@@ -276,7 +275,12 @@ export default function VenueForm({
                 safe, enjoyable experience.
               </p>
               <FormControl>
-                <Input type="number" {...field} className="w-1/3" />
+                <Input
+                  id="maxGuests"
+                  type="number"
+                  {...field}
+                  className="w-1/3"
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -285,50 +289,52 @@ export default function VenueForm({
 
         {/* Facilities */}
 
-        <FormItem>
-          <label>Facilities at your venue</label>
-          <p>
-            Select the amenities that make your venue extra inviting. Check all
-            that apply.
-          </p>
+        <fieldset>
+          <FormItem>
+            <legend>Facilities at your venue</legend>
+            <p>
+              Select the amenities that make your venue extra inviting. Check
+              all that apply.
+            </p>
 
-          <FormField
-            control={form.control}
-            name="meta"
-            render={({ field }) => (
-              <>
-                {(["wifi", "parking", "breakfast", "pets"] as const).map(
-                  (key) => (
-                    <FormItem
-                      key={key}
-                      className="flex flex-row gap-3 items-center justify-start capitalize"
-                    >
-                      <FormControl>
-                        <Checkbox
-                          key={key}
-                          checked={field.value[key]}
-                          onCheckedChange={(checked) => {
-                            field.onChange({
-                              ...field.value,
-                              [key]: checked,
-                            });
-                          }}
-                        />
-                      </FormControl>
-                      <label>{key}</label>
-                      <FormMessage />
-                    </FormItem>
-                  )
-                )}
-              </>
-            )}
-          />
-        </FormItem>
+            <FormField
+              control={form.control}
+              name="meta"
+              render={({ field }) => (
+                <>
+                  {(["wifi", "parking", "breakfast", "pets"] as const).map(
+                    (key) => (
+                      <FormItem
+                        key={key}
+                        className="flex flex-row gap-3 items-center justify-start capitalize"
+                      >
+                        <FormControl>
+                          <Checkbox
+                            key={key}
+                            checked={field.value[key]}
+                            onCheckedChange={(checked) => {
+                              field.onChange({
+                                ...field.value,
+                                [key]: checked,
+                              });
+                            }}
+                          />
+                        </FormControl>
+                        <label>{key}</label>
+                        <FormMessage />
+                      </FormItem>
+                    )
+                  )}
+                </>
+              )}
+            />
+          </FormItem>
+        </fieldset>
 
         {/* Location */}
 
         <StyledFieldset>
-          <h3>Location details</h3>
+          <legend className="mb-2">Location details</legend>
           <p>Enter your venue&apos;s address</p>
 
           <FormField
@@ -336,9 +342,9 @@ export default function VenueForm({
             name="location.address"
             render={({ field }) => (
               <FormItem>
-                <label>Street</label>
+                <label htmlFor="address">Street</label>
                 <FormControl>
-                  <Input {...field} />
+                  <Input id="address" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -349,9 +355,9 @@ export default function VenueForm({
             name="location.city"
             render={({ field }) => (
               <FormItem>
-                <label>City</label>
+                <label htmlFor="city">City</label>
                 <FormControl>
-                  <Input {...field} />
+                  <Input id="city" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -362,9 +368,9 @@ export default function VenueForm({
             name="location.zip"
             render={({ field }) => (
               <FormItem>
-                <label>Zip code</label>
+                <label htmlFor="zip">Zip code</label>
                 <FormControl>
-                  <Input {...field} />
+                  <Input id="zip" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -375,9 +381,9 @@ export default function VenueForm({
             name="location.country"
             render={({ field }) => (
               <FormItem>
-                <label>Country</label>
+                <label htmlFor="country">Country</label>
                 <FormControl>
-                  <Input {...field} />
+                  <Input id="country" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

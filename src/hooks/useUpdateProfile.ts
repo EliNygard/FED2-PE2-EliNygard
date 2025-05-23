@@ -39,9 +39,7 @@ export function useUpdateProfile() {
     try {
       const response = await setUpdateProfile(userName, avatar);
       const userData = response.data;
-      console.log(userData.avatar);
       updateAvatar(userData.avatar);
-
       return userData;
     } catch (error: unknown) {
       const message = error instanceof Error ? error.message : "Unknown error";

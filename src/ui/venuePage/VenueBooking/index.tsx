@@ -197,7 +197,6 @@ export default function VenueBooking({ venue }: { venue: IVenue }) {
               />
               <Button
                 type="submit"
-                // disabled={isLoading || !token}
                 title={!token ? "Log in to make a booking" : undefined}
                 $variant={!token ? "disabled" : "primary"}
               >

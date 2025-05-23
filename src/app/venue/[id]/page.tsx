@@ -5,10 +5,6 @@ import VenueGallery from "@/ui/venuePage/VenueGallery";
 import VenueHeader from "@/ui/venuePage/VenueHeader";
 import VenueInfo from "@/ui/venuePage/VenueInfo";
 import VenueLocation from "@/ui/venuePage/VenueLocation";
-
-// TODO
-// add image slider to mobile
-
 import type { Metadata } from "next";
 
 type Props = {
@@ -18,8 +14,6 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const id = (await params).id;
-
-  // fetch post information
   const venue = (await getVenueById(id)).data;
 
   return {
@@ -44,17 +38,12 @@ export default async function VenuePage({
   const { id } = await params;
 
   const { data: venue } = await getVenueById(id);
-  console.log('venue page:', venue);
 
-  // add default image if array is empty
   const venueImages = Array.isArray(venue.media)
     ? venue.media
     : venue.media
       ? [venue.media as IMedia]
       : [];
-
-
-  // const firstVenueImage = venueImages[0] || {};
 
   return (
     <div className="page-padding md:p-0 m-auto grid grid-cols-1 gap-8 md:gap-x-16 lg:gap-x-28 md:grid-cols-[1fr_auto] max-w-[1120px]">
@@ -78,24 +67,3 @@ export default async function VenuePage({
     </div>
   );
 }
-
-/**
- * Next.js “generateStaticParams” function to statically pre‐render this page
- * for every venue in the system.
- *
- * Fetches the full list of venues, and returns an array of param objects,
- * each containing an `id` string to be used by Next.js when building static
- * pages.
- *
- * @returns An array of param objects `{ id: string }` for each venue.
- */
-
-// export async function generateStaticParams() {
-//   const response = await getVenues();
-//   const venues = response.data;
-//   console.log(venues);
-
-//   return venues.map((venue) => ({
-//     id: venue.id,
-//   }));
-// }

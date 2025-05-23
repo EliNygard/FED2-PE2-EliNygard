@@ -120,8 +120,6 @@ export function RegisterForm() {
       });
       if (!user) return;
 
-      console.log(user);
-
       form.reset({
         name: "",
         email: "",
@@ -188,7 +186,7 @@ export function RegisterForm() {
       <StyledRegisterForm>
         <form
           onSubmit={form.handleSubmit(onSubmit, (errors) => {
-            console.log("Validation failed", errors);
+            console.error(errors);
           })}
         >
           <h2>Register</h2>

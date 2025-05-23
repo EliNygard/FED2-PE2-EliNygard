@@ -1,11 +1,9 @@
 import { deleteVenueFetch } from "@/app/api/deleteVenueFetch";
-// import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export function useDeleteVenue() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isError, setIsError] = useState<string | null>(null);
-  // const router = useRouter()
 
   async function deleteVenue(id: string) {
     setIsLoading(true);
@@ -13,8 +11,6 @@ export function useDeleteVenue() {
 
     try {
       await deleteVenueFetch(id);
-      console.log("venue deleted ", id);
-      // router.refresh()
     } catch (error: unknown) {
       const message =
         error instanceof Error
