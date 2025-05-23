@@ -7,7 +7,6 @@ import { IVenue } from "@/interface";
  */
 
 export default function VenueInfo({ venue }: { venue: IVenue }) {
-  console.log(venue.maxGuests);
   let guestsString = "";
 
   if (venue.maxGuests === 1) {
@@ -15,8 +14,6 @@ export default function VenueInfo({ venue }: { venue: IVenue }) {
   } else {
     guestsString = "guests";
   }
-
-  console.log(guestsString);
 
   return (
     <section>

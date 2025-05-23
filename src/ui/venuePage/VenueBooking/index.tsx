@@ -62,7 +62,6 @@ export default function VenueBooking({ venue }: { venue: IVenue }) {
   const router = useRouter();
   const token = useAuthStore((state) => state.user?.accessToken);
   const username = useAuthStore((state) => state.user?.name);
-  console.log(username);
 
   const form = useForm<FormValues>({
     resolver: zodResolver(BookFormSchema),

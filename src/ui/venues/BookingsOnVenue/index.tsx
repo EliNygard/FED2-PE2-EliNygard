@@ -13,15 +13,13 @@ import { dateFormat } from "@/utils/dateFormat";
  * - The guests count
  * - The booked dates
  * - The customer's email address
- *  
+ *
  * - The component is part of the MyVenueCard.
  * @param venue The venue data.
  */
 
 export default function BookingsAccordion({ venue }: { venue: IVenue }) {
-  console.log(venue);
   const bookings = venue.bookings;
-  console.log(bookings);
 
   return (
     <Accordion type="single" collapsible>

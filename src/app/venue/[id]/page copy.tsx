@@ -1,5 +1,5 @@
 import { IMedia } from "@/interface";
-import { getVenueById } from "@/lib/api";
+import { getVenueById, getVenues } from "@/lib/api";
 import VenueBooking from "@/ui/venuePage/VenueBooking";
 import VenueGallery from "@/ui/venuePage/VenueGallery";
 import VenueHeader from "@/ui/venuePage/VenueHeader";
@@ -43,7 +43,8 @@ export default async function VenuePage({
 }) {
   const { id } = await params;
 
-  const { data: venue } = await getVenueById(id);
+  const response = await getVenueById(id);
+  const venue = response.data;
   console.log('venue page:', venue);
 
   // add default image if array is empty
@@ -90,12 +91,12 @@ export default async function VenuePage({
  * @returns An array of param objects `{ id: string }` for each venue.
  */
 
-// export async function generateStaticParams() {
-//   const response = await getVenues();
-//   const venues = response.data;
-//   console.log(venues);
+export async function generateStaticParams() {
+  const response = await getVenues();
+  const venues = response.data;
+  console.log(venues);
 
-//   return venues.map((venue) => ({
-//     id: venue.id,
-//   }));
-// }
+  return venues.map((venue) => ({
+    id: venue.id,
+  }));
+}

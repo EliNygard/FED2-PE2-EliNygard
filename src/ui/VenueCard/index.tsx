@@ -16,7 +16,6 @@ export default function VenueCard({ venue }: { venue: IVenue }) {
   const firstImage = venue.media?.[0];
   const { city, country } = venue.location || {};
   let locationString = null;
-  console.log(city, country);
   if (city && country) {
     locationString = `${city}, ${country}`;
   } else if (city) {
