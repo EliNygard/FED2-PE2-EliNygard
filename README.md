@@ -1,53 +1,95 @@
-# FED2-PE2-EliNygard
+# FED2 Project Exam 2
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Delivery: May 2025
+<br/>
+<br/>
+This is my final exam at Noroff. The goal of this assigmnet was to take the skills I have learned over the last two years and take on an extensive project. This is a web site for the fictional client Holidaze.
+<br/>
+<br/>
+[![Website home page](/public/LogoHolidaze.png)](https://pe-holidaze.vercel.app/)
+<br/>
+<br/>
+[Figma Design File](https://www.figma.com/design/yfdN1ViBVSqE8gXnqMcoII/Holidaze-design-files?node-id=1-88&t=JZ8SsaYjAGsDR51D-1) ·
+[Visit the Website](https://pe-holidaze.vercel.app/)
 
 ## Built With
 
-Next
-React
-Tailwind
-[![style: styled-components](https://img.shields.io/badge/style-%F0%9F%92%85%20styled--components-orange.png?colorB=daa357&colorA=db748e)](https://github.com/styled-components/styled-components)
-Zod
-Zustand
-React hook form
-eslint
-prettier
-shadcn ui
+![Next.js](https://img.shields.io/badge/%20Next.js-000000.svg?style=for-the-badge&logo=nextdotjs&logoColor=white)
+![React](https://img.shields.io/badge/%20React-20232a.svg?style=for-the-badge&logo=react&logoColor=61DAFB)
+![TypeScript](https://img.shields.io/badge/%20TypeScript-3178C6.svg?style=for-the-badge&logo=typescript&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/%20TailwindCSS-38B2AC.svg?style=for-the-badge&logo=tailwindcss&logoColor=white)
+![Styled Components](https://img.shields.io/badge/%20Styled%20Components-DB7093.svg?style=for-the-badge&logo=styled-components&logoColor=white)
+![Zod](https://img.shields.io/badge/%20Zod-3B82F6.svg?style=for-the-badge&logo=zod&logoColor=white)
+![Zustand](https://img.shields.io/badge/%20Zustand-000000.svg?style=for-the-badge&logo=zustand&logoColor=white)
+![React Hook Form](https://img.shields.io/badge/%20React_Hook_Form-EC5990.svg?style=for-the-badge&logo=reacthookform&logoColor=white)
+![ESLint](https://img.shields.io/badge/%20ESLint-4B32C3.svg?style=for-the-badge&logo=eslint&logoColor=white)
+![Prettier](https://img.shields.io/badge/%20Prettier-F7B93E.svg?style=for-the-badge&logo=prettier&logoColor=white)
+![ShadCN UI](https://img.shields.io/badge/%20ShadCN%20UI-000000.svg?style=for-the-badge&logoColor=white)
 
-any more?
+## About the project
+
+Welcome to Holidaze, a modern front-end application built to bring effortless venue booking and management to life. Whether you’re planning your next getaway or hosting travelers at your own space, Holidaze has you covered:
+
+### Customer Experience
+
+Sign Up & Sign In: Create an account as a customer, then explore venues tailored to your needs.
+
+Browse & Search: View a list of all venues, filter by name or description, and search for your perfect stay.
+
+Venue Details: Dive into each venue’s photos, description and amenities before booking your stay.
+
+Seamless Booking: Reserve your dates in just a few clicks and manage upcoming trips from your dashboard.
+
+### Venue Manager Dashboard
+
+Manager Registration: Apply to become a host and gain access to the venue manager panel.
+
+Venue Management: Add, edit, or remove venue listings—complete with descriptions, pricing, and availability calendars.
+
+Booking Oversight: View incoming booking requests on all your venues.
+
+This project was built by consuming Noroff's [REST API documentation for Holidaze](https://docs.noroff.dev/docs/v2/holidaze/bookings). From wireframes to polished UI components, every screen was planned, designed, and implemented to deliver a clean, responsive, and intuitive user experience. Feel free to explore the code, try out the features.
+
+## Contact
+
+Feel free to contact me
+
+Eli Nygård
+
+[![Gmail](https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:eli.nygard@gmail.com)
+[![LinkedIn](https://img.shields.io/badge/%20LinkedIn-0077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/eli-nygard)
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+Make sure you have Git installed on your local machine. You can download it from [here](https://git-scm.com/downloads)
+
+### Installation
+
+Clone the repo:
+
+```sh
+git clone https://github.com/EliNygard/FED2-PE2-EliNygard.git
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Open the project
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Navigate to the project directory:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```sh
+cd FED2-PE2-EliNygard
+```
 
-## Learn More
+Open the project with VSCode:
 
-To learn more about Next.js, take a look at the following resources:
+```sh
+code .
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Run npm install to install the necessary dependencies:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```sh
+npm install
+```
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
