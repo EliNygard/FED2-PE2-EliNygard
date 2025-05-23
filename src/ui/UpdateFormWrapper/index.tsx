@@ -29,6 +29,7 @@ export default function UpdateFormWrapper({
       await updateVenue(data, venueId);
       toast.success("Your venue was successfully updated!");
       router.push(`/venue/${venueId}`);
+      router.refresh()
     } catch (error) {
       console.error(error);
       toast.error(
