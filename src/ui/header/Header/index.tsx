@@ -17,14 +17,13 @@ export default function Header() {
     <header className="my-5 page-padding">
       <nav className="h-15 md:h-20">
         <ul className="flex gap-3 justify-between items-center">
-          <li>
+          <li className="w-28 sm:w-34">
             <Link href="/">
               <Image
                 src="/LogoHolidaze.png"
                 alt="Holidaze logo"
                 width={144}
                 height={30}
-                className="w-auto h-full object-contain"
               />
             </Link>
           </li>
