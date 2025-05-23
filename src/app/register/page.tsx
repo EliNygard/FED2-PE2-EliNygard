@@ -15,7 +15,7 @@ export default function RegisterPage() {
       <div className="mt-3 grid grid-cols-1 gap-7 md:grid-cols-2 md:gap-1.5 md:items-start">
         <div className="block md:hidden">
           <Image
-            src="/LogoMountainsV.svg"
+            src="/LogoMountainsV.png"
             alt="Welcome to Holidaze"
             width={640}
             height={320}
@@ -26,7 +26,7 @@ export default function RegisterPage() {
 
         <div className="hidden md:flex md:order-2">
           <Image
-            src="/LogoMountainsH.svg"
+            src="/LogoMountainsH.png"
             alt="Welcome to Holidaze"
             width={463}
             height={617}

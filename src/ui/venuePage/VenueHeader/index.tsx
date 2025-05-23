@@ -34,7 +34,7 @@ export default function VenueHeader({ venue }: { venue: IVenue }) {
           <div className={styles.hostWrapper}>
             <div className="relative rounded-full h-10 w-10 overflow-hidden">
               <Image
-                src={venue.owner.avatar.url || "/default-user.svg"}
+                src={venue.owner.avatar.url || "/default-user.png"}
                 alt={venue.owner.name || "User profile image"}
                 fill
                 sizes="33vw"

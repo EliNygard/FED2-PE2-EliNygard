@@ -111,7 +111,7 @@ export default function VenueGallery({
         ) : (
           <div className="relative">
             <Image
-              src="/LogoMountainsV.svg"
+              src="/LogoMountainsV.png"
               alt="default image of venue"
               fill
               style={{ objectFit: "cover" }}

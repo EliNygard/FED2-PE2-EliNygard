@@ -27,7 +27,7 @@ export default function LoginButton() {
           </div>
           <DialogHeader>
             <Image
-              src="/LogoMountainsH.svg"
+              src="/LogoMountainsH.png"
               alt="Welcome to Holidaze"
               width={321}
               height={214}

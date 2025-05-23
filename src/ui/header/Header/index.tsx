@@ -16,23 +16,15 @@ export default function Header() {
   return (
     <header className="my-5 page-padding">
       <nav className="h-15 md:h-20">
-        <ul className="flex justify-between items-center">
+        <ul className="flex gap-3 justify-between items-center">
           <li>
-            <Link href="/" className="flex items-center">
+            <Link href="/">
               <Image
-                src="/LogoHolidazeShort.svg"
-                alt="Holidaze Logo (mobile)"
-                width={22}
-                height={28}
-                className="block sm:hidden"
-              />
-
-              <Image
-                src="/LogoHolidaze.svg"
-                alt="Holidaze logo (desktop)"
+                src="/LogoHolidaze.png"
+                alt="Holidaze logo"
                 width={144}
                 height={30}
-                className="hidden sm:flex"
+                className="w-full h-auto object-contain"
               />
             </Link>
           </li>

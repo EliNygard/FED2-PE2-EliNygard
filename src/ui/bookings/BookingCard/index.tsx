@@ -4,12 +4,16 @@ import Link from "next/link";
 import { JSX } from "react";
 
 /**
- * BookingCard displays a single booking a user has made on a venue. The card is displayed on a users profile page, in the section `My Bookings`. 
+ * BookingCard displays a single booking a user has made on a venue. The card is displayed on a users profile page, in the section `My Bookings`.
  * Including: venue image, location, dates and guest count.
  * @param booking The booking data (dates, venue, guests).
  */
 
-export default function BookingCard({ booking }: { booking: IBooking }): JSX.Element {
+export default function BookingCard({
+  booking,
+}: {
+  booking: IBooking;
+}): JSX.Element {
   const dateFormat = new Intl.DateTimeFormat("no-NO", {
     year: "numeric",
     month: "numeric",
@@ -19,7 +23,7 @@ export default function BookingCard({ booking }: { booking: IBooking }): JSX.Ele
   const firstImage = booking.venue.media?.[0];
   const dateFrom = dateFormat.format(new Date(booking.dateFrom));
   const dateTo = dateFormat.format(new Date(booking.dateTo));
-  const venueId = booking.venue.id
+  const venueId = booking.venue.id;
 
   return (
     <li className="">
@@ -36,12 +40,12 @@ export default function BookingCard({ booking }: { booking: IBooking }): JSX.Ele
                   objectFit: "cover",
                   overflow: "hidden",
                   borderRadius: "6px",
-                  aspectRatio: 'inherit'
+                  aspectRatio: "inherit",
                 }}
               />
             ) : (
               <Image
-                src="/LogoMountainsV.svg"
+                src="/LogoMountainsV.png"
                 alt={booking.venue.name}
                 fill
                 style={{
@@ -53,7 +57,9 @@ export default function BookingCard({ booking }: { booking: IBooking }): JSX.Ele
             )}
           </div>
           <div className="flex flex-col justify-between py-1 md:py-2">
-            <p className="text-sm md:text-base">{booking.venue?.location?.city}</p>
+            <p className="text-sm md:text-base">
+              {booking.venue?.location?.city}
+            </p>
             <p className="text-sm md:text-base"> {`${dateFrom} - ${dateTo}`}</p>
             <p className="text-sm md:text-base">{`${booking.guests} guests`}</p>
           </div>
