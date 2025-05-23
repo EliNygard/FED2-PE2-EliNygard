@@ -1,6 +1,4 @@
-'use client'
-
-import { useAuthStore } from "@/stores/useAuthStore";
+import ProfileLandingPageWrapper from "@/ui/ProfileLandingPage";
 
 /**
  * Page component for displaying the base profile page.
@@ -8,13 +6,12 @@ import { useAuthStore } from "@/stores/useAuthStore";
  * - Renders different content for Venue Manager or Customer
  */
 
-export default function ProfilePage() {
-    const isVenueManager = useAuthStore((state) => state.isVenueManager)
+export default async function ProfilePage({ params}: { params: Promise<{ username: string}>}) {
+  const { username } = await params
+    
 
      
   return (
-    <section className="">
-{isVenueManager ? 'display my venues' : 'display my bookings'}
-    </section>
+    <ProfileLandingPageWrapper username={username} />
   );
 }
