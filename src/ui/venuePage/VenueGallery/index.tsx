@@ -50,7 +50,6 @@ export default function VenueGallery({
   }
 
   const imageCount = venueImages.length;
-  // console.log(venueImages);
 
   let gridClasses = "";
   if (imageCount <= 2) {
@@ -62,11 +61,29 @@ export default function VenueGallery({
     gridClasses = "grid-cols-1 md:grid-cols-[65%_1fr] md:grid-rows-2";
   }
 
-  const count = isXl ? 5 : isMd ? 3 : 1;
+  let count: number;
+  if (!isMd && !isXl) {
+    count = 1;
+  } else {
+    if (isXl && imageCount >= 5) {
+      count = 5;
+    } else if (imageCount >= 3) {
+      count = 3;
+    } else {
+      count = imageCount;
+    }
+  }
+
   const imagesToShow = venueImages.slice(0, count);
 
   const spanClasses = (index: number) => {
     if (isMd && !isXl) {
+      if (index === 0) return "md:col-start-1 md:row-span-2";
+      if (index === 1) return "md:col-start-2 md:row-start-1";
+      if (index === 2) return "md:col-start-2 md:row-start-2";
+      return "";
+    }
+    if (isXl && count === 3) {
       if (index === 0) return "md:col-start-1 md:row-span-2";
       if (index === 1) return "md:col-start-2 md:row-start-1";
       if (index === 2) return "md:col-start-2 md:row-start-2";
