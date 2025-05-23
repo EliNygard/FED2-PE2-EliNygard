@@ -2,7 +2,7 @@ import CreateFormWrapper from "@/ui/CreateFormWrapper";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: 'Holidaze - Create new venue',
+  title: 'Create a new venue | Holidaze',
   description: 'Creates a new venue for customers to book a stay',
 }
 

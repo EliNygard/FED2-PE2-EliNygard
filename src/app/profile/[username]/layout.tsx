@@ -6,15 +6,14 @@ import type { Metadata } from "next";
 
 type Props = {
   params: Promise<{ username: string }>;
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const username = (await params).username;
 
   return {
-    title: `${username} - profile page`,
-    description: `${username}'s profile page`,
+    title: `${username}'s Dashboard | Holidaze`,
+    description: `Manage bookings, view hosted venues and edit ${username}'s Holidaze dashboard`,
   };
 }
 
