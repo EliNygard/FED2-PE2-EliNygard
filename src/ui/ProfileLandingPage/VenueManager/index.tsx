@@ -15,7 +15,7 @@ export default function VenueManager({ username }: { username: string }) {
       <header className="flex flex-col gap-3">
         <h1>Welcome back to Holidaze, {username}!</h1>
         <h2 className="flex gap-2 items-center">
-          <LuBadgeCheck />
+          <LuBadgeCheck aria-hidden='true' />
           <span>You are a venue manager</span>
         </h2>
       </header>
@@ -30,32 +30,32 @@ export default function VenueManager({ username }: { username: string }) {
         <ul className="flex flex-col gap-2 md:gap-4">
           <li className="flex gap-2 items-center">
             <span className="w-5 self-start">
-              <LuHousePlus size={20} />
+              <LuHousePlus size={20} aria-hidden='true' />
             </span>
 
             <span>List a new property and start earning.</span>
           </li>
           <li className="flex gap-2 items-center">
             <span className="w-5 self-start">
-              <LuPencil size={20} />
+              <LuPencil size={20} aria-hidden='true' />
             </span>
             <span>View and edit the venues you currently host.</span>
           </li>
           <li className="flex gap-2 items-center">
             <span className="w-5 self-start">
-              <LuCalendarFold size={20} />
+              <LuCalendarFold size={20} aria-hidden='true' />
             </span>
             <span>See upcoming and past reservations for all your venues.</span>
           </li>
           <li className="flex gap-2 items-center">
             <span className="w-5 self-start">
-              <LuUserRoundPen size={20} />
+              <LuUserRoundPen size={20} aria-hidden='true' />
             </span>
             <span>Update your profile photo.</span>
           </li>
           <li className="flex gap-2 items-center">
             <span className="w-5 self-start">
-              <LuHouse size={20} />
+              <LuHouse size={20} aria-hidden='true' />
             </span>
             <span>Take a break and book your own holiday.</span>
           </li>
