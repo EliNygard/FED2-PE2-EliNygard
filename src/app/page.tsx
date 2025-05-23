@@ -19,7 +19,7 @@ export default async function HomePage({
   const pageNumber = parseInt(page, 10);
   console.log(pageNumber);
 
-  const { data: venues, meta: meta } = await getVenues(pageNumber, 10);
+  const { data: venues, meta: meta } = await getVenues(pageNumber, 12);
   console.log("Venues: ", venues);
   console.log("Meta: ", meta);
   console.log(meta.currentPage);
