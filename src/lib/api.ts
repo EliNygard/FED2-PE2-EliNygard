@@ -64,7 +64,7 @@ async function fetcher<T>(
       : {}),
   };
 
-  await delay(1000)
+  await delay(1000);
   const response = await fetch(`${API_BASE}${url}`, {
     ...init,
     headers: { ...defaultHeaders, ...customHeaders },
@@ -74,7 +74,7 @@ async function fetcher<T>(
     throw new Error(`API error: ${response.status}: ${text}`);
   }
   const body = await response.json();
-  console.log(body);
+  console.log("fetcher:", body);
 
   return {
     data: body.data as T,

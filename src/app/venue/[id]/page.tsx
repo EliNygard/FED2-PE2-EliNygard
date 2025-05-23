@@ -45,7 +45,7 @@ export default async function VenuePage({
 
   const response = await getVenueById(id);
   const venue = response.data;
-  console.log(venue);
+  console.log('venue page:', venue);
 
   // add default image if array is empty
   const venueImages = Array.isArray(venue.media)
@@ -54,7 +54,6 @@ export default async function VenuePage({
       ? [venue.media as IMedia]
       : [];
 
-  console.log(venue.bookings);
 
   // const firstVenueImage = venueImages[0] || {};
 
