@@ -21,12 +21,10 @@ export default function VenueLocation({ venue }: { venue: IVenue }) {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <div className="max-w-96">
+          <div className="w-full aspect-video mb-4">
             <iframe
               src={embedSrc}
-              width="100%"
-              height="186"
-              style={{ border: 0, pointerEvents: "none" }}
+              className="w-full h-full border-0 pointer-events-none"
               loading="lazy"
             ></iframe>
           </div>
