@@ -22,14 +22,14 @@ export default function ProfileNav() {
   }) => (
     <li>
       <Link href={href} passHref>
-        <div
-          className={`text-center
-        px-4 py-2 rounded text-white text-sm font-medium hover:bg-interaction-blue ${
-            path === href ? "bg-interaction-blue" : "bg-brand-blue"
-          }`}
+        <Button
+          $variant="narrow"
+          className={
+            path === href ? "bg-interaction-blue text-white" : "bg-brand-blue"
+          }
         >
           {children}
-        </div>
+        </Button>
       </Link>
     </li>
   );

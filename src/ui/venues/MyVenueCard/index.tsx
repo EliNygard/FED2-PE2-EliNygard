@@ -54,7 +54,7 @@ export default function MyVenueCard({
                   />
                 ) : (
                   <Image
-                    src="/LogoMountainsV.svg"
+                    src="/LogoMountainsV.png"
                     alt={venue.name}
                     fill
                     style={{

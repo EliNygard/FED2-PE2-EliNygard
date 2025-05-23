@@ -9,11 +9,11 @@ import {
 
 export default function Customer({ username }: { username: string }) {
   return (
-    <section className="flex flex-col gap-9 mb-6">
+    <div className="flex flex-col gap-9 mb-6">
       <header className="flex flex-col gap-3">
         <h1>Welcome back to Holidaze, {username}!</h1>
         <h2 className="flex gap-2 items-center">
-          <LuBriefcase />
+          <LuBriefcase aria-hidden="true" />
           <span>You are a traveler</span>
         </h2>
       </header>
@@ -28,7 +28,7 @@ export default function Customer({ username }: { username: string }) {
         <ul className="flex flex-col gap-2 md:gap-4">
           <li className="flex gap-2 items-center">
             <span className="w-5 self-start">
-              <LuHouse size={20} />
+              <LuHouse size={20} aria-hidden="true" />
             </span>
 
             <span>Explore available stays at your favorite location.</span>
@@ -36,13 +36,13 @@ export default function Customer({ username }: { username: string }) {
 
           <li className="flex gap-2 items-center">
             <span className="w-5 self-start">
-              <LuCalendarFold size={20} />
+              <LuCalendarFold size={20} aria-hidden="true" />
             </span>
             <span>View your upcoming and past reservations.</span>
           </li>
           <li className="flex gap-2 items-center">
             <span className="w-5 self-start">
-              <LuUserRoundPen size={20} />
+              <LuUserRoundPen size={20} aria-hidden="true" />
             </span>
             <span>Update your profile photo.</span>
           </li>
@@ -51,9 +51,11 @@ export default function Customer({ username }: { username: string }) {
 
       <div className="border border-disabled-blue bg-[#dae8f1] max-w-md">
         <p className="p-6">
-          Tip from the Holidaze team: Use our search filters to find venues by city, ambiance or surroundings—try queries like “Oslo“, “cabin forest“ or “sea view” to discover your perfect getaway.
+          Tip from the Holidaze team: Use our search filters to find venues by
+          city, ambiance or surroundings—try queries like “Oslo“, “cabin forest“
+          or “sea view” to discover your perfect getaway.
         </p>
       </div>
-    </section>
+    </div>
   );
 }

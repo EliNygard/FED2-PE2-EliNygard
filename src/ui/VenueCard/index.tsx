@@ -35,13 +35,13 @@ export default function VenueCard({ venue }: { venue: IVenue }) {
               src={firstImage.url}
               alt={firstImage.alt || venue.name}
               fill
-              sizes="50vw"
+              sizes="30vw"
               style={{ objectFit: "cover" }}
               loading="lazy"
             />
           ) : (
             <Image
-              src="/LogoMountainsV.svg"
+              src="/LogoMountainsV.png"
               alt={venue.name}
               fill
               style={{ objectFit: "cover" }}

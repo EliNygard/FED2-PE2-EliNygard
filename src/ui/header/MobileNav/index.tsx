@@ -40,7 +40,7 @@ export default function MobileNav() {
       <DialogContent className="bg-secondary-background sm:max-w-md max-h-[calc(100vh-4rem)] overflow-y-auto touch-pan-y md:max-w-2xl max-w-[calc(100%-1rem)]">
         <DialogHeader>
           <Image
-            src="/LogoMountainsV.svg"
+            src="/LogoMountainsV.png"
             alt="Welcome to Holidaze"
             width={321}
             height={214}

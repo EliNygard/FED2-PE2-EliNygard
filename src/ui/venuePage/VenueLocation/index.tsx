@@ -2,7 +2,7 @@ import { IVenue } from "@/interface";
 
 /**
  * VenueLocation displays the venue's address to the user.
- * - The user can see a map frame and click on it to be taken to google maps. 
+ * - The user can see a map frame and click on it to be taken to google maps.
  * - The component is part of the VenuePage.
  * @param venue The venue data.
  */
@@ -14,16 +14,6 @@ export default function VenueLocation({ venue }: { venue: IVenue }) {
     <section>
       <h2>Location</h2>
       <div className="mt-4 flex flex-col gap-5">
-        <div className="max-w-96">
-          <iframe
-            src={embedSrc}
-            width="100%"
-            height="186px"
-            style={{ border: 0, pointerEvents: "none" }}
-            loading="lazy"
-          ></iframe>
-        </div>
-
         <a
           href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
             `${venue.location.city}`
@@ -31,6 +21,14 @@ export default function VenueLocation({ venue }: { venue: IVenue }) {
           target="_blank"
           rel="noopener noreferrer"
         >
+          <div className="w-full aspect-video mb-4">
+            <iframe
+              src={embedSrc}
+              className="w-full h-full border-0 pointer-events-none"
+              loading="lazy"
+            ></iframe>
+          </div>
+
           <p>{`${venue.location.address}, ${venue.location.city}`}</p>
           <p>{venue.location.country}</p>
         </a>

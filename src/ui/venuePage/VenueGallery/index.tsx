@@ -100,18 +100,18 @@ export default function VenueGallery({
                 src={img.url}
                 alt={img.alt}
                 fill
-                sizes="(max-width: 768px) 50vw, (max-width: 1200px) 50vw, 33vw"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 style={{ objectFit: "cover" }}
-                loading="lazy"
                 className="rounded cursor-pointer"
                 quality={30}
+                priority
               />
             </button>
           ))
         ) : (
           <div className="relative">
             <Image
-              src="/LogoMountainsV.svg"
+              src="/LogoMountainsV.png"
               alt="default image of venue"
               fill
               style={{ objectFit: "cover" }}

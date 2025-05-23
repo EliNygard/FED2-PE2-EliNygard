@@ -25,13 +25,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head />
       <body
         className={`${roboto.className} antialiased min-h-screen flex flex-col`}
       >
         <Header />
-        {/* <Suspense fallback={<Loading />}> */}
-          <main className="flex-1">{children}</main>
-        {/* </Suspense> */}
+        <main className="flex-1">{children}</main>
 
         <ToastProvider />
         <Footer />
