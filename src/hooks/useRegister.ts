@@ -1,5 +1,7 @@
+import { login } from "@/app/api/auth/login";
 import { register } from "@/app/api/auth/register";
 import { IRegisterUser } from "@/interface";
+import { useAuthStore } from "@/stores/useAuthStore";
 import { useState } from "react";
 
 /**
@@ -19,6 +21,8 @@ export function useRegister() {
   const [isError, setIsError] = useState<string | null>(null);
   const [isVenueManager, setIsVenueManager] = useState<boolean>(false);
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
+
+  const setUser = useAuthStore((state) => state.setUser);
 
   /**
    * Performs a register request with the given credentials.
@@ -48,7 +52,7 @@ export function useRegister() {
     setIsSuccess(false);
 
     try {
-      const userData = await register({
+      await register({
         name,
         email,
         password,
@@ -56,14 +60,14 @@ export function useRegister() {
         avatar,
         venueManager,
       });
-
+      const userData = await login({ email, password });
+      console.log(userData);
+      setUser(userData);
       setIsSuccess(true);
-      // open log in
       return userData;
     } catch (error: unknown) {
       const message = error instanceof Error ? error.message : "Unknown error";
       console.error(message);
-
       setIsError(message);
       return;
     } finally {
