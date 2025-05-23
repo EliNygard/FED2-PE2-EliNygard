@@ -64,7 +64,6 @@ export default function VenueGallery({
 
   const count = isXl ? 5 : isMd ? 3 : 1;
   const imagesToShow = venueImages.slice(0, count);
-  console.log(imagesToShow);
 
   const spanClasses = (index: number) => {
     if (isMd && !isXl) {

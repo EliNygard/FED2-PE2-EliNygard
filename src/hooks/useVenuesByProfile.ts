@@ -29,8 +29,6 @@ export function useVenuesByProfile(username: string) {
       // await delay(3000)
       const response = await getVenuesByProfile(username);
       const data = response.data;
-      console.log(data);
-
       setVenues(data);
     } catch (error: unknown) {
       const message =
@@ -53,8 +51,8 @@ export function useVenuesByProfile(username: string) {
       setError(null);
       setLoading(false);
       return;
-    } 
-    fetchVenues()
+    }
+    fetchVenues();
   }, [username, fetchVenues]);
 
   return { venues, loading, error, refetch: fetchVenues };
