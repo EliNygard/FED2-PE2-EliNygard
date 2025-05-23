@@ -118,10 +118,9 @@ export function RegisterForm() {
         avatar,
         venueManager: isVenueManager,
       });
+      if (!user) return;
 
       console.log(user);
-
-      router.push(`/profile/${name}`);
 
       form.reset({
         name: "",
@@ -130,6 +129,8 @@ export function RegisterForm() {
         bio: "",
         avatar: { url: "", alt: "" },
       });
+
+      router.push(`/profile/${user.name}`);
     } catch (error) {
       console.error(error);
     }
@@ -149,7 +150,8 @@ export function RegisterForm() {
 
         {isVenueManager ? (
           <button
-            className="text-left text-sm"
+            role="button"
+            className="text-left text-sm cursor-pointer"
             type="button"
             onClick={() => setIsVenueManager(false)}
           >
@@ -165,7 +167,8 @@ export function RegisterForm() {
           </button>
         ) : (
           <button
-            className="text-left text-sm"
+            role="button"
+            className="text-left text-sm cursor-pointer"
             type="button"
             onClick={() => setIsVenueManager(true)}
           >
