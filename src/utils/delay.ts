@@ -1,5 +1,3 @@
-// utils/delay.ts
-
 /**
  * Returns a promise that resolves after the given number of milliseconds.
  * Useful for simulating network latency or testing loading states.

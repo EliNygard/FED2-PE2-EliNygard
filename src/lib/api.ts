@@ -9,7 +9,6 @@ import {
   IVenueRequest,
 } from "@/interface";
 import { getToken } from "@/stores/useAuthStore";
-import { delay } from "@/utils/delay";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL;
 const API_KEY = process.env.API_KEY;
@@ -17,11 +16,7 @@ const API_KEY = process.env.API_KEY;
 const paramOwner = "_owner=true";
 const paramCustomer = "_customer=true";
 const paramVenue = "_venue=true";
-// const paramVenues = '_venues=true'
 const paramBookings = "_bookings=true";
-// const sortDate = "sort=created&sortOrder=desc";
-
-// pagination: limit and page
 
 interface FetcherOptions extends Omit<RequestInit, "headers"> {
   headers?: Record<string, string>;
@@ -64,7 +59,6 @@ async function fetcher<T>(
       : {}),
   };
 
-  await delay(1000);
   const response = await fetch(`${API_BASE}${url}`, {
     ...init,
     headers: { ...defaultHeaders, ...customHeaders },
@@ -74,7 +68,6 @@ async function fetcher<T>(
     throw new Error(`API error: ${response.status}: ${text}`);
   }
   const body = await response.json();
-  console.log("fetcher:", body);
 
   return {
     data: body.data as T,

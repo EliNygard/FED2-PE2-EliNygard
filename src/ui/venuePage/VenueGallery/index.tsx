@@ -45,7 +45,6 @@ export default function VenueGallery({
     setMounted(true);
   }, []);
   if (!mounted) {
-    // This renders on SSR *and* on first client pass
     return <div className="aspect-video max-h-[500px] w-full bg-gray-100" />;
   }
 

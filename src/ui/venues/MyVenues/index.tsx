@@ -15,10 +15,6 @@ export default function MyVenues({
   venues: IVenue[];
   onVenueDeleted: () => Promise<void>;
 }) {
-  // if (!venues || venues.length === 0) {
-  //   return <p>You have no venues</p>;
-  // }
-
   return (
     <section className="max-w-xl">
       <h2 className="mb-8">My Venues</h2>

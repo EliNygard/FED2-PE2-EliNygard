@@ -21,8 +21,6 @@ export default function MyVenuesPage() {
   const isHydrating = useAuthStore((state) => state.isHydrating);
   const username = useAuthStore((state) => state.user?.name) ?? "";
   const { venues, loading, error, refetch } = useVenuesByProfile(username);
-  console.log('venues list page:', venues);
-  
 
   useEffect(() => {
     if (!isHydrating && !isAuthenticated) {

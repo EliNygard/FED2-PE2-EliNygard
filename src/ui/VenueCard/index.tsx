@@ -12,7 +12,6 @@ import { roboto } from "../fonts";
  */
 
 export default function VenueCard({ venue }: { venue: IVenue }) {
-  // lift out of component
   const firstImage = venue.media?.[0];
   const { city, country } = venue.location || {};
   let locationString = null;

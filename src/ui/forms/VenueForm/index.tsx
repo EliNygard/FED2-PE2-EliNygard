@@ -85,7 +85,6 @@ export default function VenueForm({
   }, [initialValues, reset]);
 
   async function handle(data: VenueFormValues) {
-    // console.log(data);
     await onSubmit(data);
     form.reset();
   }

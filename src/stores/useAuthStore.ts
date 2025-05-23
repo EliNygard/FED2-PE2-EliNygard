@@ -51,7 +51,7 @@ export const useAuthStore = create<AuthState>()(
           token: user.accessToken,
           isAuthenticated: true,
           isVenueManager: !!user.venueManager,
-          isLoading: false
+          isLoading: false,
         }),
 
       updateAvatar: (avatar) => {
@@ -63,10 +63,6 @@ export const useAuthStore = create<AuthState>()(
             avatar,
           },
         });
-      },
-
-      changeToManager: () => {
-        // set up later. do something here if user edits profile and change to venue manager?
       },
 
       logout: () => {
@@ -91,19 +87,12 @@ export const useAuthStore = create<AuthState>()(
       onRehydrateStorage: () => (state) => {
         if (state) {
           state.setLoading(false);
-          state.setHydrating(false)
+          state.setHydrating(false);
         }
-        // state?.setHydrating(false),
-      }
+      },
     }
   )
 );
-
-// Subscribe to state changes and log them
-// DO I NEED THIS. DELETE IF NOT, IT IS LOGGING THE TOKEN ❗❗❗❗
-// useAuthStore.subscribe((state) => {
-//   console.log("[auth store] state changed: ", state.user);
-// });
 
 /**
  * Grab the current auth token from the store.

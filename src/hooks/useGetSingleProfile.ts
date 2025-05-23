@@ -1,12 +1,10 @@
 import { getSingleProfile } from "@/lib/api";
 import { useState } from "react";
 
-// delete?
-
 export function useGetSingleProfile() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isError, setIsError] = useState<string | null>(null);
-  
+
   const getProfileData = async (username: string) => {
     setIsLoading(true);
     setIsError(null);
@@ -29,5 +27,5 @@ export function useGetSingleProfile() {
     }
   };
 
-  return { getProfileData, isLoading, isError }
+  return { getProfileData, isLoading, isError };
 }

@@ -17,12 +17,7 @@ export default async function HomePage({
 }) {
   const { page = "1" } = await searchParams;
   const pageNumber = parseInt(page, 10);
-  console.log(pageNumber);
-
   const { data: venues, meta: meta } = await getVenues(pageNumber, 12);
-  console.log("Venues: ", venues);
-  console.log("Meta: ", meta);
-  console.log(meta.currentPage);
 
   return (
     <section className="flex flex-col gap-[32px] page-padding">
@@ -32,10 +27,8 @@ export default async function HomePage({
         ))}
       </ul>
       <div>
-      <PaginationPanel meta={meta} />
-
+        <PaginationPanel meta={meta} />
       </div>
-
     </section>
   );
 }

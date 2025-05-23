@@ -9,9 +9,6 @@ import styles from "./styles.module.css";
  */
 
 export default function VenueHeader({ venue }: { venue: IVenue }) {
-  // console.log(typeof venue.location.city);
-  // console.log(venue);
-
   const { city, country } = venue.location || {};
   let locationString = null;
 

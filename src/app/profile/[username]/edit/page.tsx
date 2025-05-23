@@ -52,8 +52,7 @@ export default function EditProfilePage() {
     const { avatar } = values;
 
     try {
-      const payload = await updateProfile({ avatar });
-      console.log(payload);
+      await updateProfile({ avatar });
 
       form.reset({
         avatar: { url: "", alt: "" },
@@ -103,8 +102,13 @@ export default function EditProfilePage() {
           </span>
         )}
       </div>
-      
-      <Button className="max-w-80" type="submit" disabled={isLoading} aria-busy={isLoading}>
+
+      <Button
+        className="max-w-80"
+        type="submit"
+        disabled={isLoading}
+        aria-busy={isLoading}
+      >
         {isLoading ? <ButtonSpinner /> : "Update profile"}{" "}
       </Button>
 

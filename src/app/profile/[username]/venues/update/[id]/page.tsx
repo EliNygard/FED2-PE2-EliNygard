@@ -30,7 +30,6 @@ export default async function UpdateVenuePage({
 }) {
   const { id } = await params;
   const { data } = await getVenueById(id);
-  console.log(id, data);
 
   if (!data) {
     return notFound();

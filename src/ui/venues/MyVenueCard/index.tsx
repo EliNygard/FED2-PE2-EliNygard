@@ -1,13 +1,10 @@
-// import { useDeleteVenue } from "@/hooks/useDeleteVenue";
 import { IVenue } from "@/interface";
 import { useAuthStore } from "@/stores/useAuthStore";
-// import AlertConfirmDialog from "@/ui/AlertDeleteVenue";
 import Button from "@/ui/Button";
+import DeleteVenueButton from "@/ui/DeleteVenueButton";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-// import { toast } from "sonner";
-import DeleteVenueButton from "@/ui/DeleteVenueButton";
 import BookingsAccordion from "../BookingsOnVenue";
 
 /**
