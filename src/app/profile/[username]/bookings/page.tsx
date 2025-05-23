@@ -16,7 +16,6 @@ import Loading from "../loading";
  * - Renders <MyBookingsSection> or a `no bookings` element if no bookings.
  */
 
-
 export default function MyBookingsPage() {
   const router = useRouter();
   const username = useAuthStore((state) => state.user?.name) ?? "";
