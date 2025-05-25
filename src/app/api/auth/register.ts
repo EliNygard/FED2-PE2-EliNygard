@@ -4,14 +4,13 @@ export async function register({
   name,
   email,
   password,
-  bio,
   avatar,
   venueManager,
 }: IRegisterUser) {
   const response = await fetch("https://v2.api.noroff.dev/auth/register", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ name, email, password, bio, avatar, venueManager }),
+    body: JSON.stringify({ name, email, password, avatar, venueManager }),
   });
 
   const json = await response.json();

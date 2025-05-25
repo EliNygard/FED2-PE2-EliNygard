@@ -29,7 +29,6 @@ export function useRegister() {
    * @param name – The user’s name.
    * @param email – The user’s email address.
    * @param password – The user’s password.
-   * @param bio – The user’s bio.
    * @param avatar – The user’s profile image.
    * @param venueManager – States if a user is venue manager or not.
    * @returns A promise that resolves to the registered `IRegisterUser` on success, or `undefined` on failure.
@@ -42,7 +41,6 @@ export function useRegister() {
     name,
     email,
     password,
-    bio,
     avatar,
     venueManager,
   }: IRegisterUser) => {
@@ -55,7 +53,6 @@ export function useRegister() {
         name,
         email,
         password,
-        bio,
         avatar,
         venueManager,
       });

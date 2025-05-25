@@ -6,7 +6,6 @@ export interface IRegisterRequest {
     name: string;
     email: string;
     password: string;
-    bio?: string;
     avatar: IMedia;
     venueManager?: boolean;
   };
@@ -15,7 +14,6 @@ export interface IRegisterRequest {
 export interface IUser {
   name: string;
   email: string;
-  bio?: string;
   avatar: IMedia;
   accessToken: string;
   venueManager: boolean;
@@ -30,7 +28,6 @@ export interface IRegisterUser {
   name: string;
   email: string;
   password: string;
-  bio?: string;
   avatar: IMedia;
   venueManager?: boolean;
 }
@@ -92,13 +89,11 @@ export interface IVenueRequest {
 export interface IPerson {
   name: string;
   email: string;
-  bio?: string;
   avatar: IMedia;
 }
 export interface IProfile {
   name: string;
   email: string;
-  bio?: string;
   avatar: IMedia;
   venueManager?: boolean;
   _count: {

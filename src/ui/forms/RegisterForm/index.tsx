@@ -1,7 +1,6 @@
 "use client";
 
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { useRegister } from "@/hooks/useRegister";
 import { useAuthStore } from "@/stores/useAuthStore";
 import Button from "@/ui/Button";
@@ -47,7 +46,6 @@ const RegisterFormSchema = z.object({
       message: "Passwords do not match. Please try again",
       path: ["confirmPassword"],
     }),
-  bio: z.string(),
   avatar: z.object({
     url: z.string().regex(/^https:\/\/\S+$/, {
       message: "Profile image must be a valid URL address",
@@ -59,7 +57,7 @@ const RegisterFormSchema = z.object({
 /**
  * RegisterForm component.
  *
- * Renders a register form with the fields: name, email, password, confirm password, bio and profile image.
+ * Renders a register form with the fields: name, email, password, confirm password and profile image.
  * The form handles validation and submission.
  * The form fields are reset on successful register.
  *
@@ -74,7 +72,6 @@ export function RegisterForm() {
     defaultValues: {
       name: "",
       email: "",
-      bio: "",
       avatar: {
         url: "https://images.unsplash.com/vector-1738925817850-4cfd13a45924?q=80&w=2360&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         alt: `Profile image of ${username}`,
@@ -103,7 +100,6 @@ export function RegisterForm() {
       name,
       email,
       passwordPair: { password },
-      bio,
       avatar,
     } = values;
 
@@ -114,7 +110,6 @@ export function RegisterForm() {
         name,
         email,
         password,
-        bio,
         avatar,
         venueManager: isVenueManager,
       });
@@ -124,7 +119,6 @@ export function RegisterForm() {
         name: "",
         email: "",
         passwordPair: { password: "", confirmPassword: "" },
-        bio: "",
         avatar: { url: "", alt: "" },
       });
 
@@ -249,16 +243,6 @@ export function RegisterForm() {
               {form.formState.errors.passwordPair?.confirmPassword && (
                 <span aria-live="polite">
                   {form.formState.errors.passwordPair.confirmPassword.message}
-                </span>
-              )}
-            </div>
-
-            <div>
-              <label htmlFor="bio">Your profile bio (optional)</label>
-              <Textarea id="bio" placeholder="Bio" {...form.register("bio")} />
-              {form.formState.errors.bio && (
-                <span aria-live="polite">
-                  {form.formState.errors.bio.message}
                 </span>
               )}
             </div>

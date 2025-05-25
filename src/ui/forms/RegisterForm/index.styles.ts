@@ -16,10 +16,6 @@ export const StyledRegisterForm = styled.div`
     gap: 1rem;
   }
 
-  #bio {
-    height: 124px;
-  }
-
   .image-link {
     font-size: 14px;
     margin: 0.5rem 0 0.5rem 0;
