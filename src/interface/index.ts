@@ -156,7 +156,7 @@ export interface AuthState {
   isHydrating: boolean;
   isLoading: boolean;
   setLoading: (status: boolean) => void;
-  setHydrating: (status: boolean) => void
+  setHydrating: (status: boolean) => void;
   setUser: (user: IUser) => void;
   updateAvatar: (avatar: IMedia) => void;
   logout: () => void;
