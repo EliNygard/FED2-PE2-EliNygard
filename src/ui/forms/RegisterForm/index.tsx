@@ -87,9 +87,6 @@ export function RegisterForm() {
     setIsVenueManager,
   } = useRegister();
 
-  const delay = (ms: number) =>
-    new Promise<void>((resolve) => setTimeout(resolve, ms));
-
   /**
    * Submit handler invoked when the form is submitted and passes validation.
    *
@@ -104,8 +101,6 @@ export function RegisterForm() {
     } = values;
 
     try {
-      await delay(9000);
-
       const user = await handleRegister({
         name,
         email,
