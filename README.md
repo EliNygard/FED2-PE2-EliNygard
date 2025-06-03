@@ -2,7 +2,7 @@
 
 Delivery: May 2025
 
-This is my final exam at Noroff. The goal of this assigmnet was to take the skills I have learned over the last two years and take on an extensive project. This is a web site for the fictional client Holidaze.
+This is my final exam at Noroff. The goal of this assignment was to take the skills I have learned over the last two years and take on an extensive project. This is a web site for the fictional client Holidaze.
 
 [![Website home page](/public/PE2_Holidaze.jpg)](https://pe-holidaze.vercel.app/)
 
